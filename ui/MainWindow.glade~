@@ -548,10 +548,6 @@
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">is in the domain.</property>
-                    <attributes>
-                      <attribute name="foreground" value="#000000000000"/>
-                      <attribute name="background" value="#ffffffffffff"/>
-                    </attributes>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -692,6 +688,7 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="placeholder-text" translatable="yes">e.g. Administrator</property>
+                        <signal name="activate" handler="on_id_check_button" swapped="no"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>

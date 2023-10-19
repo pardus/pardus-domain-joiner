@@ -219,8 +219,8 @@ class MainWindow:
 
         if status == 0:
                 command = self.hostname()
-                """print("command "+command)
-                print("hostname",self.comp+"."+self.domain)"""
+                print("command "+command)
+                print("hostname",self.comp+"."+self.domain)
                 hostname = self.comp+"."+self.domain
 
                 if self.domain_name_check == "False":
@@ -302,7 +302,7 @@ class MainWindow:
         if status == 0:
             if os.path.exists("/tmp/realmlist"):
                 with open("/tmp/realmlist") as realmfile:
-                    domain_name = next(realmfile)
+                    domain_name = realmfile.readline()
                     domain_details = realmfile.read()
 
                     if domain_name == '':
@@ -324,10 +324,10 @@ class MainWindow:
                         id_group = idfile.readline()
                         self.id_entry.set_text("")
                         if status == 0:
-                            self.id_label.set_text(id_group)
+                            self.id_label.set_markup("<b>"+self.id_name+"</b>\n"+id_group)
                         elif status == 256:
-                            self.id_label.set_text("\""+self.id_name + 
-                                                    _( "\" user not found. Try again!"))
+                            self.id_label.set_markup("<b>"+self.id_name + 
+                                                    _( "</b> user not found. Try again!"))
                         else:
                             self.id_label.set_text(_("No such user"))
                 else:

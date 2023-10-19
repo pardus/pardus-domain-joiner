@@ -38,8 +38,20 @@ def main():
                 print(_("Packages are not installed."))
                 exit()
                         
-            subprocess.call(["sudo","realm","discover","-v"])
-            print(_("joining the domain..."))
+            result = subprocess.run(["sudo", "realm", "discover"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=False)
+            if result.returncode == 0:
+                output_lines = result.stdout.split('\n')
+
+                if len(output_lines)>0:
+                    if domain == output_lines[0]:
+                        print(_("joining the domain..."))
+                    else:
+                        print(_("Not reachable, check your DNS address"), file=sys.stdout)
+                        exit()
+            else:
+                print(_("Not reachable, check your DNS address"), file=sys.stdout)
+                exit()
+                
 
             command = "echo " + passwd + " | sudo realm join -v --computer-ou=\""+ouaddress+"\" --user=\""+user+"@"+domain.upper()+"\" "+domain.lower()
             proc = subprocess.run([command], stdout=subprocess.PIPE, shell=True)

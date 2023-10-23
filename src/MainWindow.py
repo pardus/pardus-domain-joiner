@@ -91,7 +91,6 @@ class MainWindow:
         # error checking variables when joining the domain
         self.password_check = ""
         self.domain_name_check = ""
-        self.host_file_check = ""
 
     def onDestroy(self,Widget):
         Gtk.main_quit()
@@ -193,11 +192,8 @@ class MainWindow:
             return False
         line = source.readline()
         print(line)
-        self.host_file_check = "True"
         self.password_check = "True"
 
-        if line.strip() == "Not reachable, check your /etc/hosts file":
-            self.host_file_check = "False"
         if line.strip()=="Not reachable, check your DNS address":
             self.domain_name_check = "False"
         if line.strip() == "Domain username or password check: False":
@@ -230,9 +226,6 @@ class MainWindow:
                     self.reboot_button.set_label(_("Back"))
                 elif self.password_check == "False":
                     self.message_label.set_markup("<span color='red'>{}</span>".format(_("Your password or username are incorrect.")))
-                    self.reboot_button.set_label(_("Back"))
-                elif self.host_file_check == "False":
-                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your /etc/hosts file")))
                     self.reboot_button.set_label(_("Back"))
                 else:
                     if command == hostname:

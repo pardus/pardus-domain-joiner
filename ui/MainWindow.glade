@@ -58,7 +58,6 @@
     <property name="resizable">False</property>
     <property name="default-width">250</property>
     <property name="default-height">350</property>
-    <property name="icon">../images/afad-domain-joiner.svg</property>
     <child>
       <object class="GtkStack" id="main_stack">
         <property name="visible">True</property>

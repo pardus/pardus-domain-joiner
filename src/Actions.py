@@ -37,7 +37,44 @@ def main():
             else:
                 print(_("Packages are not installed."))
                 exit()
+
+            # to check file /etc/hostname 
+            hostname_file = "/etc/hostname"
+            with open(hostname_file, 'r') as file:
+                current_hostname = file.readline().strip()
+                print(_("checking /etc/hostname file..."))
+                if comp_name+"."+domain not in current_hostname:
+                    print(_("added domain name to /etc/hostname file"))
+                    with open(hostname_file, 'w') as file:
+                        new_hostname = "{}.{}".format(comp_name,domain)
+                        file.write(new_hostname)
+                else:
+                    print("done")
                         
+            # to check file /etc/hosts 
+            hosts_file = "/etc/hosts"
+            with open(hosts_file, 'r') as file:
+                lines = file.readlines()
+            print(_("checking /etc/hosts file..."))
+            new_hosts_file = []
+            domain_exists = False 
+
+            for line in lines:
+                if line.strip().startswith("127.0.1.1"):
+                    if f"{comp_name}.{domain}" not in line:
+                        line = f"127.0.1.1 {comp_name}.{domain} {comp_name}\n"
+                    domain_exists = True 
+                new_hosts_file.append(line)
+            if not domain_exists:
+                new_hosts_file.append(f"127.0.1.1 {comp_name}.{domain} {comp_name}\n")
+            with open(hosts_file, 'w') as file:
+                file.writelines(new_hosts_file)
+
+            if domain_exists:
+                print("done")
+            else:
+                print(_("added domain name to /etc/hosts file"))
+                     
             result = subprocess.run(["sudo", "realm", "discover"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=False)
             if result.returncode == 0:
                 output_lines = result.stdout.split('\n')
@@ -47,11 +84,7 @@ def main():
                         print(_("joining the domain..."))
                     else:
                         print(_("Not reachable, check your DNS address"), file=sys.stdout)
-                        exit()
-            else:
-                print(_("Not reachable, check your DNS address"), file=sys.stdout)
-                exit()
-                
+                        exit()                
 
             command = "echo " + passwd + " | sudo realm join -v --computer-ou=\""+ouaddress+"\" --user=\""+user+"@"+domain.upper()+"\" "+domain.lower()
             proc = subprocess.run([command], stdout=subprocess.PIPE, shell=True)

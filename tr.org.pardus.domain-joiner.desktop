@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=Domain Joiner
+Name[tr]=Etki Alanı Dahil Edici
+GenericName=Domain Joiner
+GenericName[tr]=Etki Alanı Dahil Edici
+Comment=  UI application that helps to joins or leaves your computer to the domain
+Comment[tr]= Bilgisayarınızın etki alanına katılmasına veya etki alanından ayrılmasına yardımcı olan kullanıcı arayüzü uygulaması
+Exec=domain-joiner
+Icon=domain-joiner
+Terminal=false
+Type=Application
+Categories=Utility;
+StartupNotify=true
+Keywords=domain-joiner

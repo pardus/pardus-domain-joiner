@@ -1,0 +1,28 @@
+Source: domain-joiner
+Section: utils
+Priority: optional
+Maintainer: Pardus Altyapı <altyapi@pardus.org.tr>
+Build-Depends: debhelper (>= 10), dh-python, python3-all, python3-setuptools
+Standards-Version: 1
+Homepage: https://www.pardus.org.tr
+
+Package:domain-joiner
+Architecture: all
+Depends: python3 (>=3.5),
+         python3-gi,
+         gir1.2-glib-2.0,
+         gir1.2-gtk-3.0,
+         gir1.2-vte-2.91,
+         python3-apt
+Recommends: krb5-user, 
+	 samba, 
+	 sssd, 
+	 libsss-sudo,
+	 realmd, 
+	 packagekit, 
+	 adcli, 
+	 sssd-tools, 
+	 cifs-utils, 
+	 smbclient
+Description: Domain Joiner 
+  UI application that helps to joins or leaves your computer to the domain

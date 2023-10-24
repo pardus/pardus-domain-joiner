@@ -69,7 +69,6 @@ def main():
                 new_hosts_file.append(f"127.0.1.1 {comp_name}.{domain} {comp_name}\n")
             with open(hosts_file, 'w') as file:
                 file.writelines(new_hosts_file)
-
             if domain_exists:
                 print("done")
             else:
@@ -92,30 +91,30 @@ def main():
             if password_check == 1:
                 print(_("Domain username or password check: False"), file=sys.stdout)
             
-            # 
+            # to check and rewrite file /etc/sssd/sssd.conf
             with open("/etc/sssd/sssd.conf","w") as sssd_file:
                 sssd_file.write("""
 [sssd]
-domains = lawad.local
+domains = {}
 config_file_version = 2
 services = nss, pam
 
-[domain/lawad.local]
+[domain/{}]
 default_shell = /bin/bash
-ad_server = lawad.local
+ad_server = {}
 krb5_store_password_if_offline = True
 cache_credentials = True
-krb5_realm = LAWAD.LOCAL
+krb5_realm = {}
 realmd_tags = manages-system joined-with-adcli 
 id_provider = ad
 fallback_homedir = /home/%u@%d
-ad_domain = lawad.local
+ad_domain = {}
 use_fully_qualified_names = False
 ldap_id_mapping = True
 access_provider = ad
 ad_gpo_access_control = permissive
 ad_gpo_ignore_unreadable = True
-""")
+""".format(domain,domain,domain,domain.upper(),domain))
                 
             with open("/etc/pam.d/common-session","a") as pam_file:
                 pam_file.write("""

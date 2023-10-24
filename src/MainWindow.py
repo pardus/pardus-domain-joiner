@@ -71,7 +71,6 @@ class MainWindow:
         
         # buttons
         self.reboot_button = self.builder.get_object("reboot_button")
-        # leave button
 
         # vte
         self.vtebox = self.builder.get_object("vte_box")

@@ -297,40 +297,39 @@ class MainWindow:
         comp_name = hostname[0]
         self.comp_name_entry.set_text(comp_name)
 
-        if status == 0:
-            if os.path.exists("/tmp/realmlist"):
-                with open("/tmp/realmlist") as realmfile:
-                    domain_name = realmfile.readline()
-                    domain_details = realmfile.read()
+        if os.path.exists("/tmp/realmlist"):
+            with open("/tmp/realmlist") as realmfile:
+                domain_name = realmfile.readline()
+                domain_details = realmfile.read()
 
-                    if domain_name == '':
-                        self.main_stack.set_visible_child_name("join_page")
-                        self.second_stack.set_visible_child_name("domain_join_page")
-                    else:
-                        domain_name = domain_name.split("\n")
-                        self.main_stack.set_visible_child_name("leave_page")
-                        self.compname_label.set_markup("\nYour computer <b>"
+            if domain_name == '':
+                self.main_stack.set_visible_child_name("join_page")
+                self.second_stack.set_visible_child_name("domain_join_page")
+            else:
+                domain_name = domain_name.split("\n")
+                self.main_stack.set_visible_child_name("leave_page")
+                self.compname_label.set_markup("\nYour computer <b>"
                                             +comp_name
                                             +("</b>"))
-                        self.domain_title_label.set_text(domain_name[0])
-                        self.domain_details_label.set_text(domain_details)
+                self.domain_title_label.set_text(domain_name[0])
+                self.domain_details_label.set_text(domain_details)
 
-            if self.id_clicked:
-                self.id_name = self.id_entry.get_text()
-                if os.path.exists("/tmp/idcheck"):
-                    with open("/tmp/idcheck","r") as idfile:
-                        id_group = idfile.readline()
-                        self.id_entry.set_text("")
-                        if status == 0:
-                            self.id_label.set_markup("<b>"+self.id_name+"</b>\n"+id_group)
-                        elif status == 256:
-                            self.id_label.set_markup("<b>"+self.id_name + 
-                                                    _( "</b> user not found. Try again!"))
-                        else:
-                            self.id_label.set_text(_("No such user"))
-                else:
-                    self.id_label.set_text(_("Error!")) 
-                self.id_dialog.run()
+        if self.id_clicked:
+            self.id_name = self.id_entry.get_text()
+            if os.path.exists("/tmp/idcheck"):
+                with open("/tmp/idcheck","r") as idfile:
+                    id_group = idfile.readline()
+                    self.id_entry.set_text("")
+                    if status == 0:
+                        self.id_label.set_markup("<b>"+self.id_name+"</b>\n"+id_group)
+                    elif status == 256:
+                        self.id_label.set_markup("<b>"+self.id_name + 
+                                                _( "</b> user not found. Try again!"))
+                    else:
+                        self.id_label.set_text(_("No such user"))
+            else:
+                self.id_label.set_text(_("Error!")) 
+            self.id_dialog.run()
 
         
 if __name__ == "__main__":

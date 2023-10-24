@@ -686,7 +686,7 @@
                       <object class="GtkEntry" id="id_entry">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
-                        <property name="placeholder-text" translatable="yes">e.g. Administrator</property>
+                        <property name="placeholder-text" translatable="yes">e.g. user name</property>
                         <signal name="activate" handler="on_id_check_button" swapped="no"/>
                       </object>
                       <packing>

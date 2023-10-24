@@ -58,7 +58,6 @@
     <property name="resizable">False</property>
     <property name="default-width">250</property>
     <property name="default-height">350</property>
-    <property name="icon">../images/afad-domain-joiner.svg</property>
     <child>
       <object class="GtkStack" id="main_stack">
         <property name="visible">True</property>
@@ -687,7 +686,7 @@
                       <object class="GtkEntry" id="id_entry">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
-                        <property name="placeholder-text" translatable="yes">e.g. Administrator</property>
+                        <property name="placeholder-text" translatable="yes">e.g. user name</property>
                         <signal name="activate" handler="on_id_check_button" swapped="no"/>
                       </object>
                       <packing>

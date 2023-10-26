@@ -106,7 +106,7 @@ msgstr ""
 msgid "Error: domain failed to join realm"
 msgstr ""
 
-#: src/MainWindow.py:225 src/MainWindow.py:228 src/MainWindow.py:235
+#: src/MainWindow.py:225 src/MainWindow.py:228 src/MainWindow.py:235 src/MainWindow.py:149
 msgid "Back"
 msgstr ""
 

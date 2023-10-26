@@ -1,22 +1,20 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.2.2\n"
+
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2023 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Büşra ÇAĞLIYAN <busra.cagliyan@pardus.org.tr>, 2023.
-#
-#, fuzzy
-msgid ""
-msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 11:26+0300\n"
-"PO-Revision-Date: 2023-10-26 11:50+0300\n"
-"Last-Translator: Büşra ÇAĞLIYAN <busra.cagliyan@pardus.org.tr>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: 8bit\n"
-
 #: ui/MainWindow.glade:22
 msgid "OK"
 msgstr "Tamam"
@@ -115,15 +113,16 @@ msgstr "Parola gerekli!"
 
 #: src/MainWindow.py:146 src/MainWindow.py:240
 msgid "Error: domain failed to join realm"
-msgstr "Hata: etki alanı realm'e katılamadı."
+msgstr "Hata: etki alanı realm'e katılamadı"
 
 #: src/MainWindow.py:225 src/MainWindow.py:228 src/MainWindow.py:235
+#: src/MainWindow.py:149
 msgid "Back"
 msgstr "Geri"
 
 #: src/Actions.py:85 src/MainWindow.py:224
 msgid "Not reachable, check your DNS address"
-msgstr "Ulaşılamadı, DNS adresinizi kontrol ediniz."
+msgstr "Ulaşılamadı, DNS adresinizi kontrol ediniz"
 
 #: src/MainWindow.py:227
 msgid "Your password or username are incorrect."
@@ -143,8 +142,11 @@ msgstr "Parolayı girmediniz. Tekrar deneyiniz!"
 
 #: src/MainWindow.py:310
 msgid ""
-"\nYour computer <b>"
-msgstr "\nBilgisayarınız <b>"
+"\n"
+"Your computer <b>"
+msgstr ""
+"\n"
+"Bilgisayarınız <b>"
 
 #: src/MainWindow.py:326
 msgid "</b> user not found. Try again!"

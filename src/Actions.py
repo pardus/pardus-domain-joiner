@@ -49,7 +49,7 @@ def main():
                         new_hostname = "{}.{}".format(comp_name,domain)
                         file.write(new_hostname)
                 else:
-                    print("done")
+                    print(_("done"))
                         
             # to check file /etc/hosts 
             hosts_file = "/etc/hosts"
@@ -70,7 +70,7 @@ def main():
             with open(hosts_file, 'w') as file:
                 file.writelines(new_hosts_file)
             if domain_exists:
-                print("done")
+                print(_("done"))
             else:
                 print(_("added domain name to /etc/hosts file"))
                      
@@ -83,38 +83,42 @@ def main():
                         print(_("joining the domain..."))
                     else:
                         print(_("Not reachable, check your DNS address"), file=sys.stdout)
-                        exit()                
+                        exit()
+            
+            command = "realm join -v --computer-ou=\""+ouaddress+"\" --user=\""+user+"@"+domain.upper()+"\" "+domain.lower()
+            proc = subprocess.Popen([command],stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
+            proc.communicate(passwd.encode('utf-8'))
 
-            command = "echo " + passwd + " | sudo realm join -v --computer-ou=\""+ouaddress+"\" --user=\""+user+"@"+domain.upper()+"\" "+domain.lower()
-            proc = subprocess.run([command], stdout=subprocess.PIPE, shell=True)
             password_check = proc.returncode
             if password_check == 1:
                 print(_("Domain username or password check: False"), file=sys.stdout)
             
             # to check and rewrite file /etc/sssd/sssd.conf
-            with open("/etc/sssd/sssd.conf","w") as sssd_file:
-                sssd_file.write("""
-[sssd]
-domains = {}
-config_file_version = 2
-services = nss, pam
+            settings = {
+                "use_fully_qualified_names": "False",
+                "ad_gpo_access_control":"permissive",
+                "ad_gpo_ignore_unreadable":"True"
+            }
+            new_sssd_conf = []
+            with open("/etc/sssd/sssd.conf","r") as sssd_file:
+                contents = sssd_file.readlines()
+                # 
+                for line in contents:
+                    for key, value in settings.items():
+                        if line.strip().startswith(f"{key}"):
+                            if value not in line:
+                                new_sssd_conf.append(f"{key} = {value}\n")
+                            break
+                        else:
+                            new_sssd_conf.append(line)
+            # to add missing variables
+            for key,value in settings.items():
+                if f"{key} = {value}" not in new_sssd_conf:
+                    new_sssd_conf.append(f"{key} = {value}\n")
 
-[domain/{}]
-default_shell = /bin/bash
-ad_server = {}
-krb5_store_password_if_offline = True
-cache_credentials = True
-krb5_realm = {}
-realmd_tags = manages-system joined-with-adcli 
-id_provider = ad
-fallback_homedir = /home/%u@%d
-ad_domain = {}
-use_fully_qualified_names = False
-ldap_id_mapping = True
-access_provider = ad
-ad_gpo_access_control = permissive
-ad_gpo_ignore_unreadable = True
-""".format(domain,domain,domain,domain.upper(),domain))
+            with open("/etc/sssd/sssd.conf","w") as sssd_file:
+                for item in new_sssd_conf:
+                    sssd_file.write(item)
                 
             with open("/etc/pam.d/common-session","a") as pam_file:
                 pam_file.write("""

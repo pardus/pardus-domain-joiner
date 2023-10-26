@@ -307,7 +307,7 @@ class MainWindow:
             else:
                 domain_name = domain_name.split("\n")
                 self.main_stack.set_visible_child_name("leave_page")
-                self.compname_label.set_markup("\nYour computer <b>"
+                self.compname_label.set_markup(_("\nYour computer <b>")
                                             +comp_name
                                             +("</b>"))
                 self.domain_title_label.set_text(domain_name[0])

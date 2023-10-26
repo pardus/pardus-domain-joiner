@@ -365,7 +365,7 @@
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="tooltip-text" translatable="yes">e.g. cn=Computers, dc=afad, dc=local</property>
-                            <property name="placeholder-text" translatable="yes">e.g. cn=Computers, dc=afad, dc=local</property>
+                            <property name="placeholder-text" translatable="yes">e.g. cn=Computers, dc=domain, dc=name</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -639,7 +639,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="leave_button">
-                    <property name="label" translatable="yes">Leave Button</property>
+                    <property name="label" translatable="yes">Leave Domain</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>

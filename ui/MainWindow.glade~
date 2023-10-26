@@ -639,7 +639,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="leave_button">
-                    <property name="label" translatable="yes">Leave Button</property>
+                    <property name="label" translatable="yes">Leave Domain</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>

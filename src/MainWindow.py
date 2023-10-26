@@ -146,7 +146,7 @@ class MainWindow:
                 print(_("Error: domain failed to join realm")) 
 
     def on_reboot_button(self,Widget):
-        if self.reboot_button.get_label() == "Back" or self.reboot_button.get_label() == "Geri":
+        if self.reboot_button.get_label() == _("Back" ):
             hostname = self.hostname()
             hostname = hostname.split(".")
             self.comp_name_entry.set_text(hostname[0]) # just for comp name
@@ -157,10 +157,7 @@ class MainWindow:
             self.restart()
 
     def on_details_button(self,button):
-        if button.get_active():
-            self.details_revealer.set_reveal_child(True)
-        else:
-            self.details_revealer.set_reveal_child(False)
+        self.details_revealer.set_reveal_child(button.get_active())
     
     def on_leave_button(self,Widget):
         command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "leave"]

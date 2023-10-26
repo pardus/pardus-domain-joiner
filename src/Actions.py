@@ -74,7 +74,7 @@ def main():
             else:
                 print(_("added domain name to /etc/hosts file"))
                      
-            result = subprocess.run(["sudo", "realm", "discover"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=False)
+            result = subprocess.run(["sudo", "realm", "discover"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             if result.returncode == 0:
                 output_lines = result.stdout.split('\n')
 
@@ -122,7 +122,7 @@ def main():
                 
             with open("/etc/pam.d/common-session","a") as pam_file:
                 pam_file.write("""
-session required pam_mkhomedir.so skel=/etc/skel umask=0077
+session optional pam_mkhomedir.so skel=/etc/skel umask=0077
 """)
             subprocess.call(["systemctl", "restart ", "sssd"])          
 
@@ -132,9 +132,7 @@ session required pam_mkhomedir.so skel=/etc/skel umask=0077
             print(e)
 
     def permit():
-        command1="realm permit -a"        
-        cmd = subprocess.Popen(command1, shell=True)
-        cmd.communicate()
+        subprocess.call(["realm","permit","-a"], shell=True)
 
     def leave():
         subprocess.call(["realm", "leave", "-v"])

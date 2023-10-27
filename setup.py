@@ -16,6 +16,7 @@ if os.path.exists(changelog):
 
 data_files = [
     ("/usr/share/applications/", ["tr.org.pardus.domain-joiner.desktop"]),
+    ("/usr/share/pam-configs/", ["pardus-pam-config"]),
     ("/usr/share/locale/tr/LC_MESSAGES/", ["po/tr/LC_MESSAGES/domain-joiner.mo"]),
     ("/usr/share/pardus/domain-joiner/src", ["src/MainWindow.py", "src/Actions.py","src/Checks.py","src/__version__"]),
     ("/usr/share/pardus/domain-joiner/ui", ["ui/MainWindow.glade"]),

@@ -32,7 +32,7 @@ def main():
                             env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
             
             # to join domain
-            if (os.path.isfile("/etc/sssd/sssd.conf") and os.path.isfile("/etc/krb5.conf")):
+            if os.path.isfile("/etc/krb5.conf"):
                 print(_("Packages are installed."))
             else:
                 print(_("Packages are not installed."))
@@ -74,7 +74,7 @@ def main():
             else:
                 print(_("added domain name to /etc/hosts file"))
                      
-            result = subprocess.run(["sudo", "realm", "discover"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            result = subprocess.run(["realm", "discover"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             if result.returncode == 0:
                 output_lines = result.stdout.split('\n')
 
@@ -120,10 +120,7 @@ def main():
                 for item in new_sssd_conf:
                     sssd_file.write(item)
                 
-            with open("/etc/pam.d/common-session","a") as pam_file:
-                pam_file.write("""
-session optional pam_mkhomedir.so skel=/etc/skel umask=0077
-""")
+            subprocess.call(["pam-auth-update", "--enable ", "pardus-pam-config"],env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'}) 
             subprocess.call(["systemctl", "restart ", "sssd"])          
 
             if password_check==0:

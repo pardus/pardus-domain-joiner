@@ -1,0 +1,7 @@
+Name: Create home directory on login for pardus domain joiner
+Default: yes
+Priority: 0
+Session-Type: Additional
+Session-Interactive-Only: yes
+Session:
+	optional			pam_mkhomedir.so /skel=/etc/skel umask=0077

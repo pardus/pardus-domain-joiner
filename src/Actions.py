@@ -102,18 +102,18 @@ def main():
             new_sssd_conf = []
             with open("/etc/sssd/sssd.conf","r") as sssd_file:
                 contents = sssd_file.readlines()
-                # 
+
                 for line in contents:
                     for key, value in settings.items():
                         if line.strip().startswith(f"{key}"):
                             if value not in line:
                                 new_sssd_conf.append(f"{key} = {value}\n")
                             break
-                        else:
-                            new_sssd_conf.append(line)
+                    else:
+                        new_sssd_conf.append(line)
             # to add missing variables
             for key,value in settings.items():
-                if f"{key} = {value}" not in new_sssd_conf:
+                if f"{key} = {value}\n" not in new_sssd_conf:
                     new_sssd_conf.append(f"{key} = {value}\n")
 
             with open("/etc/sssd/sssd.conf","w") as sssd_file:

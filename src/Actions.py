@@ -94,32 +94,60 @@ def main():
                 print(_("Domain username or password check: False"), file=sys.stdout)
             
             # to check and rewrite file /etc/sssd/sssd.conf
+            sssd_file = "/etc/sssd/sssd.conf"
             settings = {
                 "use_fully_qualified_names": "False",
                 "ad_gpo_access_control":"permissive",
                 "ad_gpo_ignore_unreadable":"True"
             }
-            new_sssd_conf = []
-            with open("/etc/sssd/sssd.conf","r") as sssd_file:
-                contents = sssd_file.readlines()
+            if os.path.exists(sssd_file):
+                new_sssd_conf = []
+                with open(sssd_file,"r") as sfile:
+                    contents = sfile.readlines()
 
-                for line in contents:
-                    for key, value in settings.items():
-                        if line.strip().startswith(f"{key}"):
-                            if value not in line:
-                                new_sssd_conf.append(f"{key} = {value}\n")
-                            break
-                    else:
-                        new_sssd_conf.append(line)
-            # to add missing variables
-            for key,value in settings.items():
-                if f"{key} = {value}\n" not in new_sssd_conf:
-                    new_sssd_conf.append(f"{key} = {value}\n")
+                    for line in contents:
+                        for key, value in settings.items():
+                            if line.strip().startswith(f"{key}"):
+                                if value not in line:
+                                    new_sssd_conf.append(f"{key} = {value}\n")
+                                break
+                        else:
+                            new_sssd_conf.append(line)
+                # to add missing variables
+                for key,value in settings.items():
+                    if f"{key} = {value}\n" not in new_sssd_conf:
+                        new_sssd_conf.append(f"{key} = {value}\n")
 
-            with open("/etc/sssd/sssd.conf","w") as sssd_file:
-                for item in new_sssd_conf:
-                    sssd_file.write(item)
-                
+                with open(sssd_file,"w") as sfile:
+                    for item in new_sssd_conf:
+                        sfile.write(item)
+            else:
+                with open(sssd_file,"w") as sfile:
+                    sfile.write(
+                        """
+[sssd]
+domains = {}
+config_file_version = 2
+services = nss, pam
+
+[domain/{}]
+default_shell = /bin/bash
+ad_server = {}
+krb5_store_password_if_offline = True
+cache_credentials = True
+krb5_realm ={}
+realmd_tags = manages-system joined-with-adcli 
+id_provider = ad
+fallback_homedir = /home/%u@%d
+ad_domain ={}
+use_fully_qualified_names = False
+ldap_id_mapping = True
+access_provider = ad
+ad_gpo_access_control = permissive
+ad_gpo_ignore_unreadable = True
+""".format(domain,domain,domain,domain.upper(),domain)
+                    )
+            subprocess.call(["chmod", "600", sssd_file])   
             subprocess.call(["pam-auth-update", "--enable ", "pardus-pam-config"],env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'}) 
             subprocess.call(["systemctl", "restart ", "sssd"])          
 

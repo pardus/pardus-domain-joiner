@@ -334,6 +334,7 @@
                         <property name="halign">start</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
+                        <property name="group">ou_specific_path_rb</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>

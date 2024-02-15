@@ -45,7 +45,7 @@ def main():
 
     if args.leave:
         subprocess.call(["sudo", "realm", "leave", "-v" ])
-        print(_("Successfully left to the domain."))
+        print(_("Successfully left the domain."))
         print(_("Please restart your computer"))
 
     if args.join:

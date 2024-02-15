@@ -157,7 +157,7 @@ ad_gpo_ignore_unreadable = True
             print(e)
 
     def permit():
-        subprocess.call(["realm","permit","-a"], shell=True)
+        subprocess.call(["realm","permit","-a"])
 
     def leave():
         subprocess.call(["realm", "leave", "-v"])

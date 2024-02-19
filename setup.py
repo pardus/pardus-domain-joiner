@@ -18,7 +18,7 @@ data_files = [
     ("/usr/share/applications/", ["tr.org.pardus.domain-joiner.desktop"]),
     ("/usr/share/pam-configs/", ["pardus-pam-config"]),
     ("/usr/share/locale/tr/LC_MESSAGES/", ["po/tr/LC_MESSAGES/domain-joiner.mo"]),
-    ("/usr/share/pardus/domain-joiner/src", ["src/MainWindow.py", "src/Actions.py","src/Checks.py","src/__version__"]),
+    ("/usr/share/pardus/domain-joiner/src", ["src/MainWindow.py", "src/DomainJoinerCli.py", "src/Actions.py","src/Checks.py","src/__version__"]),
     ("/usr/share/pardus/domain-joiner/ui", ["ui/MainWindow.glade"]),
     ("/usr/share/polkit-1/actions", ["tr.org.pardus.pkexec.domain-joiner.policy"])
 ]
@@ -27,7 +27,7 @@ setup(
     name="domain-joiner",
     version=version,
     packages=find_packages(),
-    scripts=["domain-joiner"],
+    scripts=["domain-joiner","domin-joiner-cli"],
     install_requires=["PyGObject"],
     data_files=data_files,
     author="Büşra ÇAĞLIYAN",

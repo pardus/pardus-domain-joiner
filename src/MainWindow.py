@@ -100,7 +100,7 @@ class MainWindow:
         hostname = stream.read().strip()
         return hostname
 
-    def restart(self):
+    def on_restart_button(self,Widget):
         subprocess.call(["/sbin/reboot"])
 
     def check_realm_list(self):
@@ -113,7 +113,7 @@ class MainWindow:
         self.user = self.user_name_entry.get_text()
         self.passwd = self.password_entry.get_text()
 
-        old_hostname = self.hostname().split()[0]
+        old_hostname = self.hostname().split(".")[0]
         if self.comp != old_hostname:
             self.required_label.set_markup("<span color='red'>{}</span>".format(_("Restart your computer because your hostname has changed!")))
         elif self.comp == "" or self.domain == "" or self.user == "" or self.passwd == "":
@@ -152,7 +152,7 @@ class MainWindow:
             start, end = self.vtetextview.get_buffer().get_bounds()
             self.vtetextview.get_buffer().delete(start,end)
         else:
-            self.restart()
+            self.on_restart_button(Widget)
 
     def on_details_button(self,button):
         self.details_revealer.set_reveal_child(button.get_active())
@@ -260,8 +260,8 @@ class MainWindow:
     def onLeaveProcessExit(self, pid, status):
         print("onLeaveProcessExit - status: {}".format(status))        
         if status == 0:
-            self.main_stack.set_visible_child_name("join_page")
-            self.second_stack.set_visible_child_name("domain_join_page")
+            self.main_stack.set_visible_child_name("end_page")
+            #self.second_stack.set_visible_child_name("domain_join_page")
 
     def startCheckProcess(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,

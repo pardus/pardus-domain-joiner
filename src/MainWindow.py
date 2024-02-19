@@ -113,14 +113,11 @@ class MainWindow:
         self.user = self.user_name_entry.get_text()
         self.passwd = self.password_entry.get_text()
 
-        if (self.comp == ""):
-            self.required_label.set_markup("<span color='red'>{}</span>".format(_("Computer name is required!")))
-        elif (self.domain == ""):
-            self.required_label.set_markup("<span color='red'>{}</span>".format(_("Domain name is required!")))
-        elif (self.user == ""):
-            self.required_label.set_markup("<span color='red'>{}</span>".format(_("User name is required!")))
-        elif (self.passwd == ""):
-            self.required_label.set_markup("<span color='red'>{}</span>".format(_("Password is required!")))
+        old_hostname = self.hostname().split()[0]
+        if self.comp != old_hostname:
+            self.required_label.set_markup("<span color='red'>{}</span>".format(_("Restart your computer because your hostname has changed!")))
+        elif self.comp == "" or self.domain == "" or self.user == "" or self.passwd == "":
+            self.required_label.set_markup("<span color='red'>{}</span>".format(_("All blanks must be filled!")))
         else: 
             self.comp_name_entry.set_text("")
             self.domain_name_entry.set_text("")
@@ -140,7 +137,8 @@ class MainWindow:
             self.message_label.set_text("")
             self.reboot_button.set_sensitive(False)
             try:
-                command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py","join", self.comp, self.domain,self.user,self.passwd, self.ouaddress]
+                command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) 
+                           + "/Actions.py","join", self.comp, self.domain,self.user,self.passwd, self.ouaddress]
                 self.startJoinProcess(command)
             except Exception as e:
                 print(_("Error: domain failed to join realm")) 

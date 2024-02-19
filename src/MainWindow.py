@@ -68,6 +68,8 @@ class MainWindow:
             "ou_specific_path_rb")
         self.ou_specific_entry= self.builder.get_object(
             "ou_specific_path_entry")
+        self.ou_warning_label= self.builder.get_object(
+            "ou_warning_label")
         
         # buttons
         self.reboot_button = self.builder.get_object("reboot_button")
@@ -112,12 +114,15 @@ class MainWindow:
         self.domain = self.domain_name_entry.get_text()
         self.user = self.user_name_entry.get_text()
         self.passwd = self.password_entry.get_text()
+        self.ouaddress == ""
 
         old_hostname = self.hostname().split(".")[0]
         if self.comp != old_hostname:
             self.required_label.set_markup("<span color='red'>{}</span>".format(_("Restart your computer because your hostname has changed!")))
         elif self.comp == "" or self.domain == "" or self.user == "" or self.passwd == "":
             self.required_label.set_markup("<span color='red'>{}</span>".format(_("All blanks must be filled!")))
+        elif self.ou_specific_rb.get_active() and self.ouaddress == "":
+            self.ou_warning_label.set_markup("<span color='red'>{}</span>".format(_("The specific ou path was not entered!")))
         else: 
             self.comp_name_entry.set_text("")
             self.domain_name_entry.set_text("")
@@ -125,13 +130,16 @@ class MainWindow:
             self.password_entry.set_text("")
             self.required_label.set_text("")
             
+            fulldn = ", dc=" + self.domain.replace(".", ", dc=")
             if (self.ou_default_rb.get_active()):
-                fulldn = self.domain.replace(".", ", dc=")
-                self.ouaddress = "cn=Computers, dc="+fulldn
+                self.ouaddress = "cn=Computers" + fulldn
             else:
-                fulldn = self.domain.replace(".", ",dc=")
-                self.ouaddress = self.ou_specific_entry.get_text()+",dc="+fulldn
+                self.ouaddress = self.ou_specific_entry.get_text() + fulldn
+            self.ou_warning_label.set_text("")
 
+            if self.ou_specific_rb.get_active() and self.ouaddress == ",dc="+fulldn:
+                self.ou_warning_label.set_markup("<span color='red'>{}</span>".format(_("The specific ou path was not entered!")))
+            
             self.main_stack.set_visible_child_name("join_page")
             self.second_stack.set_visible_child_name("message_page")
             self.message_label.set_text("")

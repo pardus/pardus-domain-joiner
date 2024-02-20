@@ -49,35 +49,37 @@ def main():
         print(_("Please restart your computer"))
 
     if args.join:
-        # print("please enter other command")
-        if  args.domain or args.computer or args.username:
-                domain_name = str(args.domain)
-                computer_name = str(args.computer)
-                username = str(args.username)
-                ou_location = str(args.organizationalunit)
-                password = str(args.password)
-                if domain_name =="None" or computer_name == "None" or username=="None":
-                    print(_("error: the following arguments are required: --domain/-d, --computer/-c, --username/-u"))
-                else:
-                    if(password == "None"):
+        if domain_name =="None" or computer_name == "None" or username=="None":
+            print(_("Error: The following arguments are required!"))
+            print(_("Please enter other commands:\n"), 
+               _("\t\t [-d/--domain DOMAIN] [-c/--computer COMPUTER]\n"),
+               _("\t\t [-u/--username USERNAME] [--organizationalunit \"ou=Computers\"]\n"),
+               _("\t\t [--password PASSWORD]\n"))
+        else:
+            domain_name = str(args.domain)
+            computer_name = str(args.computer)
+            username = str(args.username)
+            ou_location = str(args.organizationalunit)
+            password = str(args.password)
+            
+            if(password == "None"):
                         domain_password = getpass.getpass(_("Enter the password of domain: "))
-                    else:
+            else:
                         domain_password = password
 
-                    if(ou_location == "None"):
-                        fulldn = domain_name.replace(".",",dc=")
-                        ouaddress = "cn=Computers,dc="+fulldn
-                    else:
-                        fulldn = domain_name.replace(".",",dc=")
-                        ouaddress = ou_location + ",dc="+fulldn
+            fulldn = ", dc=" + domain_name.replace(".",",dc=")
+            if(ou_location == "None"):
+                ouaddress = "cn=Computers" + fulldn
+            else:
+                ouaddress = ou_location + fulldn
+            
+            try:
+                print(_("Joining Domain..."))
+                subprocess.call(["sudo", "python3", "Actions.py","join", computer_name, domain_name, username,domain_password,ouaddress])
+                print(_("Please reboot your computer!"))
+            except Exception as err:
+                print(err)
 
-                    try:
-                        print(_("Joining Domain..."))
-                        subprocess.call(["sudo", "python3", "Actions.py","join", computer_name, domain_name, username,domain_password,ouaddress])
-                        print(_("Please reboot your computer!"))
-                    except Exception as err:
-                        print(err)
-        
 
 if __name__ == "__main__":
     main()

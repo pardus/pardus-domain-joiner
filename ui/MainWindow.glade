@@ -354,6 +354,7 @@
                             <property name="receives-default">False</property>
                             <property name="halign">start</property>
                             <property name="draw-indicator">True</property>
+                            <property name="group">ou_default_path_rb</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -755,8 +756,8 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Your computer has left the domain. 
-&lt;b&gt;Restart the computer.&lt;/b&gt;</property>
+                <property name="label" translatable="yes">Successfully left the domain.
+&lt;b&gt;Please restart your computer&lt;/b&gt;</property>
                 <property name="use-markup">True</property>
                 <property name="justify">center</property>
               </object>

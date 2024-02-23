@@ -75,7 +75,10 @@ def main():
                 print(_("added domain name to /etc/hosts file"))
                      
             result = subprocess.run(["realm", "discover"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-            if result.returncode == 0:
+            if result.returncode != 0:
+                print(_("Not reachable, check your DNS address"), file=sys.stdout)
+                exit()
+            else:
                 output_lines = result.stdout.split('\n')
 
                 if len(output_lines)>0:
@@ -92,7 +95,7 @@ def main():
             password_check = proc.returncode
             if password_check == 1:
                 print(_("Domain username or password check: False"), file=sys.stdout)
-            
+
             # to check and rewrite file /etc/sssd/sssd.conf
             sssd_file = "/etc/sssd/sssd.conf"
             settings = {

@@ -96,7 +96,7 @@ def main():
             if password_check == 1:
                 print(_("Domain username or password check: False"), file=sys.stdout)
             
-            if smb_clicked:
+            if smb_clicked == "True":
                 # Samba Authentication            
                 # rewrite file /etc/samba/smb.conf
                 smb_file = "/etc/samba/smb.conf"

@@ -89,7 +89,7 @@ class MainWindow:
         self.domain_details_label.set_visible(False)
 
         self.id_clicked=False
-        self.smb_check_clicked=False
+        self.smb_check_clicked="False"
         
         # error checking variables when joining the domain
         self.password_check = ""
@@ -127,7 +127,7 @@ class MainWindow:
             self.ou_warning_label.set_markup("<span color='red'>{}</span>".format(_("The specific organizational unit path was not entered!")))
         else: 
             if self.smb_check_button.get_active():
-                self.smb_check_clicked = True
+                self.smb_check_clicked = "True"
             
             self.comp_name_entry.set_text("")
             self.domain_name_entry.set_text("")

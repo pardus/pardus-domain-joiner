@@ -73,6 +73,7 @@ class MainWindow:
         
         # buttons
         self.reboot_button = self.builder.get_object("reboot_button")
+        self.smb_check_button = self.builder.get_object("smb_check_button")
 
         # vte
         self.vtebox = self.builder.get_object("vte_box")
@@ -88,6 +89,7 @@ class MainWindow:
         self.domain_details_label.set_visible(False)
 
         self.id_clicked=False
+        self.smb_check_clicked=False
         
         # error checking variables when joining the domain
         self.password_check = ""
@@ -124,6 +126,9 @@ class MainWindow:
         elif self.ou_specific_rb.get_active() and self.ouaddress == "":
             self.ou_warning_label.set_markup("<span color='red'>{}</span>".format(_("The specific organizational unit path was not entered!")))
         else: 
+            if self.smb_check_button.get_active():
+                self.smb_check_clicked = True
+            
             self.comp_name_entry.set_text("")
             self.domain_name_entry.set_text("")
             self.user_name_entry.set_text("")
@@ -146,19 +151,24 @@ class MainWindow:
             self.reboot_button.set_sensitive(False)
             try:
                 command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) 
-                           + "/Actions.py","join", self.comp, self.domain,self.user,self.passwd, self.ouaddress]
+                           + "/Actions.py","join", self.comp, self.domain,self.user,self.passwd, self.ouaddress,self.smb_check_clicked]
                 self.startJoinProcess(command)
             except Exception as e:
-                print(_("Error: domain failed to join realm")) 
+                print(_("Error: domain failed to join realm"))
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your DNS address")))
+                self.reboot_button.set_sensitive(True)
+                self.reboot_button.set_label(_("Close"))
 
     def on_reboot_button(self,Widget):
-        if self.reboot_button.get_label() == _("Back" ):
+        if self.reboot_button.get_label() == _("Back"):
             hostname = self.hostname()
             hostname = hostname.split(".")
             self.comp_name_entry.set_text(hostname[0]) # just for comp name
             self.second_stack.set_visible_child_name("domain_join_page")
             start, end = self.vtetextview.get_buffer().get_bounds()
             self.vtetextview.get_buffer().delete(start,end)
+        elif self.reboot_button.get_label() == _("Close"):
+            Gtk.main_quit()
         else:
             self.on_restart_button(Widget)
 

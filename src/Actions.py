@@ -18,7 +18,7 @@ def main():
         apt_pkg.pkgsystem_unlock()
         return True
 
-    def join(comp_name,domain,user,passwd,ouaddress):
+    def join(comp_name,domain,user,passwd,ouaddress,smb_clicked):
         try:
             # to update
             subprocess.call(["apt", "update", "-o", "APT::Status-Fd=2"],
@@ -95,6 +95,27 @@ def main():
             password_check = proc.returncode
             if password_check == 1:
                 print(_("Domain username or password check: False"), file=sys.stdout)
+            
+            if smb_clicked:
+                # Samba Authentication            
+                # rewrite file /etc/samba/smb.conf
+                smb_file = "/etc/samba/smb.conf"
+                with open(smb_file, "w") as file:
+                    file.write(
+                        """[global]
+    unix charset = UTF-8
+    workgroup = {}
+    client signing = yes
+    client use spnego = yes
+    dedicated keytab file = /etc/krb5.keytab
+    kerberos method = secrets and keytab
+    realm = {}
+    dns proxy = no
+    map to guest = Bad User
+    log file = /var/log/samba/log.%m
+    max log size = 1000
+    syslog = 0
+    """.format(domain.split(".")[0].upper(),domain))
 
             # to check and rewrite file /etc/sssd/sssd.conf
             sssd_file = "/etc/sssd/sssd.conf"
@@ -168,7 +189,7 @@ ad_gpo_ignore_unreadable = True
     if len(sys.argv) > 1:
         if control_lock():
             if sys.argv[1] == "join":
-                join(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6])
+                join(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7])
                 permit()
             elif sys.argv[1] == "leave":
                 leave()

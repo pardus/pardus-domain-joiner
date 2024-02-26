@@ -18,7 +18,7 @@ def main():
         apt_pkg.pkgsystem_unlock()
         return True
 
-    def join(comp_name,domain,user,passwd,ouaddress,smb_clicked):
+    def join(comp_name,domain,user,passwd,ouaddress,smb_settings):
         try:
             # to update
             subprocess.call(["apt", "update", "-o", "APT::Status-Fd=2"],
@@ -96,7 +96,7 @@ def main():
             if password_check == 1:
                 print(_("Domain username or password check: False"), file=sys.stdout)
             
-            if smb_clicked == "True":
+            if smb_settings == "True":
                 # Samba Authentication            
                 # rewrite file /etc/samba/smb.conf
                 smb_file = "/etc/samba/smb.conf"

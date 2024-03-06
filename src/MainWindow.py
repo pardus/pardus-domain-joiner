@@ -93,6 +93,7 @@ class MainWindow:
         
         # error checking variables when joining the domain
         self.password_check = ""
+        self.domain_check = ""
         self.domain_name_check = ""
 
     def onDestroy(self,Widget):
@@ -207,6 +208,8 @@ class MainWindow:
         self.password_check = "True"
 
         if line.strip()=="Not reachable, check your DNS address":
+            self.domain_check = "False"
+        if line.strip()=="Domain name check: False":
             self.domain_name_check = "False"
         if line.strip() == "Domain username or password check: False":
             self.password_check = "False"
@@ -233,11 +236,14 @@ class MainWindow:
                 command = self.hostname()
                 hostname = self.comp+"."+self.domain
 
-                if self.domain_name_check == "False":
-                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your DNS address")))
+                if self.domain_check == "False":
+                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your DNS address.")))
+                    self.reboot_button.set_label(_("Back"))
+                elif self.domain_name_check == "False":
+                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Domain name is incorrect.")))
                     self.reboot_button.set_label(_("Back"))
                 elif self.password_check == "False":
-                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Your password or username are incorrect.")))
+                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Your password or username is incorrect.")))
                     self.reboot_button.set_label(_("Back"))
                 else:
                     if command == hostname:

@@ -74,25 +74,29 @@ def main():
             else:
                 print(_("added domain name to /etc/hosts file"))
                      
-            result = subprocess.run(["realm", "discover"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-            if result.returncode != 0:
-                print(_("Not reachable, check your DNS address"), file=sys.stdout)
+            try:
+                result = subprocess.check_output(["realm", "discover"]).decode("utf-8")
+                if len(result) > 0:
+                    for line in result.split("\n"):
+                        if line.strip().startswith("domain-name:"):
+                            if line.split(":")[1] == " "+domain:
+                                print("joining the domain...")
+                            else:
+                                print("Domain name check: False")
+                                exit()
+                else:
+                    print(("Not reachable, check your DNS address"), file=sys.stdout)
+                    exit()
+            except subprocess.CalledProcessError as e:
+                print("An error occurred! Exit Code:", e.returncode)
+                print(("Not reachable, check your DNS address"), file=sys.stdout)
                 exit()
-            else:
-                output_lines = result.stdout.split('\n')
-
-                if len(output_lines)>0:
-                    if domain == output_lines[0]:
-                        print(_("joining the domain..."))
-                    else:
-                        print(_("Not reachable, check your DNS address"), file=sys.stdout)
-                        exit()
             
             command = "realm join -v --computer-ou=\""+ouaddress+"\" --user=\""+user+"@"+domain.upper()+"\" "+domain.lower()
-            proc = subprocess.Popen([command],stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
-            proc.communicate(passwd.encode('utf-8'))
+            process = subprocess.Popen([command],stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
+            process.communicate(passwd.encode('utf-8'))
 
-            password_check = proc.returncode
+            password_check = process.returncode
             if password_check == 1:
                 print(_("Domain username or password check: False"), file=sys.stdout)
             
@@ -115,7 +119,7 @@ def main():
     log file = /var/log/samba/log.%m
     max log size = 1000
     syslog = 0
-    """.format(domain.split(".")[0].upper(),domain))
+""".format(domain.split(".")[0].upper(),domain))
 
             # to check and rewrite file /etc/sssd/sssd.conf
             sssd_file = "/etc/sssd/sssd.conf"

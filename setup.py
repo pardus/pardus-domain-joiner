@@ -27,7 +27,7 @@ setup(
     name="domain-joiner",
     version=version,
     packages=find_packages(),
-    scripts=["domain-joiner","domin-joiner-cli"],
+    scripts=["domain-joiner"],
     install_requires=["PyGObject"],
     data_files=data_files,
     author="Büşra ÇAĞLIYAN",

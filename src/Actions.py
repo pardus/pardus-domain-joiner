@@ -80,16 +80,16 @@ def main():
                     for line in result.split("\n"):
                         if line.strip().startswith("domain-name:"):
                             if line.split(":")[1] == " "+domain:
-                                print("joining the domain...")
+                                print(_("joining the domain..."))
                             else:
-                                print("Domain name check: False")
+                                print(_("Domain name check: False"))
                                 exit()
                 else:
-                    print(("Not reachable, check your DNS address"), file=sys.stdout)
+                    print(_("Not reachable, check your DNS address"), file=sys.stdout)
                     exit()
             except subprocess.CalledProcessError as e:
-                print("An error occurred! Exit Code:", e.returncode)
-                print(("Not reachable, check your DNS address"), file=sys.stdout)
+                print(_("An error occurred! Exit Code:"), e.returncode)
+                print(_("Not reachable, check your DNS address"), file=sys.stdout)
                 exit()
             
             command = "realm join -v --computer-ou=\""+ouaddress+"\" --user=\""+user+"@"+domain.upper()+"\" "+domain.lower()

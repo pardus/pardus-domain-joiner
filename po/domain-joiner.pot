@@ -3,182 +3,236 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
 msgid ""
 msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-07 09:19+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: ui/MainWindow.glade:22
+#: MainWindow.glade:22
 msgid "OK"
 msgstr ""
 
-#: src/MainWindow.glade:104
+#: MainWindow.glade:111
 msgid "Your computer is not part of a domain."
 msgstr ""
 
-#: ui/MainWindow.glade:135
+#: MainWindow.glade:143
 msgid "Computer Name:"
 msgstr ""
 
-#: ui/MainWindow.glade:173
+#: MainWindow.glade:181
 msgid "Domain Name:"
 msgstr ""
 
-#: ui/MainWindow.glade:211
+#: MainWindow.glade:219
 msgid "User Name:"
 msgstr ""
 
-#: ui/MainWindow.glade:249
+#: MainWindow.glade:257
 msgid "Password:"
 msgstr ""
 
-#: ui/MainWindow.glade:317 
+#: MainWindow.glade:288
+msgid "set samba settings automatically"
+msgstr ""
+
+#: MainWindow.glade:341
 msgid "Organizational Unit"
 msgstr ""
 
-#: ui/MainWindow.glade:330
+#: MainWindow.glade:354
 msgid "Default Container (Computers)"
 msgstr ""
 
-#: ui/MainWindow.glade:350
+#: MainWindow.glade:374
 msgid "Specific OU Path:"
 msgstr ""
 
-#: ui/MainWindow.glade:367 ui/MainWindow.glade:368
+#: MainWindow.glade:392
+msgid "e.g. cn=Computers, dc=afad, dc=local"
+msgstr ""
+
+#: MainWindow.glade:393
 msgid "e.g. cn=Computers, dc=domain, dc=name"
 msgstr ""
 
-#: ui/MainWindow.glade:392
+#: MainWindow.glade:428
 msgid "Join Domain"
 msgstr ""
 
-#: ui/MainWindow.glade:425
+#: MainWindow.glade:462
 msgid "Messages"
 msgstr ""
 
-#: ui/MainWindow.glade:485
+#: MainWindow.glade:524
 msgid "Reboot"
 msgstr ""
 
-#: ui/MainWindow.glade:549
+#: MainWindow.glade:589
 msgid "is in the domain."
 msgstr ""
 
-#: ui/MainWindow.glade:594
+#: MainWindow.glade:634
 msgid "details"
 msgstr ""
 
-#: ui/MainWindow.glade:642
-msgid "Leave Button"
+#: MainWindow.glade:682
+msgid "Leave Domain"
 msgstr ""
 
-#: ui/MainWindow.glade:689
+#: MainWindow.glade:729
 msgid "e.g. user name"
 msgstr ""
 
-#: ui/MainWindow.glade:700
+#: MainWindow.glade:740
 msgid "ID Check"
 msgstr ""
 
-#: src/MainWindow.py:34
-msgid "Domain Settings"
-msgstr ""
-
-#: src/MainWindow.py:81
-msgid "Information"
-msgstr ""
-
-#: src/MainWindow.py:117
-msgid "Computer name is required!"
-msgstr ""
-
-#: src/MainWindow.py:119
-msgid "Domain name is required!"
-msgstr ""
-
-#: src/MainWindow.py:121
-msgid "User name is required!"
-msgstr ""
-
-#: src/MainWindow.py:123
-msgid "Password is required!"
-msgstr ""
-
-#: src/MainWindow.py:146 src/MainWindow.py:240
-msgid "Error: domain failed to join realm"
-msgstr ""
-
-#: src/MainWindow.py:225 src/MainWindow.py:228 src/MainWindow.py:235 src/MainWindow.py:149
-msgid "Back"
-msgstr ""
-
-#: src/Actions.py:85 src/MainWindow.py:224
-msgid "Not reachable, check your DNS address"
-msgstr ""
-
-#: src/MainWindow.py:227
-msgid "Your password or username are incorrect."
-msgstr ""
-
-#: src/MainWindow.py:231 src/Actions.py:130 
-msgid "This computer has been successfully added to the domain."
-msgstr ""
-
-#: src/MainWindow.py:234
-msgid "Unrecognize domain"
-msgstr ""
-
-#: src/MainWindow.py:237
-msgid "You don't enter the password. Try again!"
-msgstr ""
-
-#: src/MainWindow.py:310
+#: MainWindow.glade:786
 msgid ""
-"\nYour computer <b>"
+"Successfully left the domain.\n"
+"<b>Please restart your computer</b>"
 msgstr ""
 
-#: src/MainWindow.py:326
-msgid "</b> user not found. Try again!"
+#: MainWindow.glade:799
+msgid "Restart"
 msgstr ""
 
-#: src/MainWindow.py:328
-msgid "No such user"
-msgstr ""
-
-#: src/MainWindow.py:330
-msgid "Error!"
-msgstr ""
-
-#: src/Actions.py:36 
+#: Actions.py:36
 msgid "Packages are installed."
 msgstr ""
 
-#: src/Actions.py:38 
+#: Actions.py:38
 msgid "Packages are not installed."
 msgstr ""
 
-#: src/Actions.py:45 
+#: Actions.py:45
 msgid "checking /etc/hostname file..."
 msgstr ""
 
-#: src/Actions.py:47 
+#: Actions.py:47
 msgid "added domain name to /etc/hostname file"
 msgstr ""
 
-#: src/Actions.py:52,  src/Actions.py:73
+#: Actions.py:52 Actions.py:73
 msgid "done"
 msgstr ""
 
-#: src/Actions.py:58 
+#: Actions.py:58
 msgid "checking /etc/hosts file..."
 msgstr ""
 
-#: src/Actions.py:75 
+#: Actions.py:75
 msgid "added domain name to /etc/hosts file"
 msgstr ""
 
-#: src/Actions.py:83 
+#: Actions.py:83
 msgid "joining the domain..."
 msgstr ""
 
-#: src/Actions.py:94
+#: Actions.py:85
+msgid "Domain name check: False"
+msgstr ""
+
+#: Actions.py:88 Actions.py:92 MainWindow.py:159
+msgid "Not reachable, check your DNS address"
+msgstr ""
+
+#: Actions.py:91
+msgid "An error occurred! Exit Code:"
+msgstr ""
+
+#: Actions.py:101
 msgid "Domain username or password check: False"
+msgstr ""
+
+#: Actions.py:183 MainWindow.py:250
+msgid "This computer has been successfully added to the domain."
+msgstr ""
+
+#: MainWindow.py:34
+msgid "Domain Settings"
+msgstr ""
+
+#: MainWindow.py:84
+msgid "Information"
+msgstr ""
+
+#: MainWindow.py:124
+msgid "Restart your computer because your hostname has changed!"
+msgstr ""
+
+#: MainWindow.py:126
+msgid "All blanks must be filled!"
+msgstr ""
+
+#: MainWindow.py:128
+msgid "The specific organizational unit path was not entered!"
+msgstr ""
+
+#: MainWindow.py:147
+msgid "The specific ou path was not entered!"
+msgstr ""
+
+#: MainWindow.py:158 MainWindow.py:259
+msgid "Error: domain failed to join realm"
+msgstr ""
+
+#: MainWindow.py:161 MainWindow.py:171 MainWindow.py:241 MainWindow.py:260
+msgid "Close"
+msgstr ""
+
+#: MainWindow.py:164 MainWindow.py:244 MainWindow.py:247 MainWindow.py:254
+msgid "Back"
+msgstr ""
+
+#: MainWindow.py:232
+msgid "Reboot"
+msgstr ""
+
+#: MainWindow.py:240
+msgid "Not reachable, check your DNS address."
+msgstr ""
+
+#: MainWindow.py:243
+msgid "Domain name is incorrect."
+msgstr ""
+
+#: MainWindow.py:246
+msgid "Your password or username is incorrect."
+msgstr ""
+
+#: MainWindow.py:253
+msgid "Unrecognize domain"
+msgstr ""
+
+#: MainWindow.py:256
+msgid "You don't enter the password. Try again!"
+msgstr ""
+
+#: MainWindow.py:331
+msgid ""
+"\n"
+"Your computer <b>"
+msgstr ""
+
+#: MainWindow.py:347
+msgid "</b> user not found. Try again!"
+msgstr ""
+
+#: MainWindow.py:349
+msgid "No such user"
+msgstr ""
+
+#: MainWindow.py:351
+msgid "Error!"
 msgstr ""

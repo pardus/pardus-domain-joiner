@@ -233,30 +233,32 @@ class MainWindow:
         self.vtetextview.scroll_to_iter(self.vtetextview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
 
         if status == 0:
-                command = self.hostname()
-                hostname = self.comp+"."+self.domain
+            command = self.hostname()
+            hostname = self.comp+"."+self.domain
 
-                if self.domain_check == "False":
-                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your DNS address.")))
-                    self.reboot_button.set_label(_("Back"))
-                elif self.domain_name_check == "False":
-                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Domain name is incorrect.")))
-                    self.reboot_button.set_label(_("Back"))
-                elif self.password_check == "False":
-                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Your password or username is incorrect.")))
-                    self.reboot_button.set_label(_("Back"))
+            if self.domain_check == "False":
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your DNS address.")))
+                self.reboot_button.set_label(_("Close"))
+            elif self.domain_name_check == "False":
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Domain name is incorrect.")))
+                self.reboot_button.set_label(_("Back"))
+            elif self.password_check == "False":
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Your password or username is incorrect.")))
+                self.reboot_button.set_label(_("Back"))
+            else:
+                if command == hostname:
+                    self.message_label.set_markup("<span color='green'>{}</span>".format(_("This computer has been successfully added to the domain.")))
+                    self.status = True
                 else:
-                    if command == hostname:
-                        self.message_label.set_markup("<span color='green'>{}</span>".format(_("This computer has been successfully added to the domain.")))
-                        self.status = True
-                    else:
-                        self.message_label.set_markup("<span color='red'>{}</span>".format(_("Unrecognize domain")))
-                        self.reboot_button.set_label(_("Back"))
+                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Unrecognize domain")))
+                    self.reboot_button.set_label(_("Back"))
         elif status == 32256:
-                self.message_label.set_markup("<span color='red'>{}</span>".format(_("You don't enter the password. Try again!")))
+            self.message_label.set_markup("<span color='red'>{}</span>".format(_("You don't enter the password. Try again!")))
         else:
-                print("onVteDone status: {}".format(status))
-                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Error: domain failed to join realm")))
+            print("onVteDone status: {}".format(status))
+            self.message_label.set_markup("<span color='red'>{}</span>".format(_("Error: domain failed to join realm")))
+            self.reboot_button.set_label(_("Close"))
+
     
     def startLeaveProcess(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,

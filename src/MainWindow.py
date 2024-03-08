@@ -83,6 +83,10 @@ class MainWindow:
         self.id_dialog = self.builder.get_object("id_dialog")
         self.id_dialog.set_title(_("Information"))
 
+        # hostname dialog
+        self.hostname_dialog = self.builder.get_object("hostname_dialog")
+        self.hostname_dialog.set_title(_("Warning"))
+
         # domain detail
         self.details_revealer = self.builder.get_object("details_revealer")  
         self.details_revealer.set_reveal_child(False)
@@ -122,6 +126,8 @@ class MainWindow:
         old_hostname = self.hostname().split(".")[0]
         if self.comp != old_hostname:
             self.required_label.set_markup("<span color='red'>{}</span>".format(_("Your hostname has changed!\nEdit hosts-hostname files and restart your computer.")))
+            self.hostname_dialog.run()
+            self.required_label.set_text("")
         elif self.comp == "" or self.domain == "" or self.user == "" or self.passwd == "":
             self.required_label.set_markup("<span color='red'>{}</span>".format(_("All blanks must be filled!")))
         elif self.ou_specific_rb.get_active() and self.ouaddress == "":
@@ -188,10 +194,18 @@ class MainWindow:
 
     def on_dialog_close(self, widget):
         self.id_dialog.hide()
+        self.hostname_dialog.hide()
 
     def on_window_delete_event(self, widget, event):
         self.id_dialog.hide()
+        self.hostname_dialog.hide()
         return True
+    
+    def on_dialog_accept_and_reboot(self, widget):
+        command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) 
+                           + "/Actions.py","host", self.comp, self.domain]
+        pid = self.startCheckHostnameProcess(command)
+        
     
     def startJoinProcess(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
@@ -358,6 +372,36 @@ class MainWindow:
                 self.id_label.set_text(_("Error!")) 
             self.id_dialog.run()
 
+    def startCheckHostnameProcess(self, params):
+        pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
+                                                      standard_output=True, standard_error=True)
+        GLib.io_add_watch(GLib.IOChannel(stdout), GLib.IO_IN | GLib.IO_HUP, self.onCheckHostnameProcessStdout)
+        GLib.io_add_watch(GLib.IOChannel(stderr), GLib.IO_IN | GLib.IO_HUP, self.onCheckHostnameProcessStderr)
+        GLib.child_watch_add(GLib.PRIORITY_DEFAULT_IDLE, pid, self.onCheckHostnameProcessExit)
+
+    def onCheckHostnameProcessStdout(self, source, condition):
+        if condition == GLib.IO_HUP:
+            return False
+        line = source.readline()
+        print(line)
+        return True
+
+    def onCheckHostnameProcessStderr(self, source, condition):
+        if condition == GLib.IO_HUP:
+            return False
+        line = source.readline()
+        print(line)
+        return True
+    
+    def onCheckHostnameProcessExit(self, pid, status):
+        print("onCheckHostnameProcessExit - status: {}".format(status))
+        self.required_label.set_text("")
+
+        if status == 0:
+            subprocess.call(["/sbin/reboot"])
+            self.required_label.set_markup("")
+        else:
+            self.required_label.set_markup("<span color='red'>{}</span>".format(_("Your hostname has changed!\nEdit hosts-hostname files and restart your computer.")))
         
 if __name__ == "__main__":
     app = MainWindow()

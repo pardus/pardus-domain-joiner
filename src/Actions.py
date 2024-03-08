@@ -28,28 +28,9 @@ def main():
             return False
         apt_pkg.pkgsystem_unlock()
         return True
-
-    def join(comp_name,domain,user,passwd,ouaddress,smb_settings):
-        try:
-            # to update
-            subprocess.call(["apt", "update", "-o", "APT::Status-Fd=2"],
-                            env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
-
-            # to install packages
-            packagelist = ["krb5-user", "samba", "sssd", "libsss-sudo",
-                        "realmd", "packagekit", "adcli", "sssd-tools", "cifs-utils", "smbclient"]
-            for p in  packagelist:
-                subprocess.call(["apt", "install", p, "-yq", "-o", "APT::Status-Fd=2"],
-                            env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
-            
-            # to join domain
-            if os.path.isfile("/etc/krb5.conf"):
-                print(_("Packages are installed."))
-            else:
-                print(_("Packages are not installed."))
-                exit()
-
-            # to check file /etc/hostname 
+    
+    def host(comp_name,domain):
+        # to check file /etc/hostname 
             hostname_file = "/etc/hostname"
             with open(hostname_file, 'r') as file:
                 current_hostname = file.readline().strip()
@@ -84,6 +65,28 @@ def main():
                 print(_("done"))
             else:
                 print(_("added domain name to /etc/hosts file"))
+            
+    def join(comp_name,domain,user,passwd,ouaddress,smb_settings):
+        try:
+            # to update
+            subprocess.call(["apt", "update", "-o", "APT::Status-Fd=2"],
+                            env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
+
+            # to install packages
+            packagelist = ["krb5-user", "samba", "sssd", "libsss-sudo",
+                        "realmd", "packagekit", "adcli", "sssd-tools", "cifs-utils", "smbclient"]
+            for p in  packagelist:
+                subprocess.call(["apt", "install", p, "-yq", "-o", "APT::Status-Fd=2"],
+                            env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
+            
+            # to join domain
+            if os.path.isfile("/etc/krb5.conf"):
+                print(_("Packages are installed."))
+            else:
+                print(_("Packages are not installed."))
+                exit()
+
+            host(comp_name, domain)
                      
             try:
                 result = subprocess.check_output(["realm", "discover"]).decode("utf-8")
@@ -206,6 +209,8 @@ ad_gpo_ignore_unreadable = True
             if sys.argv[1] == "join":
                 join(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7])
                 permit()
+            elif sys.argv[1] == "host":
+                host(sys.argv[2],sys.argv[3])
             elif sys.argv[1] == "leave":
                 leave()
         else:

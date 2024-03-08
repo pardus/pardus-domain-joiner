@@ -121,7 +121,7 @@ class MainWindow:
 
         old_hostname = self.hostname().split(".")[0]
         if self.comp != old_hostname:
-            self.required_label.set_markup("<span color='red'>{}</span>".format(_("Restart your computer because your hostname has changed!")))
+            self.required_label.set_markup("<span color='red'>{}</span>".format(_("Your hostname has changed!\nEdit hosts-hostname files and restart your computer.")))
         elif self.comp == "" or self.domain == "" or self.user == "" or self.passwd == "":
             self.required_label.set_markup("<span color='red'>{}</span>".format(_("All blanks must be filled!")))
         elif self.ou_specific_rb.get_active() and self.ouaddress == "":
@@ -156,7 +156,7 @@ class MainWindow:
                 self.startJoinProcess(command)
             except Exception as e:
                 print(_("Error: domain failed to join realm"))
-                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your DNS address")))
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your DNS address.")))
                 self.reboot_button.set_sensitive(True)
                 self.reboot_button.set_label(_("Close"))
 
@@ -210,7 +210,7 @@ class MainWindow:
         self.domain_check = "True"
         self.domain_name_check = "True"
 
-        if line.strip()=="Not reachable, check your DNS address":
+        if line.strip()=="Not reachable, check your DNS address.":
             self.domain_check = "False"
         if line.strip()=="Domain name check: False":
             self.domain_name_check = "False"
@@ -261,6 +261,10 @@ class MainWindow:
             print("onVteDone status: {}".format(status))
             self.message_label.set_markup("<span color='red'>{}</span>".format(_("Error: domain failed to join realm")))
             self.reboot_button.set_label(_("Close"))
+
+        self.password_check = ""
+        self.domain_check = ""
+        self.domain_name_check = ""
 
     
     def startLeaveProcess(self, params):

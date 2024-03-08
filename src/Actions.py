@@ -5,7 +5,18 @@ import os
 import sys
 import subprocess
 import apt_pkg
+import locale
 from locale import gettext as _
+
+# Translation Constants:
+APPNAME = "domain-joiner"
+TRANSLATIONS_PATH = "/usr/share/locale"
+SYSTEM_LANGUAGE = os.environ.get("LANG")
+
+# Translation functions:
+locale.bindtextdomain(APPNAME, TRANSLATIONS_PATH)
+locale.textdomain(APPNAME)
+locale.setlocale(locale.LC_ALL, SYSTEM_LANGUAGE)
 
 def main():
 
@@ -85,11 +96,11 @@ def main():
                                 print(_("Domain name check: False"))
                                 exit()
                 else:
-                    print(_("Not reachable, check your DNS address"), file=sys.stdout)
+                    print(_("Not reachable, check your DNS address."), file=sys.stdout)
                     exit()
             except subprocess.CalledProcessError as e:
                 print(_("An error occurred! Exit Code:"), e.returncode)
-                print(_("Not reachable, check your DNS address"), file=sys.stdout)
+                print(_("Not reachable, check your DNS address."), file=sys.stdout)
                 exit()
             
             command = "realm join -v --computer-ou=\""+ouaddress+"\" --user=\""+user+"@"+domain.upper()+"\" "+domain.lower()

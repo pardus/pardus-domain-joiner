@@ -73,7 +73,7 @@ msgstr ""
 msgid "Messages"
 msgstr ""
 
-#: MainWindow.glade:524
+#: MainWindow.glade:524 MainWindow.py:232
 msgid "Reboot"
 msgstr ""
 
@@ -143,8 +143,8 @@ msgstr ""
 msgid "Domain name check: False"
 msgstr ""
 
-#: Actions.py:88 Actions.py:92 MainWindow.py:159
-msgid "Not reachable, check your DNS address"
+#: Actions.py:88 Actions.py:92 MainWindow.py:159 MainWindow.py:240
+msgid "Not reachable, check your DNS address."
 msgstr ""
 
 #: Actions.py:91
@@ -168,7 +168,7 @@ msgid "Information"
 msgstr ""
 
 #: MainWindow.py:124
-msgid "Restart your computer because your hostname has changed!"
+msgid "Your hostname has changed!\nEdit hosts-hostname files and restart your computer."
 msgstr ""
 
 #: MainWindow.py:126
@@ -193,14 +193,6 @@ msgstr ""
 
 #: MainWindow.py:164 MainWindow.py:244 MainWindow.py:247 MainWindow.py:254
 msgid "Back"
-msgstr ""
-
-#: MainWindow.py:232
-msgid "Reboot"
-msgstr ""
-
-#: MainWindow.py:240
-msgid "Not reachable, check your DNS address."
 msgstr ""
 
 #: MainWindow.py:243

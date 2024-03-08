@@ -370,8 +370,11 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="visibility">False</property>
-                                <property name="invisible-char">●</property>
+                                <property name="invisible-char">*</property>
+                                <property name="secondary-icon-name">view-conceal-symbolic</property>
                                 <property name="input-purpose">password</property>
+                                <signal name="icon-press" handler="set_password_icon_press" swapped="no"/>
+                                <signal name="icon-release" handler="set_password_icon_release" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>

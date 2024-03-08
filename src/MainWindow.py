@@ -103,6 +103,14 @@ class MainWindow:
     def onDestroy(self,Widget):
         Gtk.main_quit()
 
+    def set_password_icon_press(self, Widget, icon_pos, event):
+        self.password_entry.set_visibility(True)
+        self.password_entry.set_icon_from_icon_name(1,'view-reveal-symbolic')
+
+    def set_password_icon_release(self, Widget, icon_pos, event):
+        self.password_entry.set_visibility(False)
+        self.password_entry.set_icon_from_icon_name(1,'view-conceal-symbolic')
+
     # pulls with the computer name and domain name
     def hostname(self):
         stream = os.popen('hostname') 
@@ -125,7 +133,7 @@ class MainWindow:
 
         old_hostname = self.hostname().split(".")[0]
         if self.comp != old_hostname:
-            self.required_label.set_markup("<span color='red'>{}</span>".format(_("Your hostname has changed!\nEdit hosts-hostname files and restart your computer.")))
+            self.required_label.set_markup("<span color='red'>{}</span>".format(_("Your hostname has changed!")))
             self.hostname_dialog.run()
             self.required_label.set_text("")
         elif self.comp == "" or self.domain == "" or self.user == "" or self.passwd == "":
@@ -401,7 +409,7 @@ class MainWindow:
             subprocess.call(["/sbin/reboot"])
             self.required_label.set_markup("")
         else:
-            self.required_label.set_markup("<span color='red'>{}</span>".format(_("Your hostname has changed!\nEdit hosts-hostname files and restart your computer.")))
+            self.required_label.set_markup("<span color='red'>{}</span>".format(_("Your hostname has changed!")))
         
 if __name__ == "__main__":
     app = MainWindow()

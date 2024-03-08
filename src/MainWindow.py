@@ -205,7 +205,10 @@ class MainWindow:
             return False
         line = source.readline()
         print(line)
+        
         self.password_check = "True"
+        self.domain_check = "True"
+        self.domain_name_check = "True"
 
         if line.strip()=="Not reachable, check your DNS address":
             self.domain_check = "False"

@@ -231,8 +231,6 @@
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">center</property>
-                        <property name="margin-top">5</property>
-                        <property name="margin-bottom">5</property>
                         <property name="orientation">vertical</property>
                         <property name="spacing">8</property>
                         <child>
@@ -437,8 +435,6 @@
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">center</property>
-                        <property name="margin-top">5</property>
-                        <property name="margin-bottom">5</property>
                         <property name="orientation">vertical</property>
                         <property name="homogeneous">True</property>
                         <child>
@@ -447,7 +443,6 @@
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
                             <property name="margin-left">5</property>
-                            <property name="margin-start">5</property>
                             <property name="label" translatable="yes">Organizational Unit</property>
                             <attributes>
                               <attribute name="weight" value="bold"/>
@@ -587,12 +582,16 @@
                           <object class="GtkScrolledWindow">
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
-                            <property name="shadow-type">in</property>
                             <child>
                               <object class="GtkTextView" id="vte_text_view">
                                 <property name="visible">True</property>
                                 <property name="can-focus">True</property>
                                 <property name="editable">False</property>
+                                <property name="left-margin">3</property>
+                                <property name="right-margin">3</property>
+                                <property name="top-margin">3</property>
+                                <property name="bottom-margin">3</property>
+                                <property name="input-purpose">terminal</property>
                               </object>
                             </child>
                           </object>

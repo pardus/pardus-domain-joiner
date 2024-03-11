@@ -17,31 +17,37 @@ locale.setlocale(locale.LC_ALL, SYSTEM_LANGUAGE)
 
 def join(computer_name,domain_name,username,password,ou_location,smb_settings):
     if domain_name =="None" or computer_name == "None" or username=="None":
-            print(_("Error: The following arguments are required!"))
-            print(_("Please enter other commands:\n"), 
+        print(_("Error: The following arguments are required!"))
+        print(_("Please enter other commands:\n"), 
                _("\t\t [-d/--domain DOMAIN] [-c/--computer COMPUTER]\n"),
                _("\t\t [-u/--username USERNAME] [--organizationalunit \"ou=Computers\"]\n"),
                _("\t\t [--password PASSWORD]\n"))
-    else:
-            
-            
-            if(password == "None"):
-                domain_password = getpass.getpass(_("Enter the password of domain: "))
-            else:
-                domain_password = password
+    else:   
+        if(password == "None"):
+            domain_password = getpass.getpass(_("Enter the password of domain: "))
+        else:
+            domain_password = password
 
-            fulldn = ", dc=" + domain_name.replace(".",",dc=")
-            if(ou_location == "None"):
-                ouaddress = "cn=Computers" + fulldn
-            else:
-                ouaddress = ou_location + fulldn
+        fulldn = ", dc=" + domain_name.replace(".",",dc=")
+        if(ou_location == "None"):
+            ouaddress = "cn=Computers" + fulldn
+        else:
+            ouaddress = ou_location + fulldn
                         
-            try:
-                print(_("Joining Domain..."))
-                subprocess.call(["sudo", "python3", "Actions.py","join", computer_name, domain_name, username,domain_password,ouaddress,smb_settings])
-                # print(_("Please reboot your computer!"))
-            except Exception as err:
-                print(err)
+        try:
+            print(_("Joining Domain..."))
+            subprocess.call(["sudo", "python3", "Actions.py","join", computer_name, domain_name, username,domain_password,ouaddress,smb_settings])
+        except Exception as err:
+            print(err)
+
+def check_domain_list(domain):  
+    output = subprocess.check_output(["sudo", "realm", "list"], stderr=subprocess.STDOUT, text=True)
+
+    if domain in output:
+        return True
+    else:
+        return False
+
 
 def main():
     parser = argparse.ArgumentParser(description=
@@ -53,12 +59,12 @@ def main():
     parser.add_argument('-ou', '--organizationalunit', action="store",metavar='"ou=Computers"', help=_('organizational unit'))
     parser.add_argument('-p', '--password', action="store", help=_('password of domain user'))
     parser.add_argument('-s', '--samba-settings', action="store_true", help=_('adds samba settings when joining your computer to the domain, it is used with join'))
-    parser.add_argument('-l', '--leave', action="store_const",const="leave", help=_('to leaves domain'))
-    parser.add_argument('--list', action="store_const",const="list", help=_('lists domain Information'))
+    parser.add_argument('-l', '--leave', action="store_const",const="leave", help=_('to leave the domain'))
+    parser.add_argument('--list', action="store_const",const="list", help=_('lists domain information'))
     parser.add_argument("-id", '--idcheck', action="store", help=_('shows the users ids in the domain'))
 
     args = parser.parse_args()
-    # print(args.join)
+    
     domain_name = str(args.domain)
     computer_name = str(args.computer)
     username = str(args.username)
@@ -66,37 +72,31 @@ def main():
     password = str(args.password)
     idname = str(args.idcheck)
     
-    
     if args.idcheck:
         subprocess.call(["id", idname])
 
     if args.list:
         subprocess.call(["sudo", "realm", "list"])
-
+        
     if args.leave:
         subprocess.call(["sudo", "realm", "leave", "-v" ])
         print(_("Successfully left the domain."))
         print(_("Please restart your computer"))
 
-    if args.join and not args.samba_settings:
+    if args.join:
         domain_name = str(args.domain)
         computer_name = str(args.computer)
         username = str(args.username)
         ou_location = str(args.organizationalunit)
         password = str(args.password)
-        smb_settings = "False"
 
-        join(computer_name,domain_name,username,password,ou_location,smb_settings)
+        smb_settings = "True" if args.samba_settings else "False"
 
-    if args.join and args.samba_settings:
-        domain_name = str(args.domain)
-        computer_name = str(args.computer)
-        username = str(args.username)
-        ou_location = str(args.organizationalunit)
-        password = str(args.password)
-        smb_settings = "True"
-
-        join(computer_name,domain_name,username,password,ou_location,smb_settings)
+        cl = check_domain_list(domain_name)
+        if cl:
+            print(_("Already joined to this domain"))
+        else:
+            join(computer_name,domain_name,username,password,ou_location,smb_settings)
 
 if __name__ == "__main__":
     main()

@@ -19,7 +19,6 @@ locale.textdomain(APPNAME)
 locale.setlocale(locale.LC_ALL, SYSTEM_LANGUAGE)
 
 def main():
-
     def control_lock():
         apt_pkg.init_system()
         try:
@@ -29,83 +28,87 @@ def main():
         apt_pkg.pkgsystem_unlock()
         return True
     
-    def host(comp_name,domain):
-        # to check file /etc/hostname 
-            hostname_file = "/etc/hostname"
-            with open(hostname_file, 'r') as file:
-                current_hostname = file.readline().strip()
-                print(_("checking /etc/hostname file..."))
-                if comp_name+"."+domain not in current_hostname:
-                    print(_("added domain name to /etc/hostname file"))
-                    with open(hostname_file, 'w') as file:
-                        new_hostname = "{}.{}".format(comp_name,domain)
-                        file.write(new_hostname)
-                else:
-                    print(_("done"))
-                        
-            # to check file /etc/hosts 
-            hosts_file = "/etc/hosts"
-            with open(hosts_file, 'r') as file:
-                lines = file.readlines()
-            print(_("checking /etc/hosts file..."))
-            new_hosts_file = []
-            domain_exists = False 
+    def update():
+        subprocess.call(["apt", "update", "-o", "APT::Status-Fd=2"],
+                        env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
 
-            for line in lines:
-                if line.strip().startswith("127.0.1.1"):
-                    if f"{comp_name}.{domain}" not in line:
-                        line = f"127.0.1.1 {comp_name}.{domain} {comp_name}\n"
-                    domain_exists = True 
-                new_hosts_file.append(line)
-            if not domain_exists:
-                new_hosts_file.append(f"127.0.1.1 {comp_name}.{domain} {comp_name}\n")
-            with open(hosts_file, 'w') as file:
-                file.writelines(new_hosts_file)
-            if domain_exists:
-                print(_("done"))
+    def install(package_list):
+        for package in  package_list:
+            subprocess.call(["apt", "install", package, "-yq", "-o", "APT::Status-Fd=2"],
+                        env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
+
+    def update_hostname_file(comp_name,domain):
+        # to check file /etc/hostname 
+        hostname_file = "/etc/hostname"
+        with open(hostname_file, 'r') as file:
+            current_hostname = file.readline().strip()
+            print(_("checking /etc/hostname file..."))
+            if comp_name+"."+domain not in current_hostname:
+                print(_("added domain name to /etc/hostname file"))
+                with open(hostname_file, 'w') as file:
+                    new_hostname = "{}.{}".format(comp_name,domain)
+                    file.write(new_hostname)
             else:
-                print(_("added domain name to /etc/hosts file"))
+                print(_("done"))
+
+    def update_hosts_file(comp_name,domain):
+        # to check file /etc/hosts 
+        hosts_file = "/etc/hosts"
+        with open(hosts_file, 'r') as file:
+            lines = file.readlines()
+        print(_("checking /etc/hosts file..."))
+        new_hosts_file = []
+        domain_exists = False 
+
+        for line in lines:
+            if line.strip().startswith("127.0.1.1"):
+                if f"{comp_name}.{domain}" not in line:
+                    line = f"127.0.1.1 {comp_name}.{domain} {comp_name}\n"
+                domain_exists = True 
+            new_hosts_file.append(line)
+
+        if not domain_exists:
+            new_hosts_file.append(f"127.0.1.1 {comp_name}.{domain} {comp_name}\n")
+
+        with open(hosts_file, 'w') as file:
+            file.writelines(new_hosts_file)
+
+        if domain_exists:
+            print(_("done"))
+        else:
+            print(_("added domain name to /etc/hosts file"))
             
     def join(comp_name,domain,user,passwd,ouaddress,smb_settings):
         try:
             # to update
-            subprocess.call(["apt", "update", "-o", "APT::Status-Fd=2"],
-                            env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
+            update()
 
             # to install packages
-            packagelist = ["krb5-user", "samba", "sssd", "libsss-sudo",
-                        "realmd", "packagekit", "adcli", "sssd-tools", "cifs-utils", "smbclient"]
-            for p in  packagelist:
-                subprocess.call(["apt", "install", p, "-yq", "-o", "APT::Status-Fd=2"],
-                            env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'})
-            
-            # to join domain
-            if os.path.isfile("/etc/krb5.conf"):
-                print(_("Packages are installed."))
-            else:
-                print(_("Packages are not installed."))
-                exit()
+            package_list = ["krb5-user", "samba", "sssd", "libsss-sudo", 
+                       "realmd", "packagekit", "adcli", "sssd-tools", "cifs-utils", "smbclient"]
+            install(package_list)
 
-            host(comp_name, domain)
-                     
-            try:
-                result = subprocess.check_output(["realm", "discover"]).decode("utf-8")
-                if len(result) > 0:
-                    for line in result.split("\n"):
-                        if line.strip().startswith("domain-name:"):
-                            if line.split(":")[1] == " "+domain:
-                                print(_("joining the domain..."))
-                            else:
-                                print(_("Domain name check: False"))
-                                exit()
-                else:
-                    print(_("Not reachable, check your DNS address."), file=sys.stdout)
-                    exit()
-            except subprocess.CalledProcessError as e:
-                print(_("An error occurred! Exit Code:"), e.returncode)
-                print(_("Not reachable, check your DNS address."), file=sys.stdout)
-                exit()
+            # to join domain
+            if not os.path.isfile("/etc/krb5.conf"):
+                print(_("Packages are not installed."))
+                sys.exit(1)
+
+            update_hostname_file(comp_name, domain)
+            update_hosts_file(comp_name, domain)
             
+            print(_("joining the domain..."))
+            result = subprocess.check_output(["realm", "discover"]).decode("utf-8")
+            
+            if not result:
+                print(_("Not reachable, check your DNS address."), file=sys.stdout)
+                sys.exit(1)
+                
+            for line in result.split("\n"):
+                if line.strip().startswith("domain-name:"):
+                    if line.split(":")[1] != " "+domain:
+                        print(_("Domain name check: False"), file=sys.stdout)
+                        sys.exit(1)
+
             command = "realm join -v --computer-ou=\""+ouaddress+"\" --user=\""+user+"@"+domain.upper()+"\" "+domain.lower()
             process = subprocess.Popen([command],stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)
             process.communicate(passwd.encode('utf-8'))
@@ -190,8 +193,9 @@ ad_gpo_ignore_unreadable = True
 """.format(domain,domain,domain,domain.upper(),domain)
                     )
             subprocess.call(["chmod", "600", sssd_file])   
-            subprocess.call(["pam-auth-update", "--enable ", "pardus-pam-config"],env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'}) 
-            subprocess.call(["systemctl", "restart ", "sssd"])          
+            subprocess.call(["pam-auth-update", "--enable ", "pardus-pam-config"],
+                            env={**os.environ, 'DEBIAN_FRONTEND': 'noninteractive'}) 
+            subprocess.call(["systemctl", "restart ", "sssd"])
 
             if password_check==0:
                 print(_("This computer has been successfully added to the domain."))
@@ -210,7 +214,8 @@ ad_gpo_ignore_unreadable = True
                 join(sys.argv[2],sys.argv[3],sys.argv[4],sys.argv[5],sys.argv[6],sys.argv[7])
                 permit()
             elif sys.argv[1] == "host":
-                host(sys.argv[2],sys.argv[3])
+                update_hostname_file(sys.argv[2],sys.argv[3])
+                update_hosts_file(sys.argv[2],sys.argv[3])
             elif sys.argv[1] == "leave":
                 leave()
         else:

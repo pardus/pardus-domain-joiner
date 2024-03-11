@@ -92,17 +92,27 @@ class MainWindow:
         self.details_revealer.set_reveal_child(False)
         self.domain_details_label.set_visible(False)
 
+        # used to control button clicks 
         self.id_clicked=False
         self.smb_check_clicked="False"
         
-        # error checking variables when joining the domain
+        # checking for errors when joining the domain
         self.password_check = ""
         self.domain_check = ""
         self.domain_name_check = ""
 
     def onDestroy(self,Widget):
         Gtk.main_quit()
+        
+    def on_dialog_close(self, widget):
+        self.id_dialog.hide()
+        self.hostname_dialog.hide()
 
+    def on_window_delete_event(self, widget, event):
+        self.id_dialog.hide()
+        self.hostname_dialog.hide()
+        return True
+    
     def set_password_icon_press(self, Widget, icon_pos, event):
         self.password_entry.set_visibility(True)
         self.password_entry.set_icon_from_icon_name(1,'view-reveal-symbolic')
@@ -111,18 +121,36 @@ class MainWindow:
         self.password_entry.set_visibility(False)
         self.password_entry.set_icon_from_icon_name(1,'view-conceal-symbolic')
 
+    def on_restart_button(self,Widget):
+        subprocess.call(["/sbin/reboot"])
+    
+    def on_details_button(self,button):
+        self.details_revealer.set_reveal_child(button.get_active())
+
+    def check_realm_list(self):
+        cmd = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Checks.py", "list"]
+        self.expid = self.startCheckProcess(cmd)
+        
+    def on_id_check_button(self,Widget):
+        self.id_name = self.id_entry.get_text()
+        self.id_clicked = True
+        command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Checks.py", "id_check", self.id_name]
+        pid = self.startCheckProcess(command)
+
+    def on_leave_button(self,Widget):
+        command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "leave"]
+        pid = self.startLeaveProcess(command)
+
+    def on_dialog_accept_and_reboot(self, widget):
+        command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) 
+                           + "/Actions.py","host", self.comp, self.domain]
+        pid = self.startCheckHostnameProcess(command)
+
     # pulls with the computer name and domain name
     def hostname(self):
         stream = os.popen('hostname') 
         hostname = stream.read().strip()
         return hostname
-
-    def on_restart_button(self,Widget):
-        subprocess.call(["/sbin/reboot"])
-
-    def check_realm_list(self):
-        cmd = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Checks.py", "list"]
-        self.expid = self.startCheckProcess(cmd)
 
     def on_join_button(self,Widget):
         self.comp = self.comp_name_entry.get_text()
@@ -187,34 +215,6 @@ class MainWindow:
         else:
             self.on_restart_button(Widget)
 
-    def on_details_button(self,button):
-        self.details_revealer.set_reveal_child(button.get_active())
-    
-    def on_leave_button(self,Widget):
-        command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "leave"]
-        pid = self.startLeaveProcess(command)
-
-    def on_id_check_button(self,Widget):
-        self.id_name = self.id_entry.get_text()
-        self.id_clicked = True
-        command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Checks.py", "id_check", self.id_name]
-        pid = self.startCheckProcess(command)
-
-    def on_dialog_close(self, widget):
-        self.id_dialog.hide()
-        self.hostname_dialog.hide()
-
-    def on_window_delete_event(self, widget, event):
-        self.id_dialog.hide()
-        self.hostname_dialog.hide()
-        return True
-    
-    def on_dialog_accept_and_reboot(self, widget):
-        command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) 
-                           + "/Actions.py","host", self.comp, self.domain]
-        pid = self.startCheckHostnameProcess(command)
-        
-    
     def startJoinProcess(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
                                                       standard_output=True, standard_error=True)
@@ -284,40 +284,6 @@ class MainWindow:
             self.message_label.set_markup("<span color='red'>{}</span>".format(_("Error: domain failed to join realm")))
             self.reboot_button.set_label(_("Close"))
 
-        self.password_check = ""
-        self.domain_check = ""
-        self.domain_name_check = ""
-
-    
-    def startLeaveProcess(self, params):
-        pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
-                                                      standard_output=True, standard_error=True)
-        GLib.io_add_watch(GLib.IOChannel(stdout), GLib.IO_IN | GLib.IO_HUP, self.onLeaveProcessStdout)
-        GLib.io_add_watch(GLib.IOChannel(stderr), GLib.IO_IN | GLib.IO_HUP, self.onLeaveProcessStderr)
-        GLib.child_watch_add(GLib.PRIORITY_DEFAULT_IDLE, pid, self.onLeaveProcessExit)
-
-        return pid
-    
-    def onLeaveProcessStdout(self, source, condition):
-        if condition == GLib.IO_HUP:
-            return False
-        line = source.readline()
-        print(line)
-        return True
-    
-    def onLeaveProcessStderr(self, source, condition):
-        if condition == GLib.IO_HUP:
-            return False
-        line = source.readline()
-        print(line)
-        return True
-    
-    def onLeaveProcessExit(self, pid, status):
-        print("onLeaveProcessExit - status: {}".format(status))        
-        if status == 0:
-            self.main_stack.set_visible_child_name("end_page")
-            #self.second_stack.set_visible_child_name("domain_join_page")
-
     def startCheckProcess(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
                                                       standard_output=True, standard_error=True)
@@ -380,6 +346,34 @@ class MainWindow:
                 self.id_label.set_text(_("Error!")) 
             self.id_dialog.run()
 
+    def startLeaveProcess(self, params):
+        pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
+                                                      standard_output=True, standard_error=True)
+        GLib.io_add_watch(GLib.IOChannel(stdout), GLib.IO_IN | GLib.IO_HUP, self.onLeaveProcessStdout)
+        GLib.io_add_watch(GLib.IOChannel(stderr), GLib.IO_IN | GLib.IO_HUP, self.onLeaveProcessStderr)
+        GLib.child_watch_add(GLib.PRIORITY_DEFAULT_IDLE, pid, self.onLeaveProcessExit)
+
+        return pid
+    
+    def onLeaveProcessStdout(self, source, condition):
+        if condition == GLib.IO_HUP:
+            return False
+        line = source.readline()
+        print(line)
+        return True
+    
+    def onLeaveProcessStderr(self, source, condition):
+        if condition == GLib.IO_HUP:
+            return False
+        line = source.readline()
+        print(line)
+        return True
+    
+    def onLeaveProcessExit(self, pid, status):
+        print("onLeaveProcessExit - status: {}".format(status))        
+        if status == 0:
+            self.main_stack.set_visible_child_name("end_page")
+
     def startCheckHostnameProcess(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
                                                       standard_output=True, standard_error=True)
@@ -403,11 +397,9 @@ class MainWindow:
     
     def onCheckHostnameProcessExit(self, pid, status):
         print("onCheckHostnameProcessExit - status: {}".format(status))
-        self.required_label.set_text("")
 
         if status == 0:
             subprocess.call(["/sbin/reboot"])
-            self.required_label.set_markup("")
         else:
             self.required_label.set_markup("<span color='red'>{}</span>".format(_("Your hostname has changed!")))
         

@@ -1,24 +1,48 @@
-## Domain Joiner
+# Domain Joiner
 
-Domain Joiner is GUI app that joins users to the domain.
+**Domain Joiner** is a graphical user interface (GUI) application developed in Python3 and GTK+ 3. It facilitates the process of joining users to a domain or removing users from the domain.
 
-### Dependencies
+## Dependencies
 
-This application is developed based on Python3 and GTK+ 3.
+Make sure to install the following dependencies before running the application:
 
-`python3-gi, gir1.2-glib-2.0, gir1.2-gtk-3.0, gir1.2-vte-2.91, python3-apt`
+- `python3-gi`
+- `gir1.2-glib-2.0`
+- `gir1.2-gtk-3.0`
+- `gir1.2-vte-2.91`
+- `python3-apt`
+- `realmd`
+- `krb5-user`
+- `samba`
+- `sssd`
+- `libsss-sudo`
+- `packagekit`
+- `adcli`
+- `sssd-tools`
+- `cifs-utils`
+- `smbclient`
 
-### Screenshots
+## Installation
 
-![join page](screenshots/joinpage.png)
+1. Install the required packages using your package manager.
 
-![message page](screenshots/messagepage.png)
+2. Clone the repository:
 
-![leave page](screenshots/leavepage.png)
+   ```bash
+   git clone https://git.pardus.net.tr/busra.cagliyan/domain-joiner
 
-![leave page 2](screenshots/leavepage2.png)
+3. Run the program:
+    
+    * GUI 
+      ```bash
+      sudo python MainWindow.py
+      ```
+    
+    * CLI
+      ```bash
+      sudo python DomainJoinerCLI.py -h
+      ```
+    
+## Installation
 
-![id page](screenshots/idpage.png)
-
-
-
+Screenshots of the application will be provided in the repository.

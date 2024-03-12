@@ -227,16 +227,12 @@ class MainWindow:
             return False
         line = source.readline()
         print(line)
-        
-        self.password_check = "True"
-        self.domain_check = "True"
-        self.domain_name_check = "True"
 
-        if line.strip()=="Not reachable, check your DNS address.":
+        if line.strip()==_("Not reachable, check your DNS address."):
             self.domain_check = "False"
-        if line.strip()=="Domain name check: False":
+        if line.strip()==_("Domain name check: False"):
             self.domain_name_check = "False"
-        if line.strip() == "Domain username or password check: False":
+        if line.strip() == _("Domain username or password check: False"):
             self.password_check = "False"
         self.vtetextview.get_buffer().insert(self.vtetextview.get_buffer().get_end_iter(), line)
         self.vtetextview.scroll_to_iter(self.vtetextview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
@@ -257,32 +253,31 @@ class MainWindow:
         self.reboot_button.set_label(_("Reboot"))
         self.vtetextview.scroll_to_iter(self.vtetextview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
 
-        if status == 0:
+        if status == 32256:
+            self.message_label.set_markup("<span color='red'>{}</span>".format(_("You don't enter the password. Try again!")))
+        else:
             command = self.hostname()
             hostname = self.comp+"."+self.domain
 
             if self.domain_check == "False":
                 self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your DNS address.")))
                 self.reboot_button.set_label(_("Close"))
+                self.domain_check = ""
             elif self.domain_name_check == "False":
                 self.message_label.set_markup("<span color='red'>{}</span>".format(_("Domain name is incorrect.")))
                 self.reboot_button.set_label(_("Back"))
+                self.domain_name_check = ""
             elif self.password_check == "False":
                 self.message_label.set_markup("<span color='red'>{}</span>".format(_("Your password or username is incorrect.")))
                 self.reboot_button.set_label(_("Back"))
+                self.password_check = ""
             else:
                 if command == hostname:
                     self.message_label.set_markup("<span color='green'>{}</span>".format(_("This computer has been successfully added to the domain.")))
                     self.status = True
                 else:
-                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Unrecognize domain")))
-                    self.reboot_button.set_label(_("Back"))
-        elif status == 32256:
-            self.message_label.set_markup("<span color='red'>{}</span>".format(_("You don't enter the password. Try again!")))
-        else:
-            print("onVteDone status: {}".format(status))
-            self.message_label.set_markup("<span color='red'>{}</span>".format(_("Error: domain failed to join realm")))
-            self.reboot_button.set_label(_("Close"))
+                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Error: domain failed to join realm")))
+                    self.reboot_button.set_label(_("Close"))
 
     def startCheckProcess(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,

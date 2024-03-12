@@ -96,18 +96,21 @@ def main():
             update_hostname_file(comp_name, domain)
             update_hosts_file(comp_name, domain)
             
-            print(_("joining the domain..."))
-            result = subprocess.check_output(["realm", "discover"]).decode("utf-8")
-            
-            if not result:
+            try:
+                result = subprocess.check_output(["realm", "discover"]).decode("utf-8")
+
+                for line in result.split("\n"):
+                    if line.strip().startswith("domain-name:"):
+                        if line.split(":")[1] == " "+domain:
+                            print(_("joining the domain..."))
+                        else:
+                            print(_("Domain name check: False"))
+                            sys.exit(1)
+
+            except subprocess.CalledProcessError as e:
+                print(_("An error occurred! Exit Code:"), e.returncode)
                 print(_("Not reachable, check your DNS address."), file=sys.stdout)
                 sys.exit(1)
-                
-            for line in result.split("\n"):
-                if line.strip().startswith("domain-name:"):
-                    if line.split(":")[1] != " "+domain:
-                        print(_("Domain name check: False"), file=sys.stdout)
-                        sys.exit(1)
 
             command = "realm join -v --computer-ou=\""+ouaddress+"\" --user=\""+user+"@"+domain.upper()+"\" "+domain.lower()
             process = subprocess.Popen([command],stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True)

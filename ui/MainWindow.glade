@@ -161,6 +161,7 @@
     <property name="resizable">False</property>
     <property name="default-width">250</property>
     <property name="default-height">350</property>
+    <property name="icon">../data/pardus-domain-joiner.svg</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>

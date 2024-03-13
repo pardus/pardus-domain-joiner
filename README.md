@@ -30,6 +30,7 @@ Make sure to install the following dependencies before running the application:
 
    ```bash
    git clone https://git.pardus.net.tr/busra.cagliyan/domain-joiner
+   ```
 
 3. Run the program:
     

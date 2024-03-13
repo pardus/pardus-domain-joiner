@@ -155,3 +155,6 @@ cython_debug/
 *.idea
 
 .pybuild/
+
+.deb/
+*.deb

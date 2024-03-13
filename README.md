@@ -43,6 +43,6 @@ Make sure to install the following dependencies before running the application:
       sudo python DomainJoinerCLI.py -h
       ```
     
-## Installation
+## Screenshots
 
 Screenshots of the application will be provided in the repository.

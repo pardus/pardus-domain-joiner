@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-07 09:19+0300\n"
+"POT-Creation-Date: 2024-03-13 14:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,214 +17,310 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: MainWindow.glade:22
-msgid "OK"
-msgstr ""
-
-#: MainWindow.glade:111
-msgid "Your computer is not part of a domain."
-msgstr ""
-
-#: MainWindow.glade:143
-msgid "Computer Name:"
-msgstr ""
-
-#: MainWindow.glade:181
-msgid "Domain Name:"
-msgstr ""
-
-#: MainWindow.glade:219
-msgid "User Name:"
-msgstr ""
-
-#: MainWindow.glade:257
-msgid "Password:"
-msgstr ""
-
-#: MainWindow.glade:288
-msgid "set samba settings automatically"
-msgstr ""
-
-#: MainWindow.glade:341
-msgid "Organizational Unit"
-msgstr ""
-
-#: MainWindow.glade:354
-msgid "Default Container (Computers)"
-msgstr ""
-
-#: MainWindow.glade:374
-msgid "Specific OU Path:"
-msgstr ""
-
-#: MainWindow.glade:392
-msgid "e.g. cn=Computers, dc=afad, dc=local"
-msgstr ""
-
-#: MainWindow.glade:393
-msgid "e.g. cn=Computers, dc=domain, dc=name"
-msgstr ""
-
-#: MainWindow.glade:428
-msgid "Join Domain"
-msgstr ""
-
-#: MainWindow.glade:462
-msgid "Messages"
-msgstr ""
-
-#: MainWindow.glade:524 MainWindow.py:232
-msgid "Reboot"
-msgstr ""
-
-#: MainWindow.glade:589
-msgid "is in the domain."
-msgstr ""
-
-#: MainWindow.glade:634
-msgid "details"
-msgstr ""
-
-#: MainWindow.glade:682
-msgid "Leave Domain"
-msgstr ""
-
-#: MainWindow.glade:729
-msgid "e.g. user name"
-msgstr ""
-
-#: MainWindow.glade:740
-msgid "ID Check"
-msgstr ""
-
-#: MainWindow.glade:786
-msgid ""
-"Successfully left the domain.\n"
-"<b>Please restart your computer</b>"
-msgstr ""
-
-#: MainWindow.glade:799
-msgid "Restart"
-msgstr ""
-
-#: Actions.py:36
-msgid "Packages are installed."
-msgstr ""
-
-#: Actions.py:38
-msgid "Packages are not installed."
-msgstr ""
-
-#: Actions.py:45
+#: src/Actions.py:45
 msgid "checking /etc/hostname file..."
 msgstr ""
 
-#: Actions.py:47
+#: src/Actions.py:47
 msgid "added domain name to /etc/hostname file"
 msgstr ""
 
-#: Actions.py:52 Actions.py:73
+#: src/Actions.py:52 src/Actions.py:77
 msgid "done"
 msgstr ""
 
-#: Actions.py:58
+#: src/Actions.py:59
 msgid "checking /etc/hosts file..."
 msgstr ""
 
-#: Actions.py:75
+#: src/Actions.py:79
 msgid "added domain name to /etc/hosts file"
 msgstr ""
 
-#: Actions.py:83
+#: src/Actions.py:93
+msgid "Packages are not installed."
+msgstr ""
+
+#: src/Actions.py:105
 msgid "joining the domain..."
 msgstr ""
 
-#: Actions.py:85
+#: src/Actions.py:107 src/MainWindow.py:233
 msgid "Domain name check: False"
 msgstr ""
 
-#: Actions.py:88 Actions.py:92 MainWindow.py:159 MainWindow.py:240
-msgid "Not reachable, check your DNS address."
-msgstr ""
-
-#: Actions.py:91
+#: src/Actions.py:111
 msgid "An error occurred! Exit Code:"
 msgstr ""
 
-#: Actions.py:101
+#: src/Actions.py:112 src/MainWindow.py:201 src/MainWindow.py:231
+#: src/MainWindow.py:263
+msgid "Not reachable, check your DNS address."
+msgstr ""
+
+#: src/Actions.py:121 src/MainWindow.py:235
 msgid "Domain username or password check: False"
 msgstr ""
 
-#: Actions.py:183 MainWindow.py:250
+#: src/Actions.py:204 src/MainWindow.py:276
 msgid "This computer has been successfully added to the domain."
 msgstr ""
 
-#: MainWindow.py:34
+#: src/DomainJoinerCli.py:20
+msgid "Error: The following arguments are required!"
+msgstr ""
+
+#: src/DomainJoinerCli.py:21
+msgid "Please enter other commands:\n"
+msgstr ""
+
+#: src/DomainJoinerCli.py:22
+msgid "\t\t [-d/--domain DOMAIN] [-c/--computer COMPUTER]\n"
+msgstr ""
+
+#: src/DomainJoinerCli.py:23
+msgid "\t\t [-u/--username USERNAME] [--organizationalunit \"ou=Computers\"]\n"
+msgstr ""
+
+#: src/DomainJoinerCli.py:24
+msgid "\t\t [--password PASSWORD]\n"
+msgstr ""
+
+#: src/DomainJoinerCli.py:27
+msgid "Enter the password of domain: "
+msgstr ""
+
+#: src/DomainJoinerCli.py:38
+msgid "Joining Domain..."
+msgstr ""
+
+#: src/DomainJoinerCli.py:54
+msgid "This app is simple domain joiner CLI application."
+msgstr ""
+
+#: src/DomainJoinerCli.py:56
+msgid "joins your computer to the domain"
+msgstr ""
+
+#: src/DomainJoinerCli.py:57
+msgid "domain name"
+msgstr ""
+
+#: src/DomainJoinerCli.py:58
+msgid "computer name"
+msgstr ""
+
+#: src/DomainJoinerCli.py:59
+msgid "domain user name"
+msgstr ""
+
+#: src/DomainJoinerCli.py:60
+msgid "organizational unit"
+msgstr ""
+
+#: src/DomainJoinerCli.py:61
+msgid "password of domain user"
+msgstr ""
+
+#: src/DomainJoinerCli.py:62
+msgid ""
+"adds samba settings when joining your computer to the domain, it is used "
+"with join"
+msgstr ""
+
+#: src/DomainJoinerCli.py:63
+msgid "to leave the domain"
+msgstr ""
+
+#: src/DomainJoinerCli.py:64
+msgid "lists domain information"
+msgstr ""
+
+#: src/DomainJoinerCli.py:65
+msgid "shows the users ids in the domain"
+msgstr ""
+
+#: src/DomainJoinerCli.py:84
+msgid "Successfully left the domain."
+msgstr ""
+
+#: src/DomainJoinerCli.py:85
+msgid "Please restart your computer"
+msgstr ""
+
+#: src/DomainJoinerCli.py:98
+msgid "Already joined to this domain"
+msgstr ""
+
+#: src/MainWindow.py:34
 msgid "Domain Settings"
 msgstr ""
 
-#: MainWindow.py:84
+#: src/MainWindow.py:84
 msgid "Information"
 msgstr ""
 
-#: MainWindow.py:124
-msgid "Your hostname has changed!\nEdit hosts-hostname files and restart your computer."
+#: src/MainWindow.py:88
+msgid "Warning"
 msgstr ""
 
-#: MainWindow.py:126
+#: src/MainWindow.py:164 src/MainWindow.py:399 ui/MainWindow.glade:75
+msgid "Your hostname has changed!"
+msgstr ""
+
+#: src/MainWindow.py:168
 msgid "All blanks must be filled!"
 msgstr ""
 
-#: MainWindow.py:128
+#: src/MainWindow.py:170
 msgid "The specific organizational unit path was not entered!"
 msgstr ""
 
-#: MainWindow.py:147
+#: src/MainWindow.py:189
 msgid "The specific ou path was not entered!"
 msgstr ""
 
-#: MainWindow.py:158 MainWindow.py:259
+#: src/MainWindow.py:200 src/MainWindow.py:279
 msgid "Error: domain failed to join realm"
 msgstr ""
 
-#: MainWindow.py:161 MainWindow.py:171 MainWindow.py:241 MainWindow.py:260
+#: src/MainWindow.py:203 src/MainWindow.py:213 src/MainWindow.py:264
+#: src/MainWindow.py:280
 msgid "Close"
 msgstr ""
 
-#: MainWindow.py:164 MainWindow.py:244 MainWindow.py:247 MainWindow.py:254
+#: src/MainWindow.py:206 src/MainWindow.py:268 src/MainWindow.py:272
 msgid "Back"
 msgstr ""
 
-#: MainWindow.py:243
-msgid "Domain name is incorrect."
+#: src/MainWindow.py:253 ui/MainWindow.glade:633
+msgid "Reboot"
 msgstr ""
 
-#: MainWindow.py:246
-msgid "Your password or username is incorrect."
-msgstr ""
-
-#: MainWindow.py:253
-msgid "Unrecognize domain"
-msgstr ""
-
-#: MainWindow.py:256
+#: src/MainWindow.py:257
 msgid "You don't enter the password. Try again!"
 msgstr ""
 
-#: MainWindow.py:331
+#: src/MainWindow.py:267
+msgid "Domain name is incorrect."
+msgstr ""
+
+#: src/MainWindow.py:271
+msgid "Your password or username is incorrect."
+msgstr ""
+
+#: src/MainWindow.py:321
 msgid ""
 "\n"
 "Your computer <b>"
 msgstr ""
 
-#: MainWindow.py:347
+#: src/MainWindow.py:337
 msgid "</b> user not found. Try again!"
 msgstr ""
 
-#: MainWindow.py:349
+#: src/MainWindow.py:339
 msgid "No such user"
 msgstr ""
 
-#: MainWindow.py:351
+#: src/MainWindow.py:341
 msgid "Error!"
+msgstr ""
+
+#: ui/MainWindow.glade:24
+msgid "Accept & Reboot"
+msgstr ""
+
+#: ui/MainWindow.glade:42
+msgid "Cancel"
+msgstr ""
+
+#: ui/MainWindow.glade:97
+msgid "You must restart your computer to change your hostname."
+msgstr ""
+
+#: ui/MainWindow.glade:125
+msgid "OK"
+msgstr ""
+
+#: ui/MainWindow.glade:218
+msgid "Your computer is not part of a domain."
+msgstr ""
+
+#: ui/MainWindow.glade:248
+msgid "Computer Name:"
+msgstr ""
+
+#: ui/MainWindow.glade:286
+msgid "Domain Name:"
+msgstr ""
+
+#: ui/MainWindow.glade:324
+msgid "User Name:"
+msgstr ""
+
+#: ui/MainWindow.glade:362
+msgid "Password:"
+msgstr ""
+
+#: ui/MainWindow.glade:396
+msgid "set samba settings automatically"
+msgstr ""
+
+#: ui/MainWindow.glade:446
+msgid "Organizational Unit"
+msgstr ""
+
+#: ui/MainWindow.glade:459
+msgid "Default Container (Computers)"
+msgstr ""
+
+#: ui/MainWindow.glade:479
+msgid "Specific OU Path:"
+msgstr ""
+
+#: ui/MainWindow.glade:497
+msgid "e.g. cn=Computers, dc=afad, dc=local"
+msgstr ""
+
+#: ui/MainWindow.glade:498
+msgid "e.g. cn=Computers, dc=domain, dc=name"
+msgstr ""
+
+#: ui/MainWindow.glade:533
+msgid "Join Domain"
+msgstr ""
+
+#: ui/MainWindow.glade:567
+msgid "Messages"
+msgstr ""
+
+#: ui/MainWindow.glade:698
+msgid "is in the domain."
+msgstr ""
+
+#: ui/MainWindow.glade:743
+msgid "details"
+msgstr ""
+
+#: ui/MainWindow.glade:791
+msgid "Leave Domain"
+msgstr ""
+
+#: ui/MainWindow.glade:838
+msgid "e.g. user name"
+msgstr ""
+
+#: ui/MainWindow.glade:849
+msgid "ID Check"
+msgstr ""
+
+#: ui/MainWindow.glade:895
+msgid ""
+"Successfully left the domain.\n"
+"<b>Please restart your computer</b>"
+msgstr ""
+
+#: ui/MainWindow.glade:908
+msgid "Restart"
 msgstr ""

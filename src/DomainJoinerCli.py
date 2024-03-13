@@ -50,8 +50,9 @@ def check_domain_list(domain):
 
 
 def main():
-    parser = argparse.ArgumentParser(description=
-                                 "This app is simple domain joiner CLI application.")
+    parser = argparse.ArgumentParser(
+        description=_("This application is a simple CLI application that joins your computer to the domain or leaves them from the domain.")
+        )
     parser.add_argument('-j', '--join', action="store_true", help=_('joins your computer to the domain'))
     parser.add_argument('-d', '--domain', action="store", help=_('domain name'))
     parser.add_argument('-c', '--computer', action="store", help=_('computer name'))
@@ -100,4 +101,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

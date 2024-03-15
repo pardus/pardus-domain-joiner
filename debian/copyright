@@ -1,10 +1,11 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: domain-joiner
-Source: https://www.pardus.org.tr
+Upstream-Contact: Büşra ÇAĞLIYAN <busra.cagliyan@pardus.org.tr>
+Source: https://github.com/pardus/
 
 
 Files: *
-Copyright: 2023 Büşra ÇAĞLIYAN <busra.cagliyan@pardus.org.tr>
+Copyright: 2024, Pardus <dev@pardus.org.tr>
 License: GPL-3.0+
 
 License: GPL-3.0+

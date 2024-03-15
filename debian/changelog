@@ -1,5 +1,5 @@
-domain-joiner (1.0) stable; urgency=medium
+domain-joiner (1.0) unstable; urgency=medium
 
   * first commit
   
- -- Büşra ÇAĞLIYAN <busra.cagliyan@pardus.org.tr>  Thu, 26 Oct 2023 13:52:56 +0300
+ -- Büşra ÇAĞLIYAN <busra.cagliyan@pardus.org.tr>  Thu, 15 Mar 2024 13:52:56 +0300

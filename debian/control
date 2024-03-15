@@ -25,4 +25,4 @@ Depends: python3 (>=3.5),
 	 cifs-utils, 
 	 smbclient
 Description: Domain Joiner 
-  UI application that helps to joins or leaves your computer to the domain
+  This application is a simple ui/cli application that joins your computer to the domain or leaves it from the domain.

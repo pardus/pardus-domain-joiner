@@ -95,7 +95,7 @@ msgid "Joining Domain..."
 msgstr "Etki Alanına Katılıyor..."
 
 #: src/DomainJoinerCli.py:54
-msgid "This application is a simple CLI application that joins your computer to the domain or leaves them from the domain."
+msgid "This application is a simple CLI application that joins your computer to the domain or leaves it from the domain."
 msgstr "Bu uygulama, bilgisayarınızı etki alanına dahil eden ya da onları etki alanından ayıran basit bir CLI uygulamasıdır."
 
 #: src/DomainJoinerCli.py:56

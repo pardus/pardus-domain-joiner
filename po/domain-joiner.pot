@@ -95,7 +95,7 @@ msgid "Joining Domain..."
 msgstr ""
 
 #: src/DomainJoinerCli.py:54
-msgid "This app is simple domain joiner CLI application."
+msgid "This application is a simple CLI application that joins your computer to the domain or leaves it from the domain."
 msgstr ""
 
 #: src/DomainJoinerCli.py:56

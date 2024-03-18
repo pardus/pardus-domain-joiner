@@ -46,4 +46,34 @@ Make sure to install the following dependencies before running the application:
     
 ## Screenshots
 
-Screenshots of the application will be provided in the repository.
+**Domain Join Page**
+
+![join page](screenshots/join_page.png)
+
+This screen displays the steps required to join your computer to a domain.
+
+**Error Message Page**
+
+![message page 1](screenshots/error_message_page.png)
+
+This screen appears while joining the domain and contains an error message if an error is encountered.
+
+**Domain Information Pages**
+
+![message page 2](screenshots/message_page2.png)
+![message page 3](screenshots/message_page3.png)
+
+These screen appears information about the domain if successfully join the domain
+
+**User Information Page**
+
+![id page](screenshots/id_page.png)
+
+This screen displays user information.
+
+**Leave Domain Page**
+
+![leave page](screenshots/leave_page.png)
+
+This screen appears when the computer leaves the domain, prompting you to restart the computer.
+

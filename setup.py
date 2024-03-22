@@ -5,8 +5,6 @@ import os
 import subprocess
 
 from setuptools import setup, find_packages
-
-
  	
 def create_mo_files():
     podir = "po"
@@ -20,7 +18,6 @@ def create_mo_files():
             mo.append(("/usr/share/locale/" + po.split(".po")[0] + "/LC_MESSAGES",
                        ["po/" + po.split(".po")[0] + "/LC_MESSAGES/domain-joiner.mo"]))
     return mo
-
 
 changelog = 'debian/changelog'
 if os.path.exists(changelog):

@@ -6,9 +6,9 @@ from locale import gettext as _
 import subprocess
 
 # translation constants:
-APPNAME =  "domain-joiner-cli"
-TRANSLATIONS_PATH =  "/usr/share/locale"
-SYSTEM_LANGUAGE =  os.environ.get("LANG")
+APPNAME = "domain-joiner"
+TRANSLATIONS_PATH = "/usr/share/locale"
+SYSTEM_LANGUAGE = os.environ.get("LANG")
 
 # Translation functions:
 locale.bindtextdomain(APPNAME, TRANSLATIONS_PATH)

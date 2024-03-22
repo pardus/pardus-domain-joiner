@@ -22,7 +22,7 @@ def join(computer_name,domain_name,username,password,ou_location,smb_settings):
                _("\t\t [-d/--domain DOMAIN] [-c/--computer COMPUTER]\n"),
                _("\t\t [-u/--username USERNAME] [--organizationalunit \"ou=Computers\"]\n"),
                _("\t\t [--password PASSWORD]\n"))
-    else:   
+    else:
         if(password == "None"):
             domain_password = getpass.getpass(_("Enter the password of domain: "))
         else:
@@ -63,6 +63,7 @@ def main():
     parser.add_argument('-l', '--leave', action="store_const",const="leave", help=_('to leave the domain'))
     parser.add_argument('--list', action="store_const",const="list", help=_('lists domain information'))
     parser.add_argument("-id", '--idcheck', action="store", help=_('shows the users ids in the domain'))
+    parser.add_argument("-dis", '--discover', action="store_const", const="discover", help=_('discovers whether the domain is reachable or not'))
 
     args = parser.parse_args()
     
@@ -75,6 +76,9 @@ def main():
     
     if args.idcheck:
         subprocess.call(["id", idname])
+
+    if args.discover:
+        subprocess.call(["sudo", "realm", "discover"])
 
     if args.list:
         subprocess.call(["sudo", "realm", "list"])

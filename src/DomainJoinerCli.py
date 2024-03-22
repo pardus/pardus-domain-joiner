@@ -36,7 +36,7 @@ def join(computer_name,domain_name,username,password,ou_location,smb_settings):
                         
         try:
             print(_("Joining Domain..."))
-            subprocess.call(["sudo", "python3", "Actions.py","join", computer_name, domain_name, username,domain_password,ouaddress,smb_settings])
+            subprocess.call(["sudo", "python3", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py","join", computer_name, domain_name, username,domain_password,ouaddress,smb_settings])
         except Exception as err:
             print(err)
 

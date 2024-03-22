@@ -140,15 +140,19 @@ msgstr "etki alanı bilgilerini listeler"
 msgid "shows the users ids in the domain"
 msgstr "etki alanındaki kullanıcıların kimliklerini gösterir"
 
-#: src/DomainJoinerCli.py:84
+#: ../src/DomainJoinerCli.py:66
+msgid "discovers whether the domain is reachable or not"
+msgstr "etki alanı adının ulaşılabilir olup olmadığını keşfeder"
+
+#: src/DomainJoinerCli.py:88
 msgid "Successfully left the domain."
 msgstr "Etki alanından başarıyla ayrıldı."
 
-#: src/DomainJoinerCli.py:85
+#: src/DomainJoinerCli.py:89
 msgid "Please restart your computer"
 msgstr "Lütfen bilgisayarınızı yeniden başlatın"
 
-#: src/DomainJoinerCli.py:98
+#: src/DomainJoinerCli.py:102
 msgid "Already joined to this domain"
 msgstr "Bu alana zaten katıldınız"
 

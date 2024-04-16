@@ -1,6 +1,7 @@
 import argparse
 import getpass
 import os
+import sys
 import locale
 from locale import gettext as _
 import subprocess
@@ -53,6 +54,7 @@ def main():
     parser = argparse.ArgumentParser(
         description=_("This application is a simple CLI application that joins your computer to the domain or leaves it from the domain.")
         )
+    
     parser.add_argument('-j', '--join', action="store_true", help=_('joins your computer to the domain'))
     parser.add_argument('-d', '--domain', action="store", help=_('domain name'))
     parser.add_argument('-c', '--computer', action="store", help=_('computer name'))
@@ -74,34 +76,39 @@ def main():
     password = str(args.password)
     idname = str(args.idcheck)
     
-    if args.idcheck:
-        subprocess.call(["id", idname])
+    if len(sys.argv)==1:
+        parser.print_help(sys.stderr)
+        sys.exit(1)
+    else:
+        if args.idcheck:
+            subprocess.call(["id", idname])
 
-    if args.discover:
-        subprocess.call(["sudo", "realm", "discover"])
+        if args.discover:
+            subprocess.call(["sudo", "realm", "discover"])
 
-    if args.list:
-        subprocess.call(["sudo", "realm", "list"])
-        
-    if args.leave:
-        subprocess.call(["sudo", "realm", "leave", "-v" ])
-        print(_("Successfully left the domain."))
-        print(_("Please restart your computer"))
+        if args.list:
+            subprocess.call(["sudo", "realm", "list"])
+            
+        if args.leave:
+            subprocess.call(["sudo", "realm", "leave", "-v" ])
+            print(_("Successfully left the domain."))
+            print(_("Please restart your computer"))
 
-    if args.join:
-        domain_name = str(args.domain)
-        computer_name = str(args.computer)
-        username = str(args.username)
-        ou_location = str(args.organizationalunit)
-        password = str(args.password)
+        if args.join:
+            domain_name = str(args.domain)
+            computer_name = str(args.computer)
+            username = str(args.username)
+            ou_location = str(args.organizationalunit)
+            password = str(args.password)
 
-        smb_settings = "True" if args.samba_settings else "False"
+            smb_settings = "True" if args.samba_settings else "False"
 
-        cl = check_domain_list(domain_name)
-        if cl:
-            print(_("Already joined to this domain"))
-        else:
-            join(computer_name,domain_name,username,password,ou_location,smb_settings)
+            cl = check_domain_list(domain_name)
+            if cl:
+                print(_("Already joined to this domain"))
+            else:
+                join(computer_name,domain_name,username,password,ou_location,smb_settings)
+
 
 if __name__ == "__main__":
     main()

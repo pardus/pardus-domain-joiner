@@ -12,7 +12,7 @@ gi.require_version("Vte", "2.91")
 from gi.repository import GLib, Gtk, Vte
 
 # Translation Constants:
-APPNAME = "domain-joiner"
+APPNAME = "pardus-domain-joiner"
 TRANSLATIONS_PATH = "/usr/share/locale"
 SYSTEM_LANGUAGE = os.environ.get("LANG")
 
@@ -31,7 +31,7 @@ class MainWindow:
 
         self.window = self.builder.get_object("main_window")
         self.window.set_application()
-        self.window.set_title(_("Domain Settings"))
+        self.window.set_title(_("Pardus Domain Settings"))
         self.window.connect("destroy", self.onDestroy)
 
         self.define_components()

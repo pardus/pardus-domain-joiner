@@ -7,7 +7,7 @@ from locale import gettext as _
 import subprocess
 
 # translation constants:
-APPNAME = "domain-joiner"
+APPNAME = "pardus-domain-joiner-cli"
 TRANSLATIONS_PATH = "/usr/share/locale"
 SYSTEM_LANGUAGE = os.environ.get("LANG")
 

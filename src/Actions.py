@@ -9,7 +9,7 @@ import locale
 from locale import gettext as _
 
 # Translation Constants:
-APPNAME = "domain-joiner"
+APPNAME = "pardus-domain-joiner"
 TRANSLATIONS_PATH = "/usr/share/locale"
 SYSTEM_LANGUAGE = os.environ.get("LANG")
 

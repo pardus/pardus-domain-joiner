@@ -83,9 +83,11 @@ class MainWindow:
         self.id_dialog = self.builder.get_object("id_dialog")
         self.id_dialog.set_title(_("Information"))
 
-        # hostname dialog
+        # dialogs
         self.hostname_dialog = self.builder.get_object("hostname_dialog")
         self.hostname_dialog.set_title(_("Warning"))
+        self.leave_dialog = self.builder.get_object("leave_dialog")
+        self.leave_dialog.set_title(_("Warning"))
 
         # domain detail
         self.details_revealer = self.builder.get_object("details_revealer")  
@@ -107,10 +109,12 @@ class MainWindow:
     def on_dialog_close(self, widget):
         self.id_dialog.hide()
         self.hostname_dialog.hide()
+        self.leave_dialog.hide()
 
     def on_window_delete_event(self, widget, event):
         self.id_dialog.hide()
         self.hostname_dialog.hide()
+        self.leave_dialog.hide()
         return True
     
     def set_password_icon_press(self, Widget, icon_pos, event):
@@ -138,6 +142,9 @@ class MainWindow:
         pid = self.startCheckProcess(command)
 
     def on_leave_button(self,Widget):
+        self.leave_dialog.run()
+    
+    def on_leave_and_restart_button(self,Widget):
         command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "leave"]
         pid = self.startLeaveProcess(command)
 
@@ -366,8 +373,10 @@ class MainWindow:
     
     def onLeaveProcessExit(self, pid, status):
         print("onLeaveProcessExit - status: {}".format(status))        
+        self.leave_dialog.hide()
         if status == 0:
             self.main_stack.set_visible_child_name("end_page")
+
 
     def startCheckHostnameProcess(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,

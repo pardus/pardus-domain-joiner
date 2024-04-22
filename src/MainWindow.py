@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import subprocess
+import platform
 import locale
 from locale import gettext as _
 
@@ -70,7 +71,7 @@ class MainWindow:
             "ou_specific_path_entry")
         self.ou_warning_label= self.builder.get_object(
             "ou_warning_label")
-        
+
         # buttons
         self.reboot_button = self.builder.get_object("reboot_button")
         self.smb_check_button = self.builder.get_object("smb_check_button")
@@ -90,14 +91,14 @@ class MainWindow:
         self.leave_dialog.set_title(_("Warning"))
 
         # domain detail
-        self.details_revealer = self.builder.get_object("details_revealer")  
+        self.details_revealer = self.builder.get_object("details_revealer")
         self.details_revealer.set_reveal_child(False)
         self.domain_details_label.set_visible(False)
 
-        # used to control button clicks 
+        # used to control button clicks
         self.id_clicked=False
         self.smb_check_clicked="False"
-        
+
         # checking for errors when joining the domain
         self.password_check = ""
         self.domain_check = ""
@@ -105,7 +106,7 @@ class MainWindow:
 
     def onDestroy(self,Widget):
         Gtk.main_quit()
-        
+
     def on_dialog_close(self, widget):
         self.id_dialog.hide()
         self.hostname_dialog.hide()
@@ -116,7 +117,7 @@ class MainWindow:
         self.hostname_dialog.hide()
         self.leave_dialog.hide()
         return True
-    
+
     def set_password_icon_press(self, Widget, icon_pos, event):
         self.password_entry.set_visibility(True)
         self.password_entry.set_icon_from_icon_name(1,'view-reveal-symbolic')
@@ -127,14 +128,14 @@ class MainWindow:
 
     def on_restart_button(self,Widget):
         subprocess.call(["/sbin/reboot"])
-    
+
     def on_details_button(self,button):
         self.details_revealer.set_reveal_child(button.get_active())
 
     def check_realm_list(self):
         cmd = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Checks.py", "list"]
         self.expid = self.startCheckProcess(cmd)
-        
+
     def on_id_check_button(self,Widget):
         self.id_name = self.id_entry.get_text()
         self.id_clicked = True
@@ -143,21 +144,19 @@ class MainWindow:
 
     def on_leave_button(self,Widget):
         self.leave_dialog.run()
-    
+
     def on_leave_and_restart_button(self,Widget):
         command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "leave"]
         pid = self.startLeaveProcess(command)
 
     def on_dialog_accept_and_reboot(self, widget):
-        command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) 
+        command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__))
                            + "/Actions.py","host", self.comp, self.domain]
         pid = self.startCheckHostnameProcess(command)
 
     # pulls with the computer name and domain name
     def hostname(self):
-        stream = os.popen('hostname') 
-        hostname = stream.read().strip()
-        return hostname
+        return platform.node()
 
     def on_join_button(self,Widget):
         self.comp = self.comp_name_entry.get_text()
@@ -175,16 +174,16 @@ class MainWindow:
             self.required_label.set_markup("<span color='red'>{}</span>".format(_("All blanks must be filled!")))
         elif self.ou_specific_rb.get_active() and self.ouaddress == "":
             self.ou_warning_label.set_markup("<span color='red'>{}</span>".format(_("The specific organizational unit path was not entered!")))
-        else: 
+        else:
             if self.smb_check_button.get_active():
                 self.smb_check_clicked = "True"
-            
+
             self.comp_name_entry.set_text("")
             self.domain_name_entry.set_text("")
             self.user_name_entry.set_text("")
             self.password_entry.set_text("")
             self.required_label.set_text("")
-            
+
             fulldn = ", dc=" + self.domain.replace(".", ", dc=")
             if (self.ou_default_rb.get_active()):
                 self.ouaddress = "cn=Computers" + fulldn
@@ -194,13 +193,13 @@ class MainWindow:
 
             if self.ou_specific_rb.get_active() and self.ouaddress == ",dc="+fulldn:
                 self.ou_warning_label.set_markup("<span color='red'>{}</span>".format(_("The specific ou path was not entered!")))
-            
+
             self.main_stack.set_visible_child_name("join_page")
             self.second_stack.set_visible_child_name("message_page")
             self.message_label.set_text("")
             self.reboot_button.set_sensitive(False)
             try:
-                command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) 
+                command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__))
                            + "/Actions.py","join", self.comp, self.domain,self.user,self.passwd, self.ouaddress,self.smb_check_clicked]
                 self.startJoinProcess(command)
             except Exception as e:
@@ -227,8 +226,8 @@ class MainWindow:
                                                       standard_output=True, standard_error=True)
         GLib.io_add_watch(GLib.IOChannel(stdout), GLib.IO_IN | GLib.IO_HUP, self.onJoinProcessStdout)
         GLib.io_add_watch(GLib.IOChannel(stderr), GLib.IO_IN | GLib.IO_HUP, self.onJoinProcessStderr)
-        GLib.child_watch_add(GLib.PRIORITY_DEFAULT_IDLE, pid, self.onJoinProcessExit) 
-    
+        GLib.child_watch_add(GLib.PRIORITY_DEFAULT_IDLE, pid, self.onJoinProcessExit)
+
     def onJoinProcessStdout(self, source, condition):
         if condition == GLib.IO_HUP:
             return False
@@ -245,14 +244,14 @@ class MainWindow:
         self.vtetextview.scroll_to_iter(self.vtetextview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
 
         return True
-    
+
     def onJoinProcessStderr(self, source, condition):
         if condition == GLib.IO_HUP:
             return False
         line = source.readline()
         print(line)
         return True
-    
+
     def onJoinProcessExit(self, pid, status):
         print("onJoinProcessExit - status: {}".format(status))
         self.reboot_button.set_sensitive(True)
@@ -325,9 +324,7 @@ class MainWindow:
             else:
                 domain_name = domain_name.split("\n")
                 self.main_stack.set_visible_child_name("leave_page")
-                self.compname_label.set_markup(_("\nYour computer <b>")
-                                            +comp_name
-                                            +("</b>"))
+                self.compname_label.set_markup("\n{}<b>{}</b>".format( _("Your computer"), comp_name)
                 self.domain_title_label.set_text(domain_name[0])
                 self.domain_details_label.set_text(domain_details)
 
@@ -338,14 +335,14 @@ class MainWindow:
                     id_group = idfile.readline()
                     self.id_entry.set_text("")
                     if status == 0:
-                        self.id_label.set_markup("<b>"+self.id_name+"</b>\n"+id_group)
+                        self.id_label.set_markup("<b>{}</b>\n<>".format(self.id_name,id_group)
                     elif status == 256:
-                        self.id_label.set_markup("<b>"+self.id_name + 
-                                                _( "</b> user not found. Try again!"))
+                        self.id_label.set_markup(
+                            "<b>{}</b> {}".format(self.id_name, _("user not found. Try again!"))
                     else:
                         self.id_label.set_text(_("No such user"))
             else:
-                self.id_label.set_text(_("Error!")) 
+                self.id_label.set_text(_("Error!"))
             self.id_dialog.run()
 
     def startLeaveProcess(self, params):
@@ -356,23 +353,23 @@ class MainWindow:
         GLib.child_watch_add(GLib.PRIORITY_DEFAULT_IDLE, pid, self.onLeaveProcessExit)
 
         return pid
-    
+
     def onLeaveProcessStdout(self, source, condition):
         if condition == GLib.IO_HUP:
             return False
         line = source.readline()
         print(line)
         return True
-    
+
     def onLeaveProcessStderr(self, source, condition):
         if condition == GLib.IO_HUP:
             return False
         line = source.readline()
         print(line)
         return True
-    
+
     def onLeaveProcessExit(self, pid, status):
-        print("onLeaveProcessExit - status: {}".format(status))        
+        print("onLeaveProcessExit - status: {}".format(status))
         self.leave_dialog.hide()
         if status == 0:
             self.main_stack.set_visible_child_name("end_page")
@@ -398,7 +395,7 @@ class MainWindow:
         line = source.readline()
         print(line)
         return True
-    
+
     def onCheckHostnameProcessExit(self, pid, status):
         print("onCheckHostnameProcessExit - status: {}".format(status))
 
@@ -406,7 +403,7 @@ class MainWindow:
             subprocess.call(["/sbin/reboot"])
         else:
             self.required_label.set_markup("<span color='red'>{}</span>".format(_("Your hostname has changed!")))
-        
+
 if __name__ == "__main__":
     app = MainWindow()
     Gtk.main()

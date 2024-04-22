@@ -103,6 +103,7 @@ class MainWindow:
         self.password_check = ""
         self.domain_check = ""
         self.domain_name_check = ""
+        self.join_check = ""
 
     def onDestroy(self,Widget):
         Gtk.main_quit()
@@ -240,6 +241,8 @@ class MainWindow:
             self.domain_name_check = "False"
         if line.strip() == _("Domain username or password check: False"):
             self.password_check = "False"
+        if line.strip() == _("This computer has been successfully added to the domain."):
+            self.join_check = "True"
         self.vtetextview.get_buffer().insert(self.vtetextview.get_buffer().get_end_iter(), line)
         self.vtetextview.scroll_to_iter(self.vtetextview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
 
@@ -278,7 +281,7 @@ class MainWindow:
                 self.reboot_button.set_label(_("Back"))
                 self.password_check = ""
             else:
-                if command == hostname:
+                if self.join_check == "True":
                     self.message_label.set_markup("<span color='green'>{}</span>".format(_("This computer has been successfully added to the domain.")))
                     self.status = True
                 else:

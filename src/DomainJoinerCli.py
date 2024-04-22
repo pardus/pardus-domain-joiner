@@ -37,12 +37,12 @@ def join(computer_name,domain_name,username,password,ou_location,smb_settings):
                         
         try:
             print(_("Joining Domain..."))
-            subprocess.call(["sudo", "python3", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py","join", computer_name, domain_name, username,domain_password,ouaddress,smb_settings])
+            subprocess.call(["python3", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py","join", computer_name, domain_name, username,domain_password,ouaddress,smb_settings])
         except Exception as err:
             print(err)
 
 def check_domain_list(domain):  
-    output = subprocess.check_output(["sudo", "realm", "list"], stderr=subprocess.STDOUT, text=True)
+    output = subprocess.check_output(["realm", "list"], stderr=subprocess.STDOUT, text=True)
 
     if domain in output:
         return True
@@ -84,13 +84,13 @@ def main():
             subprocess.call(["id", idname])
 
         if args.discover:
-            subprocess.call(["sudo", "realm", "discover"])
+            subprocess.call(["realm", "discover"])
 
         if args.list:
-            subprocess.call(["sudo", "realm", "list"])
+            subprocess.call(["realm", "list"])
             
         if args.leave:
-            subprocess.call(["sudo", "realm", "leave", "-v" ])
+            subprocess.call(["realm", "leave", "-v" ])
             print(_("Successfully left the domain."))
             print(_("Please restart your computer"))
 

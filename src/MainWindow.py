@@ -327,7 +327,7 @@ class MainWindow:
             else:
                 domain_name = domain_name.split("\n")
                 self.main_stack.set_visible_child_name("leave_page")
-                self.compname_label.set_markup("\n{}<b>{}</b>".format( _("Your computer"), comp_name)
+                self.compname_label.set_markup("\n{}<b>{}</b>".format( _("Your computer"), comp_name))
                 self.domain_title_label.set_text(domain_name[0])
                 self.domain_details_label.set_text(domain_details)
 
@@ -338,10 +338,10 @@ class MainWindow:
                     id_group = idfile.readline()
                     self.id_entry.set_text("")
                     if status == 0:
-                        self.id_label.set_markup("<b>{}</b>\n<>".format(self.id_name,id_group)
+                        self.id_label.set_markup("<b>{}</b>\n<>".format(self.id_name,id_group))
                     elif status == 256:
                         self.id_label.set_markup(
-                            "<b>{}</b> {}".format(self.id_name, _("user not found. Try again!"))
+                            "<b>{}</b> {}".format(self.id_name, _("user not found. Try again!")))
                     else:
                         self.id_label.set_text(_("No such user"))
             else:

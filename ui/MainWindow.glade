@@ -903,7 +903,7 @@
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
                     <property name="halign">center</property>
-                    <signal name="pressed" handler="on_restart_button" swapped="no"/>
+                    <signal name="pressed" handler="on_force_restart_button" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>

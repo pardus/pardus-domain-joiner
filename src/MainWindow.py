@@ -85,8 +85,6 @@ class MainWindow:
         self.id_dialog.set_title(_("Information"))
 
         # dialogs
-        self.hostname_dialog = self.builder.get_object("hostname_dialog")
-        self.hostname_dialog.set_title(_("Warning"))
         self.leave_dialog = self.builder.get_object("leave_dialog")
         self.leave_dialog.set_title(_("Warning"))
 
@@ -110,12 +108,10 @@ class MainWindow:
 
     def on_dialog_close(self, widget):
         self.id_dialog.hide()
-        self.hostname_dialog.hide()
         self.leave_dialog.hide()
 
     def on_window_delete_event(self, widget, event):
         self.id_dialog.hide()
-        self.hostname_dialog.hide()
         self.leave_dialog.hide()
         return True
 
@@ -150,12 +146,7 @@ class MainWindow:
         command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "leave"]
         pid = self.startLeaveProcess(command)
 
-    def on_dialog_accept_and_reboot(self, widget):
-        command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__))
-                           + "/Actions.py","host", self.comp, self.domain]
-        pid = self.startCheckHostnameProcess(command)
-
-    # pulls with the computer name and domain name
+    # retrieves the hostname
     def hostname(self):
         return platform.node()
 
@@ -169,7 +160,6 @@ class MainWindow:
         old_hostname = self.hostname().split(".")[0]
         if self.comp != old_hostname:
             self.required_label.set_markup("<span color='red'>{}</span>".format(_("Your hostname has changed!")))
-            self.hostname_dialog.run()
             self.required_label.set_text("")
         elif self.comp == "" or self.domain == "" or self.user == "" or self.passwd == "":
             self.required_label.set_markup("<span color='red'>{}</span>".format(_("All blanks must be filled!")))
@@ -265,9 +255,6 @@ class MainWindow:
         if status == 32256:
             self.message_label.set_markup("<span color='red'>{}</span>".format(_("You don't enter the password. Try again!")))
         else:
-            command = self.hostname()
-            hostname = self.comp+"."+self.domain
-
             if self.domain_check == "False":
                 self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your DNS address.")))
                 self.reboot_button.set_label(_("Close"))
@@ -280,13 +267,12 @@ class MainWindow:
                 self.message_label.set_markup("<span color='red'>{}</span>".format(_("Your password or username is incorrect.")))
                 self.reboot_button.set_label(_("Back"))
                 self.password_check = ""
+            elif self.join_check == "True":
+                self.message_label.set_markup("<span color='green'>{}</span>".format(_("This computer has been successfully added to the domain.")))
+                self.status = True
             else:
-                if self.join_check == "True":
-                    self.message_label.set_markup("<span color='green'>{}</span>".format(_("This computer has been successfully added to the domain.")))
-                    self.status = True
-                else:
-                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Error: domain failed to join realm")))
-                    self.reboot_button.set_label(_("Close"))
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Error: domain failed to join realm")))
+                self.reboot_button.set_label(_("Close"))
 
     def startCheckProcess(self, params):
         pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
@@ -327,7 +313,7 @@ class MainWindow:
             else:
                 domain_name = domain_name.split("\n")
                 self.main_stack.set_visible_child_name("leave_page")
-                self.compname_label.set_markup("\n{}<b>{}</b>".format( _("Your computer"), comp_name))
+                self.compname_label.set_markup("\n{} <b>{}</b>".format( _("Your computer"), comp_name))
                 self.domain_title_label.set_text(domain_name[0])
                 self.domain_details_label.set_text(domain_details)
 
@@ -338,7 +324,7 @@ class MainWindow:
                     id_group = idfile.readline()
                     self.id_entry.set_text("")
                     if status == 0:
-                        self.id_label.set_markup("<b>{}</b>\n<>".format(self.id_name,id_group))
+                        self.id_label.set_markup("<b>{}</b>\n{}".format(self.id_name,id_group))
                     elif status == 256:
                         self.id_label.set_markup(
                             "<b>{}</b> {}".format(self.id_name, _("user not found. Try again!")))
@@ -376,36 +362,6 @@ class MainWindow:
         self.leave_dialog.hide()
         if status == 0:
             self.main_stack.set_visible_child_name("end_page")
-
-
-    def startCheckHostnameProcess(self, params):
-        pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
-                                                      standard_output=True, standard_error=True)
-        GLib.io_add_watch(GLib.IOChannel(stdout), GLib.IO_IN | GLib.IO_HUP, self.onCheckHostnameProcessStdout)
-        GLib.io_add_watch(GLib.IOChannel(stderr), GLib.IO_IN | GLib.IO_HUP, self.onCheckHostnameProcessStderr)
-        GLib.child_watch_add(GLib.PRIORITY_DEFAULT_IDLE, pid, self.onCheckHostnameProcessExit)
-
-    def onCheckHostnameProcessStdout(self, source, condition):
-        if condition == GLib.IO_HUP:
-            return False
-        line = source.readline()
-        print(line)
-        return True
-
-    def onCheckHostnameProcessStderr(self, source, condition):
-        if condition == GLib.IO_HUP:
-            return False
-        line = source.readline()
-        print(line)
-        return True
-
-    def onCheckHostnameProcessExit(self, pid, status):
-        print("onCheckHostnameProcessExit - status: {}".format(status))
-
-        if status == 0:
-            subprocess.call(["/sbin/reboot"])
-        else:
-            self.required_label.set_markup("<span color='red'>{}</span>".format(_("Your hostname has changed!")))
 
 if __name__ == "__main__":
     app = MainWindow()

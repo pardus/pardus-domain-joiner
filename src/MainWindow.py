@@ -146,9 +146,8 @@ class MainWindow:
         command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/Actions.py", "leave"]
         pid = self.startLeaveProcess(command)
 
-    # retrieves the hostname
     def hostname(self):
-        return platform.node()
+        return platform.node().split(".")[0] # just for comp name
 
     def on_join_button(self,Widget):
         self.comp = self.comp_name_entry.get_text()
@@ -197,9 +196,8 @@ class MainWindow:
 
     def on_reboot_button(self,Widget):
         if self.reboot_button.get_label() == _("Back"):
-            hostname = self.hostname()
-            hostname = hostname.split(".")
-            self.comp_name_entry.set_text(hostname[0]) # just for comp name
+            comp_name = self.hostname()
+            self.comp_name_entry.set_text(comp_name)
             self.second_stack.set_visible_child_name("domain_join_page")
             start, end = self.vtetextview.get_buffer().get_bounds()
             self.vtetextview.get_buffer().delete(start,end)
@@ -293,9 +291,7 @@ class MainWindow:
 
     def onCheckProcessExit(self, pid, status):
         print("onCheckProcessExit - status: {}".format(status))
-        hostname = self.hostname()
-        hostname = hostname.split(".")
-        comp_name = hostname[0]
+        comp_name = self.hostname()
         self.comp_name_entry.set_text(comp_name)
 
         if os.path.exists("/tmp/realmlist"):

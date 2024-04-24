@@ -157,11 +157,7 @@ class MainWindow:
         self.passwd = self.password_entry.get_text()
         self.ouaddress = ""
 
-        old_hostname = self.hostname().split(".")[0]
-        if self.comp != old_hostname:
-            self.required_label.set_markup("<span color='red'>{}</span>".format(_("Your hostname has changed!")))
-            self.required_label.set_text("")
-        elif self.comp == "" or self.domain == "" or self.user == "" or self.passwd == "":
+        if self.comp == "" or self.domain == "" or self.user == "" or self.passwd == "":
             self.required_label.set_markup("<span color='red'>{}</span>".format(_("All blanks must be filled!")))
         elif self.ou_specific_rb.get_active() and self.ouaddress == "":
             self.ou_warning_label.set_markup("<span color='red'>{}</span>".format(_("The specific organizational unit path was not entered!")))

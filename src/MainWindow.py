@@ -122,15 +122,11 @@ class MainWindow:
     def set_password_icon_release(self, Widget, icon_pos, event):
         self.password_entry.set_visibility(False)
         self.password_entry.set_icon_from_icon_name(1,'view-conceal-symbolic')
-
-    def on_restart_button(self,Widget):
-        subprocess.call(["/sbin/reboot"])
     
-    def on_force_restart_button(self,Widget):
+    def on_restart_button(self,Widget):
         with open("/proc/sys/kernel/sysrq","w") as file:
             file.write("1")
             file.flush()
-
         with open("/proc/sysrq-trigger","w") as file:
             file.write("s")
             file.flush()

@@ -127,9 +127,17 @@ class MainWindow:
         subprocess.call(["/sbin/reboot"])
     
     def on_force_restart_button(self,Widget):
-        os.system('echo 1 > /proc/sys/kernel/sysrq')
-        os.system('sync')
-        os.system('echo b > /proc/sysrq-trigger')
+        with open("/proc/sys/kernel/sysrq","w") as file:
+            file.write("1")
+            file.flush()
+
+        with open("/proc/sysrq-trigger","w") as file:
+            file.write("s")
+            file.flush()
+            file.write("u")
+            file.flush()
+            file.write("b")
+            file.flush()
 
     def on_details_button(self,button):
         self.details_revealer.set_reveal_child(button.get_active())

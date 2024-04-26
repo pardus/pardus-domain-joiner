@@ -144,18 +144,8 @@ def main():
                 print(_("Not reachable, check your DNS address."), file=sys.stdout)
                 sys.exit(1)
 
-            command = (
-                'realm join -v --computer-ou="'
-                + ouaddress
-                + '" --user="'
-                + user
-                + "@"
-                + domain.upper()
-                + '" '
-                + domain.lower()
-            )
             process = subprocess.Popen(
-                [command], stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True
+                ['realm join -v --computer-ou="' + ouaddress + '" --user="' + user + "@" + domain.upper() + '" ' + domain.lower()], stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True
             )
             process.communicate(passwd.encode("utf-8"))
 
@@ -211,7 +201,8 @@ def main():
                 },
             }
             rewrite_conf(sssd_file, sssd_settings)
-            subprocess.call(["chmod", "600", sssd_file])
+            os.chmod(sssd_file, 600)
+            
             subprocess.call(
                 ["pam-auth-update", "--enable ", "pardus-pam-config"],
                 env={**os.environ, "DEBIAN_FRONTEND": "noninteractive"},

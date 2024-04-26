@@ -272,7 +272,6 @@ class MainWindow:
                 self.password_check = ""
             elif self.join_check == "True":
                 self.message_label.set_markup("<span color='green'>{}</span>".format(_("This computer has been successfully added to the domain.")))
-                self.status = True
             else:
                 self.message_label.set_markup("<span color='red'>{}</span>".format(_("Error: domain failed to join realm")))
                 self.reboot_button.set_label(_("Close"))

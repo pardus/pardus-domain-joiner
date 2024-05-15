@@ -43,6 +43,10 @@ def main():
                 env={**os.environ, "DEBIAN_FRONTEND": "noninteractive"},
             )
 
+    def set_hostname(comp_name):
+        subprocess.call(["hostnamectl", "hostname", comp_name])
+        print("changed hostname: ", comp_name)
+
     def update_hostname_file(comp_name, domain):
         # to check file /etc/hostname
         hostname_file = "/etc/hostname"
@@ -223,6 +227,7 @@ def main():
     if len(sys.argv) > 1:
         if control_lock():
             if sys.argv[1] == "join":
+                set_hostname(sys.argv[2])
                 join(
                     sys.argv[2],
                     sys.argv[3],

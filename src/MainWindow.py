@@ -195,7 +195,7 @@ class MainWindow:
             self.reboot_button.set_sensitive(False)
             try:
                 command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__))
-                           + "/Actions.py","join", self.comp, self.domain,self.user,self.passwd, self.ouaddress,self.smb_check_clicked]
+                           + "/Actions.py","join", self.comp, self.domain, self.user,self.passwd, self.ouaddress,self.smb_check_clicked]
                 self.startJoinProcess(command)
             except Exception as e:
                 print(_("Error: domain failed to join realm"))

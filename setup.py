@@ -12,11 +12,11 @@ def create_mo_files():
     for po in os.listdir(podir):
         if po.endswith(".po"):
             os.makedirs("{}/{}/LC_MESSAGES".format(podir, po.split(".po")[0]), exist_ok=True)
-            mo_file = "{}/{}/LC_MESSAGES/{}".format(podir, po.split(".po")[0], "domain-joiner.mo")
+            mo_file = "{}/{}/LC_MESSAGES/{}".format(podir, po.split(".po")[0], "pardus-domain-joiner.mo")
             msgfmt_cmd = 'msgfmt {} -o {}'.format(podir + "/" + po, mo_file)
             subprocess.call(msgfmt_cmd, shell=True)
             mo.append(("/usr/share/locale/" + po.split(".po")[0] + "/LC_MESSAGES",
-                       ["po/" + po.split(".po")[0] + "/LC_MESSAGES/domain-joiner.mo"]))
+                       ["po/" + po.split(".po")[0] + "/LC_MESSAGES/pardus-domain-joiner.mo"]))
     return mo
 
 changelog = 'debian/changelog'
@@ -35,7 +35,6 @@ data_files = [
     ("/usr/bin/", ["pardus-domain-joiner","pardus-domain-joiner-cli"]),
     ("/usr/share/applications/", ["data/tr.org.pardus.domain-joiner.desktop"]),
     ("/usr/share/pam-configs/", ["data/pardus-pam-config"]),
-    ("/usr/share/locale/tr/LC_MESSAGES/", ["po/tr/LC_MESSAGES/domain-joiner.mo"]),
     ("/usr/share/pardus/pardus-domain-joiner/src", [
         "src/MainWindow.py", 
         "src/DomainJoinerCli.py", 
@@ -48,7 +47,7 @@ data_files = [
     ("/usr/share/pardus/pardus-domain-joiner/ui", ["ui/MainWindow.glade"]),
     ("/usr/share/polkit-1/actions", ["data/tr.org.pardus.pkexec.domain-joiner.policy"]),
     ("/usr/share/icons/hicolor/scalable/apps/", ["data/pardus-domain-joiner.svg"])
-]
+] + create_mo_files()
 
 setup(
     name="pardus-domain-joiner",

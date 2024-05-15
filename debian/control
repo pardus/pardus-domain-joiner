@@ -24,5 +24,5 @@ Depends: python3 (>=3.5),
 	 sssd-tools, 
 	 cifs-utils, 
 	 smbclient
-Description: Domain Joiner 
+Description: Pardus Domain Joiner 
   This application is a simple ui/cli application that joins your computer to the domain or leaves it from the domain.

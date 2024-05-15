@@ -133,7 +133,7 @@ def main():
             update_hosts_file(comp_name, domain)
 
             try:
-                result = subprocess.check_output(["realm", "discover"]).decode("utf-8")
+                result = subprocess.check_output(["realm", "discover", "-v", domain]).decode("utf-8")
 
                 for line in result.split("\n"):
                     if line.strip().startswith("domain-name:"):

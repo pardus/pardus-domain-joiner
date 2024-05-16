@@ -6,6 +6,7 @@ import os
 import sys
 import subprocess
 import apt_pkg
+import apt
 import locale
 from locale import gettext as _
 
@@ -29,6 +30,16 @@ def main():
             return False
         apt_pkg.pkgsystem_unlock()
         return True
+
+    def isinstalled(packagename):
+        try:
+            cache = apt.Cache()
+            cache.open()
+            package = cache[packagename]
+        except Exception as e:
+            print("{}".format(e))
+            return False
+        return package.is_installed
 
     def update():
         subprocess.call(
@@ -106,10 +117,7 @@ def main():
 
     def join(comp_name, domain, user, passwd, ouaddress, smb_settings):
         try:
-            # to update
-            update()
-
-            # to install packages
+            # required packages
             package_list = [
                 "krb5-user",
                 "samba",
@@ -122,7 +130,30 @@ def main():
                 "cifs-utils",
                 "smbclient",
             ]
-            install(package_list)
+            packages_installed = True
+            not_installeds = []
+            for package in package_list:
+                if not isinstalled(package):
+                    print(_("{} is not installed.").format(package))
+                    not_installeds.append(package)
+                    packages_installed = False
+                else:
+                    print(_("{} is installed.").format(package))
+
+            if not packages_installed:
+                print(_("Required packages are installing."))
+                # to update
+                update()
+                # install packages
+                install(package_list)
+                # re-check not installed packages
+                for ni_package in not_installeds:
+                    if isinstalled(ni_package):
+                        print(_("{} is installed.").format(ni_package))
+                    else:
+                        print(_("{} is not installed.").format(package))
+            else:
+                print(_("Required packages already installed."))
 
             # to join domain
             if not os.path.isfile("/etc/krb5.conf"):

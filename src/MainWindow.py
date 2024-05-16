@@ -189,6 +189,8 @@ class MainWindow:
                 command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__))
                            + "/Actions.py","join", self.comp, self.domain, self.user,self.passwd, self.ouaddress,self.smb_check_clicked]
                 self.startJoinProcess(command)
+                self.vtetextview.get_buffer().insert(self.vtetextview.get_buffer().get_end_iter(), _("Please wait...") + "\n")
+                self.vtetextview.scroll_to_iter(self.vtetextview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
             except Exception as e:
                 print(_("Error: domain failed to join realm"))
                 self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your DNS address.")))

@@ -32,4 +32,18 @@
     <annotate key="org.freedesktop.policykit.exec.path">/usr/share/pardus/pardus-domain-joiner/src/Checks.py</annotate>
     <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
      </action>
+     
+     <action id="org.freedesktop.policykit.pkexec.domain-joiner-restart">
+     <description>Run domain joiner program</description>
+     <message>Authentication is required to run the Pardus Domain Joiner</message>
+     <message xml:lang="tr">Pardus Etki Alanına Dahil Edici için yetkilendirme gerekiyor.</message>
+     <defaults>
+        <allow_any>yes</allow_any>
+        <allow_inactive>yes</allow_inactive>
+        <allow_active>yes</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/share/pardus/pardus-domain-joiner/src/restart.sh</annotate>
+    <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+     </action>
+     
  </policyconfig>

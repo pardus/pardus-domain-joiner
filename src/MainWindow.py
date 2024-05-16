@@ -124,16 +124,8 @@ class MainWindow:
         self.password_entry.set_icon_from_icon_name(1,'view-conceal-symbolic')
     
     def on_restart_button(self,Widget):
-        with open("/proc/sys/kernel/sysrq","w") as file:
-            file.write("1")
-            file.flush()
-        with open("/proc/sysrq-trigger","w") as file:
-            file.write("s")
-            file.flush()
-            file.write("u")
-            file.flush()
-            file.write("b")
-            file.flush()
+        command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/restart.sh"]
+        pid = self.startRestartProcess(command)
 
     def on_details_button(self,button):
         self.details_revealer.set_reveal_child(button.get_active())
@@ -362,6 +354,35 @@ class MainWindow:
         self.leave_dialog.hide()
         if status == 0:
             self.main_stack.set_visible_child_name("end_page")
+
+    def startRestartProcess(self, params):
+        pid, stdin, stdout, stderr = GLib.spawn_async(params, flags=GLib.SpawnFlags.DO_NOT_REAP_CHILD,
+                                                      standard_output=True, standard_error=True)
+        GLib.io_add_watch(GLib.IOChannel(stdout), GLib.IO_IN | GLib.IO_HUP, self.onRestartProcessStdout)
+        GLib.io_add_watch(GLib.IOChannel(stderr), GLib.IO_IN | GLib.IO_HUP, self.onRestartProcessStderr)
+        GLib.child_watch_add(GLib.PRIORITY_DEFAULT_IDLE, pid, self.onRestartProcessExit)
+
+        return pid
+
+    def onRestartProcessStdout(self, source, condition):
+        if condition == GLib.IO_HUP:
+            return False
+        line = source.readline()
+        print(line)
+        return True
+
+    def onRestartProcessStderr(self, source, condition):
+        if condition == GLib.IO_HUP:
+            return False
+        line = source.readline()
+        print(line)
+        return True
+
+    def onRestartProcessExit(self, pid, status):
+        print("onRestartProcessExit - status: {}".format(status))
+        
+        if status == 0:
+            print(_("Successful"))
 
 if __name__ == "__main__":
     app = MainWindow()

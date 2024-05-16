@@ -159,7 +159,7 @@ cython_debug/
 .deb/
 *.deb
 
-#translaion
+#translation
 *.mo
 
 

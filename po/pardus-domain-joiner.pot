@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-16 10:10+0300\n"
+"POT-Creation-Date: 2024-05-16 13:23+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -86,7 +86,7 @@ msgid "Messages"
 msgstr ""
 
 #: ../ui/MainWindow.glade:626 ../ui/MainWindow.glade:901
-#: ../src/MainWindow.py:247
+#: ../src/MainWindow.py:249
 msgid "Restart"
 msgstr ""
 
@@ -140,65 +140,69 @@ msgstr ""
 msgid "The specific ou path was not entered!"
 msgstr ""
 
-#: ../src/MainWindow.py:193 ../src/MainWindow.py:268
+#: ../src/MainWindow.py:192
+msgid "Please wait..."
+msgstr ""
+
+#: ../src/MainWindow.py:195 ../src/MainWindow.py:270
 msgid "Error: domain failed to join realm"
 msgstr ""
 
-#: ../src/MainWindow.py:194 ../src/MainWindow.py:223 ../src/MainWindow.py:254
-#: ../src/Actions.py:148
+#: ../src/MainWindow.py:196 ../src/MainWindow.py:225 ../src/MainWindow.py:256
+#: ../src/Actions.py:179
 msgid "Not reachable, check your DNS address."
 msgstr ""
 
-#: ../src/MainWindow.py:196 ../src/MainWindow.py:205 ../src/MainWindow.py:255
-#: ../src/MainWindow.py:269
+#: ../src/MainWindow.py:198 ../src/MainWindow.py:207 ../src/MainWindow.py:257
+#: ../src/MainWindow.py:271
 msgid "Close"
 msgstr ""
 
-#: ../src/MainWindow.py:199 ../src/MainWindow.py:259 ../src/MainWindow.py:263
+#: ../src/MainWindow.py:201 ../src/MainWindow.py:261 ../src/MainWindow.py:265
 msgid "Back"
 msgstr ""
 
-#: ../src/MainWindow.py:225 ../src/Actions.py:143
+#: ../src/MainWindow.py:227 ../src/Actions.py:174
 msgid "Domain name check: False"
 msgstr ""
 
-#: ../src/MainWindow.py:227 ../src/Actions.py:158
+#: ../src/MainWindow.py:229 ../src/Actions.py:189
 msgid "Domain username or password check: False"
 msgstr ""
 
-#: ../src/MainWindow.py:229 ../src/MainWindow.py:266 ../src/Actions.py:217
+#: ../src/MainWindow.py:231 ../src/MainWindow.py:268 ../src/Actions.py:248
 msgid "This computer has been successfully added to the domain."
 msgstr ""
 
-#: ../src/MainWindow.py:251
+#: ../src/MainWindow.py:253
 msgid "You don't enter the password. Try again!"
 msgstr ""
 
-#: ../src/MainWindow.py:258
+#: ../src/MainWindow.py:260
 msgid "Domain name is incorrect."
 msgstr ""
 
-#: ../src/MainWindow.py:262
+#: ../src/MainWindow.py:264
 msgid "Your password or username is incorrect."
 msgstr ""
 
-#: ../src/MainWindow.py:308
+#: ../src/MainWindow.py:310
 msgid "Your computer"
 msgstr ""
 
-#: ../src/MainWindow.py:322
+#: ../src/MainWindow.py:324
 msgid "user not found. Try again!"
 msgstr ""
 
-#: ../src/MainWindow.py:324
+#: ../src/MainWindow.py:326
 msgid "No such user"
 msgstr ""
 
-#: ../src/MainWindow.py:326
+#: ../src/MainWindow.py:328
 msgid "Error!"
 msgstr ""
 
-#: ../src/MainWindow.py:385
+#: ../src/MainWindow.py:387
 msgid "Successful"
 msgstr ""
 
@@ -294,38 +298,54 @@ msgstr ""
 msgid "Already joined to this domain"
 msgstr ""
 
-#: ../src/Actions.py:48
+#: ../src/Actions.py:59
 msgid "changed hostname: "
 msgstr ""
 
-#: ../src/Actions.py:55
+#: ../src/Actions.py:66
 msgid "checking /etc/hostname file..."
 msgstr ""
 
-#: ../src/Actions.py:57
+#: ../src/Actions.py:68
 msgid "added domain name to /etc/hostname file"
 msgstr ""
 
-#: ../src/Actions.py:62 ../src/Actions.py:87
+#: ../src/Actions.py:73 ../src/Actions.py:98
 msgid "done"
 msgstr ""
 
-#: ../src/Actions.py:69
+#: ../src/Actions.py:80
 msgid "checking /etc/hosts file..."
 msgstr ""
 
-#: ../src/Actions.py:89
+#: ../src/Actions.py:100
 msgid "added domain name to /etc/hosts file"
 msgstr ""
 
-#: ../src/Actions.py:129
+#: ../src/Actions.py:137 ../src/Actions.py:154
+msgid "{} is not installed."
+msgstr ""
+
+#: ../src/Actions.py:141 ../src/Actions.py:152
+msgid "{} is installed."
+msgstr ""
+
+#: ../src/Actions.py:144
+msgid "Required packages are installing."
+msgstr ""
+
+#: ../src/Actions.py:156
+msgid "Required packages already installed."
+msgstr ""
+
+#: ../src/Actions.py:160
 msgid "Packages are not installed."
 msgstr ""
 
-#: ../src/Actions.py:141
+#: ../src/Actions.py:172
 msgid "joining the domain..."
 msgstr ""
 
-#: ../src/Actions.py:147
+#: ../src/Actions.py:178
 msgid "An error occurred! Exit Code:"
 msgstr ""

@@ -45,7 +45,7 @@ def main():
 
     def set_hostname(comp_name):
         subprocess.call(["hostnamectl", "hostname", comp_name])
-        print("changed hostname: ", comp_name)
+        print(_("changed hostname: "), comp_name)
 
     def update_hostname_file(comp_name, domain):
         # to check file /etc/hostname

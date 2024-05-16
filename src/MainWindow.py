@@ -244,7 +244,7 @@ class MainWindow:
         print("onJoinProcessExit - status: {}".format(status))
         self.reboot_button.set_sensitive(True)
 
-        self.reboot_button.set_label(_("Reboot"))
+        self.reboot_button.set_label(_("Restart"))
         self.vtetextview.scroll_to_iter(self.vtetextview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
 
         if status == 32256:

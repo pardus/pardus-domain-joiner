@@ -623,7 +623,7 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="reboot_button">
-                            <property name="label" translatable="yes">Reboot</property>
+                            <property name="label" translatable="yes">Restart</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">True</property>

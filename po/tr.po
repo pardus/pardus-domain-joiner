@@ -1,327 +1,116 @@
 # Turkish translations for PACKAGE package.
 # Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# busra <pardus@pardus.org.tr>, 2024.
+# busra <busra.cagliyan@pardus.org.tr>, 2024.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-13 14:00+0300\n"
-"PO-Revision-Date: 2024-03-13 14:02+0300\n"
-"Last-Translator: busra <pardus@pardus.org.tr>\n"
+"POT-Creation-Date: 2024-05-16 10:10+0300\n"
+"PO-Revision-Date: 2024-05-16 10:35+0300\n"
+"Last-Translator: busra <busra.cagliyan@pardus.org.tr>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
 
-#: src/Actions.py:45
-msgid "checking /etc/hostname file..."
-msgstr "/etc/hostname dosyası kontrol ediliyor..."
-
-#: src/Actions.py:47
-msgid "added domain name to /etc/hostname file"
-msgstr "/etc/hostname dosyasına etki alanı adı eklendi"
-
-#: src/Actions.py:52 src/Actions.py:77
-msgid "done"
-msgstr "bitti"
-
-#: src/Actions.py:59
-msgid "checking /etc/hosts file..."
-msgstr "/etc/hosts dosyası kontrol ediliyor..."
-
-#: src/Actions.py:79
-msgid "added domain name to /etc/hosts file"
-msgstr "/etc/hosts dosyasına etki alanı adı eklendi"
-
-#: src/Actions.py:93
-msgid "Packages are not installed."
-msgstr "Paketler yüklenemedi."
-
-#: src/Actions.py:105
-msgid "joining the domain..."
-msgstr "etki alanına dahil ediliyor..."
-
-#: src/Actions.py:107 src/MainWindow.py:233
-msgid "Domain name check: False"
-msgstr "Etki alanı adı kontrolü: Yanlış"
-
-#: src/Actions.py:111
-msgid "An error occurred! Exit Code:"
-msgstr "Bir hata oluştu!. Çıkış Kodu:"
-
-#: src/Actions.py:112 src/MainWindow.py:201 src/MainWindow.py:231
-#: src/MainWindow.py:263
-msgid "Not reachable, check your DNS address."
-msgstr "Ulaşılamıyor, DNS adresinizi kontrol edin."
-
-#: src/Actions.py:121 src/MainWindow.py:235
-msgid "Domain username or password check: False"
-msgstr "Etki alanı kullanıcı adı ya da parola kontrolü: Yanlış"
-
-#: src/Actions.py:204 src/MainWindow.py:276
-msgid "This computer has been successfully added to the domain."
-msgstr "Bu bilgisayar başarıyla etki alanına dahil edildi."
-
-#: src/DomainJoinerCli.py:20
-msgid "Error: The following arguments are required!"
-msgstr "Hata: Aşağıdaki argümanlar gerekmektedir!"
-
-#: src/DomainJoinerCli.py:21
-msgid "Please enter other commands:\n"
-msgstr "Lütfen diğer komutları girin:\n"
-
-#: src/DomainJoinerCli.py:22
-msgid "\t\t [-d/--domain DOMAIN] [-c/--computer COMPUTER]\n"
-msgstr "\t\t [-d/--domain ETKI ALANI] [-c/--computer BILGISAYAR]\n"
-
-#: src/DomainJoinerCli.py:23
-msgid "\t\t [-u/--username USERNAME] [--organizationalunit \"ou=Computers\"]\n"
-msgstr "\t\t [-u/--username YETKILI KULLANICI] [--organizationalunit \"ou=Bilgisayar\"]\n"
-
-#: src/DomainJoinerCli.py:24
-msgid "\t\t [--password PASSWORD]\n"
-msgstr "\t\t [--password PAROLA]\n"
-
-#: src/DomainJoinerCli.py:27
-msgid "Enter the password of domain: "
-msgstr "Etki alanının parolasını giriniz:"
-
-#: src/DomainJoinerCli.py:38
-msgid "Joining Domain..."
-msgstr "Etki Alanına Katılıyor..."
-
-#: src/DomainJoinerCli.py:54
-msgid "This application is a simple CLI application that joins your computer to the domain or leaves it from the domain."
-msgstr "Bu uygulama, bilgisayarınızı etki alanına dahil eden ya da onları etki alanından ayıran basit bir CLI uygulamasıdır."
-
-#: src/DomainJoinerCli.py:56
-msgid "joins your computer to the domain"
-msgstr "bilgisayarınızı etki alanına dahil eder"
-
-#: src/DomainJoinerCli.py:57
-msgid "domain name"
-msgstr "etki alanı adı"
-
-#: src/DomainJoinerCli.py:58
-msgid "computer name"
-msgstr "bilgisayar adı"
-
-#: src/DomainJoinerCli.py:59
-msgid "domain user name"
-msgstr "etki alanı yetkili kullanıcısı"
-
-#: src/DomainJoinerCli.py:60
-msgid "organizational unit"
-msgstr "organizasyonel birim"
-
-#: src/DomainJoinerCli.py:61
-msgid "password of domain user"
-msgstr "etki alanı yetkili kullanıcısının parolası"
-
-#: src/DomainJoinerCli.py:62
-msgid ""
-"adds samba settings when joining your computer to the domain, it is used "
-"with join"
-msgstr "bilgisayarınızı etki alanına dahil ederken samba ayarlarını ekler, join ile birlikte kullanılır"
-
-#: src/DomainJoinerCli.py:63
-msgid "to leave the domain"
-msgstr "etki alanından ayrılmak için"
-
-#: src/DomainJoinerCli.py:64
-msgid "lists domain information"
-msgstr "etki alanı bilgilerini listeler"
-
-#: src/DomainJoinerCli.py:65
-msgid "shows the users ids in the domain"
-msgstr "etki alanındaki kullanıcıların kimliklerini gösterir"
-
-#: ../src/DomainJoinerCli.py:66
-msgid "discovers whether the domain is reachable or not"
-msgstr "etki alanı adının ulaşılabilir olup olmadığını keşfeder"
-
-#: src/DomainJoinerCli.py:88
-msgid "Successfully left the domain."
-msgstr "Etki alanından başarıyla ayrıldı."
-
-#: src/DomainJoinerCli.py:89
-msgid "Please restart your computer"
-msgstr "Lütfen bilgisayarınızı yeniden başlatın"
-
-#: src/DomainJoinerCli.py:102
-msgid "Already joined to this domain"
-msgstr "Bu alana zaten katıldınız"
-
-#: src/MainWindow.py:34
-msgid "Domain Settings"
-msgstr "Etki Alanı Ayarları"
-
-#: src/MainWindow.py:84
-msgid "Information"
-msgstr "Bilgi"
-
-#: src/MainWindow.py:88
-msgid "Warning"
-msgstr "Uyarı"
-
-#: src/MainWindow.py:164 src/MainWindow.py:399 ui/MainWindow.glade:75
-msgid "Your hostname has changed!"
-msgstr "Ana bilgisayar adınız değişti!"
-
-#: src/MainWindow.py:168
-msgid "All blanks must be filled!"
-msgstr "Bütün boşluklar doldurulmalı!"
-
-#: src/MainWindow.py:170
-msgid "The specific organizational unit path was not entered!"
-msgstr "Belirli bir organizasyon birimi yolu girilmedi!"
-
-#: src/MainWindow.py:189
-msgid "The specific ou path was not entered!"
-msgstr "Belirli bir ou yolu girilmedi!"
-
-#: src/MainWindow.py:200 src/MainWindow.py:279
-msgid "Error: domain failed to join realm"
-msgstr "Hata: etki alanı realm'e katılamadı"
-
-#: src/MainWindow.py:203 src/MainWindow.py:213 src/MainWindow.py:264
-#: src/MainWindow.py:280
-msgid "Close"
-msgstr "Kapat"
-
-#: src/MainWindow.py:206 src/MainWindow.py:268 src/MainWindow.py:272
-msgid "Back"
-msgstr "Geri"
-
-#: src/MainWindow.py:253 ui/MainWindow.glade:633
-msgid "Reboot"
-msgstr "Yeniden Başlat"
-
-#: src/MainWindow.py:257
-msgid "You don't enter the password. Try again!"
-msgstr "Parolayı girmediniz. Tekrar deneyiniz!"
-
-#: src/MainWindow.py:267
-msgid "Domain name is incorrect."
-msgstr "Etki alanı adı doğru değil."
-
-#: src/MainWindow.py:271
-msgid "Your password or username is incorrect."
-msgstr "Parolanız ya da kullanıcı adınız yanlış."
-
-#: src/MainWindow.py:321
-msgid ""
-"\n"
-"Your computer <b>"
-msgstr ""
-"\n"
-"Bilgisayarınız <b>"
-
-#: src/MainWindow.py:337
-msgid "</b> user not found. Try again!"
-msgstr "</b> kullanıcısı bulunamadı. Tekrar deneyin!"
-
-#: src/MainWindow.py:339
-msgid "No such user"
-msgstr "Böyle bir kullanıcı yok"
-
-#: src/MainWindow.py:341
-msgid "Error!"
-msgstr "Hata!"
-
-#: ui/MainWindow.glade:24
-msgid "Accept & Reboot"
-msgstr "Kabul et & Yeniden başlat"
-
-#: ui/MainWindow.glade:42
-msgid "Cancel"
-msgstr "Kapat"
-
-#: ui/MainWindow.glade:97
-msgid "You must restart your computer to change your hostname."
-msgstr "Ana bilgisayar adını değiştirmek için bilgisayarınızı yeniden başlatmanız gerekir."
-
-#: ui/MainWindow.glade:125
+#: ../ui/MainWindow.glade:23
 msgid "OK"
 msgstr "Tamam"
 
-#: ui/MainWindow.glade:218
+#: ../ui/MainWindow.glade:79
+msgid "Yes"
+msgstr "Evet"
+
+#: ../ui/MainWindow.glade:99
+msgid "No"
+msgstr "Hayır"
+
+#: ../ui/MainWindow.glade:136
+msgid "Your computer will leave the domain. Are you sure?"
+msgstr "Bilgisayarınız etki alanından ayrılacaktır. Emin misiniz?"
+
+#: ../ui/MainWindow.glade:211
 msgid "Your computer is not part of a domain."
 msgstr "Bilgisayarınız bir etki alanına dahil değildir."
 
-#: ui/MainWindow.glade:248
+#: ../ui/MainWindow.glade:241
 msgid "Computer Name:"
 msgstr "Bilgisayar Adı:"
 
-#: ui/MainWindow.glade:286
+#: ../ui/MainWindow.glade:279
 msgid "Domain Name:"
 msgstr "Etki Alanı Adı:"
 
-#: ui/MainWindow.glade:324
+#: ../ui/MainWindow.glade:317
 msgid "User Name:"
 msgstr "Yetkili Kullanıcı:"
 
-#: ui/MainWindow.glade:362
+#: ../ui/MainWindow.glade:355
 msgid "Password:"
 msgstr "Parola:"
 
-#: ui/MainWindow.glade:396
+#: ../ui/MainWindow.glade:389
 msgid "set samba settings automatically"
 msgstr "samba ayarlarını otomatik olarak yap"
 
-#: ui/MainWindow.glade:446
+#: ../ui/MainWindow.glade:439
 msgid "Organizational Unit"
 msgstr "Organizasyonel Birim"
 
-#: ui/MainWindow.glade:459
+#: ../ui/MainWindow.glade:452
 msgid "Default Container (Computers)"
 msgstr "Varsayılan Kapsayıcı (Bilgisayar)"
 
-#: ui/MainWindow.glade:479
+#: ../ui/MainWindow.glade:472
 msgid "Specific OU Path:"
 msgstr "Belirli OB Yolu:"
 
-#: ui/MainWindow.glade:497
+#: ../ui/MainWindow.glade:490
 msgid "e.g. cn=Computers, dc=afad, dc=local"
 msgstr "örneğin cn=Computers, dc=etkialanı, dc=adı"
 
-#: ui/MainWindow.glade:498
+#: ../ui/MainWindow.glade:491
 msgid "e.g. cn=Computers, dc=domain, dc=name"
 msgstr "örneğin cn=Computers, dc=etkialanı, dc=adı"
 
-#: ui/MainWindow.glade:533
+#: ../ui/MainWindow.glade:526
 msgid "Join Domain"
 msgstr "Etki Alanına Dahil Et"
 
-#: ui/MainWindow.glade:567
+#: ../ui/MainWindow.glade:560
 msgid "Messages"
 msgstr "Mesajlar"
 
-#: ui/MainWindow.glade:698
+#: ../ui/MainWindow.glade:626 ../ui/MainWindow.glade:901 ../src/MainWindow.py:247
+msgid "Restart"
+msgstr "Yeniden Başlat"
+
+#: ../ui/MainWindow.glade:691
 msgid "is in the domain."
 msgstr "etki alanındadır."
 
-#: ui/MainWindow.glade:743
+#: ../ui/MainWindow.glade:736
 msgid "details"
 msgstr "detaylar"
 
-#: ui/MainWindow.glade:791
+#: ../ui/MainWindow.glade:784
 msgid "Leave Domain"
 msgstr "Etki Alanından Ayrılın"
 
-#: ui/MainWindow.glade:838
+#: ../ui/MainWindow.glade:831
 msgid "e.g. user name"
 msgstr "örneğin kullanıcı adı"
 
-#: ui/MainWindow.glade:849
+#: ../ui/MainWindow.glade:842
 msgid "ID Check"
 msgstr "ID Kontrol Et"
 
-#: ui/MainWindow.glade:895
+#: ../ui/MainWindow.glade:888
 msgid ""
 "Successfully left the domain.\n"
 "<b>Please restart your computer</b>"
@@ -329,6 +118,214 @@ msgstr ""
 "Etki alanından başarıyla ayrıldı.\n"
 "<b>Lütfen bilgisayarınızı yeniden başlatın</b>"
 
-#: ui/MainWindow.glade:908
-msgid "Restart"
-msgstr "Yeniden Başlat"
+#: ../src/MainWindow.py:35
+msgid "Pardus Domain Settings"
+msgstr "Pardus Etki Alanı Ayarları"
+
+#: ../src/MainWindow.py:85
+msgid "Information"
+msgstr "Bilgi"
+
+#: ../src/MainWindow.py:89
+msgid "Warning"
+msgstr "Uyarı"
+
+#: ../src/MainWindow.py:161
+msgid "All blanks must be filled!"
+msgstr "Bütün boşluklar doldurulmalı!"
+
+#: ../src/MainWindow.py:163
+msgid "The specific organizational unit path was not entered!"
+msgstr "Belirli bir organizasyon birimi yolu girilmedi!"
+
+#: ../src/MainWindow.py:182
+msgid "The specific ou path was not entered!"
+msgstr "Belirli bir ou yolu girilmedi!"
+
+#: ../src/MainWindow.py:193 ../src/MainWindow.py:268
+msgid "Error: domain failed to join realm"
+msgstr "Hata: etki alanı realm'e katılamadı"
+
+#: ../src/MainWindow.py:194 ../src/MainWindow.py:223 ../src/MainWindow.py:254 ../src/Actions.py:148
+msgid "Not reachable, check your DNS address."
+msgstr "Ulaşılamıyor, DNS adresinizi kontrol edin."
+
+#: ../src/MainWindow.py:196 ../src/MainWindow.py:205 ../src/MainWindow.py:255 ../src/MainWindow.py:269
+msgid "Close"
+msgstr "Kapat"
+
+#: ../src/MainWindow.py:199 ../src/MainWindow.py:259 ../src/MainWindow.py:263
+msgid "Back"
+msgstr "Geri"
+
+#: ../src/MainWindow.py:225 ../src/Actions.py:143
+msgid "Domain name check: False"
+msgstr "Etki alanı adı kontrolü: Yanlış"
+
+#: ../src/MainWindow.py:227 ../src/Actions.py:158
+msgid "Domain username or password check: False"
+msgstr "Etki alanı kullanıcı adı ya da parola kontrolü: Yanlış"
+
+#: ../src/MainWindow.py:229 ../src/MainWindow.py:266 ../src/Actions.py:217
+msgid "This computer has been successfully added to the domain."
+msgstr "Bu bilgisayar başarıyla etki alanına dahil edildi."
+
+#: ../src/MainWindow.py:251
+msgid "You don't enter the password. Try again!"
+msgstr "Parolayı girmediniz. Tekrar deneyiniz!"
+
+#: ../src/MainWindow.py:258
+msgid "Domain name is incorrect."
+msgstr "Etki alanı adı doğru değil."
+
+#: ../src/MainWindow.py:262
+msgid "Your password or username is incorrect."
+msgstr "Parolanız ya da kullanıcı adınız yanlış."
+
+#: ../src/MainWindow.py:308
+msgid "Your computer"
+msgstr "Bilgisayarınız"
+
+#: ../src/MainWindow.py:322
+msgid "user not found. Try again!"
+msgstr "kullanıcısı bulunamadı. Tekrar deneyin!"
+
+#: ../src/MainWindow.py:324
+msgid "No such user"
+msgstr "Böyle bir kullanıcı yok"
+
+#: ../src/MainWindow.py:326
+msgid "Error!"
+msgstr "Hata!"
+
+#: ../src/MainWindow.py:385
+msgid "Successful"
+msgstr "Başarılı"
+
+#: ../src/DomainJoinerCli.py:21
+msgid "Error: The following arguments are required!"
+msgstr "Hata: Aşağıdaki argümanlar gerekmektedir!"
+
+#: ../src/DomainJoinerCli.py:22
+msgid "Please enter other commands:\n"
+msgstr "Lütfen diğer komutları girin:\n"
+
+#: ../src/DomainJoinerCli.py:23
+msgid "\t\t [-d/--domain DOMAIN] [-c/--computer COMPUTER]\n"
+msgstr "\t\t [-d/--domain ETKI ALANI] [-c/--computer BILGISAYAR]\n"
+
+#: ../src/DomainJoinerCli.py:24
+msgid "\t\t [-u/--username USERNAME] [--organizationalunit \"ou=Computers\"]\n"
+msgstr "\t\t [-u/--username YETKILI KULLANICI] [--organizationalunit \"ou=Bilgisayar\"]\n"
+
+#: ../src/DomainJoinerCli.py:25
+msgid "\t\t [--password PASSWORD]\n"
+msgstr "\t\t [--password PAROLA]\n"
+
+#: ../src/DomainJoinerCli.py:28
+msgid "Enter the password of domain: "
+msgstr "Etki alanının parolasını giriniz: "
+
+#: ../src/DomainJoinerCli.py:39
+msgid "Joining Domain..."
+msgstr "Etki Alanına Katılıyor..."
+
+#: ../src/DomainJoinerCli.py:55
+msgid ""
+"This application is a simple CLI application that joins your computer to the domain or leaves it from "
+"the domain."
+msgstr ""
+"Bu uygulama, bilgisayarınızı etki alanına dahil eden ya da onları etki alanından ayıran basit bir CLI "
+"uygulamasıdır."
+
+#: ../src/DomainJoinerCli.py:58
+msgid "joins your computer to the domain"
+msgstr "bilgisayarınızı etki alanına dahil eder"
+
+#: ../src/DomainJoinerCli.py:59
+msgid "domain name"
+msgstr "etki alanı adı"
+
+#: ../src/DomainJoinerCli.py:60
+msgid "computer name"
+msgstr "bilgisayar adı"
+
+#: ../src/DomainJoinerCli.py:61
+msgid "domain user name"
+msgstr "etki alanı yetkili kullanıcısı"
+
+#: ../src/DomainJoinerCli.py:62
+msgid "organizational unit"
+msgstr "organizasyonel birim"
+
+#: ../src/DomainJoinerCli.py:63
+msgid "password of domain user"
+msgstr "etki alanı yetkili kullanıcısının parolası"
+
+#: ../src/DomainJoinerCli.py:64
+msgid "adds samba settings when joining your computer to the domain, it is used with join"
+msgstr "bilgisayarınızı etki alanına dahil ederken samba ayarlarını ekler, join ile birlikte kullanılır"
+
+#: ../src/DomainJoinerCli.py:65
+msgid "to leave the domain"
+msgstr "etki alanından ayrılmak için"
+
+#: ../src/DomainJoinerCli.py:66
+msgid "lists domain information"
+msgstr "etki alanı bilgilerini listeler"
+
+#: ../src/DomainJoinerCli.py:67
+msgid "shows the users ids in the domain"
+msgstr "etki alanındaki kullanıcıların kimliklerini gösterir"
+
+#: ../src/DomainJoinerCli.py:68
+msgid "discovers whether the domain is reachable or not"
+msgstr "etki alanı adının ulaşılabilir olup olmadığını keşfeder"
+
+#: ../src/DomainJoinerCli.py:94
+msgid "Successfully left the domain."
+msgstr "Etki alanından başarıyla ayrıldı."
+
+#: ../src/DomainJoinerCli.py:95
+msgid "Please restart your computer"
+msgstr "Lütfen bilgisayarınızı yeniden başlatın"
+
+#: ../src/DomainJoinerCli.py:108
+msgid "Already joined to this domain"
+msgstr "Bu alana zaten katıldınız"
+
+#: ../src/Actions.py:48
+msgid "changed hostname: "
+msgstr "ana bilgisayar adı değiştirildi: "
+
+#: ../src/Actions.py:55
+msgid "checking /etc/hostname file..."
+msgstr "/etc/hostname dosyası kontrol ediliyor..."
+
+#: ../src/Actions.py:57
+msgid "added domain name to /etc/hostname file"
+msgstr "/etc/hostname dosyasına etki alanı adı eklendi"
+
+#: ../src/Actions.py:62 ../src/Actions.py:87
+msgid "done"
+msgstr "bitti"
+
+#: ../src/Actions.py:69
+msgid "checking /etc/hosts file..."
+msgstr "/etc/hosts dosyası kontrol ediliyor..."
+
+#: ../src/Actions.py:89
+msgid "added domain name to /etc/hosts file"
+msgstr "/etc/hosts dosyasına etki alanı adı eklendi"
+
+#: ../src/Actions.py:129
+msgid "Packages are not installed."
+msgstr "Paketler yüklenemedi."
+
+#: ../src/Actions.py:141
+msgid "joining the domain..."
+msgstr "etki alanına dahil ediliyor..."
+
+#: ../src/Actions.py:147
+msgid "An error occurred! Exit Code:"
+msgstr "Bir hata oluştu!. Çıkış Kodu:"

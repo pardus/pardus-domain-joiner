@@ -38,7 +38,7 @@ data_files = [
     ("/usr/share/pardus/pardus-domain-joiner/src", [
         "src/MainWindow.py", 
         "src/DomainJoinerCli.py", 
-        "src/Actions.py","src/Checks.py",
+        "src/Actions.py","src/Checks.py","src/restart.sh",
         "src/__version__"
       ]),
     ("/usr/share/pardus/pardus-domain-joiner/data", [

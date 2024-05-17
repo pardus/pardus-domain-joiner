@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-16 13:23+0300\n"
+"POT-Creation-Date: 2024-05-17 11:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,335 +17,334 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../ui/MainWindow.glade:23
+#: ui/MainWindow.glade:23
 msgid "OK"
 msgstr ""
 
-#: ../ui/MainWindow.glade:79
+#: ui/MainWindow.glade:79
 msgid "Yes"
 msgstr ""
 
-#: ../ui/MainWindow.glade:99
+#: ui/MainWindow.glade:99
 msgid "No"
 msgstr ""
 
-#: ../ui/MainWindow.glade:136
+#: ui/MainWindow.glade:136
 msgid "Your computer will leave the domain. Are you sure?"
 msgstr ""
 
-#: ../ui/MainWindow.glade:211
+#: ui/MainWindow.glade:211
 msgid "Your computer is not part of a domain."
 msgstr ""
 
-#: ../ui/MainWindow.glade:241
+#: ui/MainWindow.glade:241
 msgid "Computer Name:"
 msgstr ""
 
-#: ../ui/MainWindow.glade:279
+#: ui/MainWindow.glade:279
 msgid "Domain Name:"
 msgstr ""
 
-#: ../ui/MainWindow.glade:317
+#: ui/MainWindow.glade:317
 msgid "User Name:"
 msgstr ""
 
-#: ../ui/MainWindow.glade:355
+#: ui/MainWindow.glade:355
 msgid "Password:"
 msgstr ""
 
-#: ../ui/MainWindow.glade:389
+#: ui/MainWindow.glade:389
 msgid "set samba settings automatically"
 msgstr ""
 
-#: ../ui/MainWindow.glade:439
+#: ui/MainWindow.glade:439
 msgid "Organizational Unit"
 msgstr ""
 
-#: ../ui/MainWindow.glade:452
+#: ui/MainWindow.glade:452
 msgid "Default Container (Computers)"
 msgstr ""
 
-#: ../ui/MainWindow.glade:472
+#: ui/MainWindow.glade:472
 msgid "Specific OU Path:"
 msgstr ""
 
-#: ../ui/MainWindow.glade:490
+#: ui/MainWindow.glade:490
 msgid "e.g. cn=Computers, dc=afad, dc=local"
 msgstr ""
 
-#: ../ui/MainWindow.glade:491
+#: ui/MainWindow.glade:491
 msgid "e.g. cn=Computers, dc=domain, dc=name"
 msgstr ""
 
-#: ../ui/MainWindow.glade:526
+#: ui/MainWindow.glade:526
 msgid "Join Domain"
 msgstr ""
 
-#: ../ui/MainWindow.glade:560
+#: ui/MainWindow.glade:560
 msgid "Messages"
 msgstr ""
 
-#: ../ui/MainWindow.glade:626 ../ui/MainWindow.glade:901
-#: ../src/MainWindow.py:249
+#: ui/MainWindow.glade:626 ui/MainWindow.glade:901 src/MainWindow.py:249
 msgid "Restart"
 msgstr ""
 
-#: ../ui/MainWindow.glade:691
+#: ui/MainWindow.glade:691
 msgid "is in the domain."
 msgstr ""
 
-#: ../ui/MainWindow.glade:736
+#: ui/MainWindow.glade:736
 msgid "details"
 msgstr ""
 
-#: ../ui/MainWindow.glade:784
+#: ui/MainWindow.glade:784
 msgid "Leave Domain"
 msgstr ""
 
-#: ../ui/MainWindow.glade:831
+#: ui/MainWindow.glade:831
 msgid "e.g. user name"
 msgstr ""
 
-#: ../ui/MainWindow.glade:842
+#: ui/MainWindow.glade:842
 msgid "ID Check"
 msgstr ""
 
-#: ../ui/MainWindow.glade:888
+#: ui/MainWindow.glade:888
 msgid ""
 "Successfully left the domain.\n"
 "<b>Please restart your computer</b>"
 msgstr ""
 
-#: ../src/MainWindow.py:35
+#: src/MainWindow.py:35
 msgid "Pardus Domain Settings"
 msgstr ""
 
-#: ../src/MainWindow.py:85
+#: src/MainWindow.py:85
 msgid "Information"
 msgstr ""
 
-#: ../src/MainWindow.py:89
+#: src/MainWindow.py:89
 msgid "Warning"
 msgstr ""
 
-#: ../src/MainWindow.py:161
+#: src/MainWindow.py:161
 msgid "All blanks must be filled!"
 msgstr ""
 
-#: ../src/MainWindow.py:163
+#: src/MainWindow.py:163
 msgid "The specific organizational unit path was not entered!"
 msgstr ""
 
-#: ../src/MainWindow.py:182
+#: src/MainWindow.py:182
 msgid "The specific ou path was not entered!"
 msgstr ""
 
-#: ../src/MainWindow.py:192
+#: src/MainWindow.py:192
 msgid "Please wait..."
 msgstr ""
 
-#: ../src/MainWindow.py:195 ../src/MainWindow.py:270
+#: src/MainWindow.py:195 src/MainWindow.py:270
 msgid "Error: domain failed to join realm"
 msgstr ""
 
-#: ../src/MainWindow.py:196 ../src/MainWindow.py:225 ../src/MainWindow.py:256
-#: ../src/Actions.py:179
+#: src/MainWindow.py:196 src/MainWindow.py:225 src/MainWindow.py:256
+#: src/Actions.py:179
 msgid "Not reachable, check your DNS address."
 msgstr ""
 
-#: ../src/MainWindow.py:198 ../src/MainWindow.py:207 ../src/MainWindow.py:257
-#: ../src/MainWindow.py:271
+#: src/MainWindow.py:198 src/MainWindow.py:207 src/MainWindow.py:257
+#: src/MainWindow.py:271
 msgid "Close"
 msgstr ""
 
-#: ../src/MainWindow.py:201 ../src/MainWindow.py:261 ../src/MainWindow.py:265
+#: src/MainWindow.py:201 src/MainWindow.py:261 src/MainWindow.py:265
 msgid "Back"
 msgstr ""
 
-#: ../src/MainWindow.py:227 ../src/Actions.py:174
+#: src/MainWindow.py:227 src/Actions.py:174
 msgid "Domain name check: False"
 msgstr ""
 
-#: ../src/MainWindow.py:229 ../src/Actions.py:189
+#: src/MainWindow.py:229 src/Actions.py:189
 msgid "Domain username or password check: False"
 msgstr ""
 
-#: ../src/MainWindow.py:231 ../src/MainWindow.py:268 ../src/Actions.py:248
+#: src/MainWindow.py:231 src/MainWindow.py:268 src/Actions.py:248
 msgid "This computer has been successfully added to the domain."
 msgstr ""
 
-#: ../src/MainWindow.py:253
+#: src/MainWindow.py:253
 msgid "You don't enter the password. Try again!"
 msgstr ""
 
-#: ../src/MainWindow.py:260
+#: src/MainWindow.py:260
 msgid "Domain name is incorrect."
 msgstr ""
 
-#: ../src/MainWindow.py:264
+#: src/MainWindow.py:264
 msgid "Your password or username is incorrect."
 msgstr ""
 
-#: ../src/MainWindow.py:310
+#: src/MainWindow.py:310
 msgid "Your computer"
 msgstr ""
 
-#: ../src/MainWindow.py:324
+#: src/MainWindow.py:324
 msgid "user not found. Try again!"
 msgstr ""
 
-#: ../src/MainWindow.py:326
+#: src/MainWindow.py:326
 msgid "No such user"
 msgstr ""
 
-#: ../src/MainWindow.py:328
+#: src/MainWindow.py:328
 msgid "Error!"
 msgstr ""
 
-#: ../src/MainWindow.py:387
+#: src/MainWindow.py:387
 msgid "Successful"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:21
+#: src/DomainJoinerCli.py:21
 msgid "Error: The following arguments are required!"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:22
+#: src/DomainJoinerCli.py:22
 msgid "Please enter other commands:\n"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:23
+#: src/DomainJoinerCli.py:23
 msgid "\t\t [-d/--domain DOMAIN] [-c/--computer COMPUTER]\n"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:24
+#: src/DomainJoinerCli.py:24
 msgid "\t\t [-u/--username USERNAME] [--organizationalunit \"ou=Computers\"]\n"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:25
+#: src/DomainJoinerCli.py:25
 msgid "\t\t [--password PASSWORD]\n"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:28
+#: src/DomainJoinerCli.py:28
 msgid "Enter the password of domain: "
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:39
+#: src/DomainJoinerCli.py:39
 msgid "Joining Domain..."
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:55
+#: src/DomainJoinerCli.py:55
 msgid ""
 "This application is a simple CLI application that joins your computer to the "
 "domain or leaves it from the domain."
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:58
+#: src/DomainJoinerCli.py:58
 msgid "joins your computer to the domain"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:59
+#: src/DomainJoinerCli.py:59
 msgid "domain name"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:60
+#: src/DomainJoinerCli.py:60
 msgid "computer name"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:61
+#: src/DomainJoinerCli.py:61
 msgid "domain user name"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:62
+#: src/DomainJoinerCli.py:62
 msgid "organizational unit"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:63
+#: src/DomainJoinerCli.py:63
 msgid "password of domain user"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:64
+#: src/DomainJoinerCli.py:64
 msgid ""
 "adds samba settings when joining your computer to the domain, it is used "
 "with join"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:65
+#: src/DomainJoinerCli.py:65
 msgid "to leave the domain"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:66
+#: src/DomainJoinerCli.py:66
 msgid "lists domain information"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:67
+#: src/DomainJoinerCli.py:67
 msgid "shows the users ids in the domain"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:68
+#: src/DomainJoinerCli.py:68
 msgid "discovers whether the domain is reachable or not"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:94
+#: src/DomainJoinerCli.py:94
 msgid "Successfully left the domain."
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:95
+#: src/DomainJoinerCli.py:95
 msgid "Please restart your computer"
 msgstr ""
 
-#: ../src/DomainJoinerCli.py:108
+#: src/DomainJoinerCli.py:108
 msgid "Already joined to this domain"
 msgstr ""
 
-#: ../src/Actions.py:59
+#: src/Actions.py:59
 msgid "changed hostname: "
 msgstr ""
 
-#: ../src/Actions.py:66
+#: src/Actions.py:66
 msgid "checking /etc/hostname file..."
 msgstr ""
 
-#: ../src/Actions.py:68
+#: src/Actions.py:68
 msgid "added domain name to /etc/hostname file"
 msgstr ""
 
-#: ../src/Actions.py:73 ../src/Actions.py:98
+#: src/Actions.py:73 src/Actions.py:98
 msgid "done"
 msgstr ""
 
-#: ../src/Actions.py:80
+#: src/Actions.py:80
 msgid "checking /etc/hosts file..."
 msgstr ""
 
-#: ../src/Actions.py:100
+#: src/Actions.py:100
 msgid "added domain name to /etc/hosts file"
 msgstr ""
 
-#: ../src/Actions.py:137 ../src/Actions.py:154
+#: src/Actions.py:137 src/Actions.py:154
 msgid "{} is not installed."
 msgstr ""
 
-#: ../src/Actions.py:141 ../src/Actions.py:152
+#: src/Actions.py:141 src/Actions.py:152
 msgid "{} is installed."
 msgstr ""
 
-#: ../src/Actions.py:144
+#: src/Actions.py:144
 msgid "Required packages are installing."
 msgstr ""
 
-#: ../src/Actions.py:156
+#: src/Actions.py:156
 msgid "Required packages already installed."
 msgstr ""
 
-#: ../src/Actions.py:160
+#: src/Actions.py:160
 msgid "Packages are not installed."
 msgstr ""
 
-#: ../src/Actions.py:172
+#: src/Actions.py:172
 msgid "joining the domain..."
 msgstr ""
 
-#: ../src/Actions.py:178
+#: src/Actions.py:178
 msgid "An error occurred! Exit Code:"
 msgstr ""

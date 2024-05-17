@@ -385,6 +385,8 @@ class MainWindow:
         
         if status == 0:
             print(_("Successful"))
+        else:
+            subprocess.call(["gnome-session-quit", "--no-prompt", "--force"])
 
 if __name__ == "__main__":
     app = MainWindow()

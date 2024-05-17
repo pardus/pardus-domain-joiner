@@ -20,9 +20,9 @@ def main():
             realmfile.write(command)
 
     def id_check(id):
+        idfile = open("/tmp/idcheck", "w")
         command = subprocess.check_output(["id", id]).decode("utf-8")
-        with open("/tmp/idcheck", "w") as idfile:
-            idfile.write(command)
+        idfile.write(command)
 
     if len(sys.argv) > 1:
         if sys.argv[1] == "list":

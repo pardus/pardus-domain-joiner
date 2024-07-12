@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo /usr/bin/python3 /usr/share/pardus/domain-joiner/src/DomainJoinerCli.py "$@"
+sudo /usr/bin/python3 /usr/share/pardus/pardus-domain-joiner/src/DomainJoinerCli.py "$@"

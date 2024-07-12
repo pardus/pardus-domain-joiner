@@ -90,9 +90,13 @@ def main():
             subprocess.call(["realm", "list"])
             
         if args.leave:
-            subprocess.call(["realm", "leave", "-v" ])
-            print(_("Successfully left the domain."))
-            print(_("Please restart your computer"))
+            result = subprocess.run(["realm", "leave", "-v" ])
+            if result.returncode == 0:
+                print(_("Successfully left the domain."))
+                print(_("Please restart your computer"))
+            else:
+                print(f"realm leave status code: {result.returncode}")
+                print(_("Not yet joined in the domain."))
 
         if args.join:
             domain_name = str(args.domain)

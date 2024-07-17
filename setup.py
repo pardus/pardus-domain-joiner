@@ -36,6 +36,7 @@ data_files = [
     ("/usr/share/applications/", ["data/tr.org.pardus.domain-joiner.desktop"]),
     ("/usr/share/pam-configs/", ["data/pardus-pam-config"]),
     ("/usr/share/pardus/pardus-domain-joiner/src", [
+        "src/Main.py", 
         "src/MainWindow.py", 
         "src/DomainJoinerCli.py", 
         "src/Actions.py","src/Checks.py","src/restart.sh",

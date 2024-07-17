@@ -1,2 +1,2 @@
 #!/bin/bash
-/usr/bin/python3 /usr/share/pardus/pardus-domain-joiner/src/MainWindow.py
+/usr/bin/python3 /usr/share/pardus/pardus-domain-joiner/src/Main.py

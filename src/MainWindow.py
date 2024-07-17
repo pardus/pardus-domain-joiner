@@ -23,7 +23,8 @@ locale.textdomain(APPNAME)
 locale.setlocale(locale.LC_ALL, SYSTEM_LANGUAGE)
 
 class MainWindow:
-    def __init__(self):
+    def __init__(self,application):
+        self.application = application
         self.builder = Gtk.Builder()
         self.builder.set_translation_domain(APPNAME)
         self.builder.add_from_file(os.path.dirname(
@@ -31,7 +32,7 @@ class MainWindow:
         self.builder.connect_signals(self)
 
         self.window = self.builder.get_object("main_window")
-        self.window.set_application()
+        self.window.set_application(self.application)
         self.window.set_title(_("Pardus Domain Settings"))
         self.window.connect("destroy", self.onDestroy)
 
@@ -104,13 +105,17 @@ class MainWindow:
         self.join_check = ""
 
     def onDestroy(self,Widget):
-        Gtk.main_quit()
+        self.window.get_application().quit()
 
     def on_dialog_close(self, widget):
         self.id_dialog.hide()
         self.leave_dialog.hide()
 
     def on_window_delete_event(self, widget, event):
+        self.window.quit()
+        return True
+
+    def on_subwindow_delete_event(self, widget, event):
         self.id_dialog.hide()
         self.leave_dialog.hide()
         return True
@@ -205,7 +210,7 @@ class MainWindow:
             start, end = self.vtetextview.get_buffer().get_bounds()
             self.vtetextview.get_buffer().delete(start,end)
         elif self.reboot_button.get_label() == _("Close"):
-            Gtk.main_quit()
+            self.window.get_application().quit()
         else:
             self.on_restart_button(Widget)
 
@@ -388,6 +393,3 @@ class MainWindow:
         else:
             subprocess.call(["gnome-session-quit", "--no-prompt", "--force"])
 
-if __name__ == "__main__":
-    app = MainWindow()
-    Gtk.main()

@@ -1,2 +1,9 @@
 #!/bin/bash
-sudo /usr/bin/python3 /usr/share/pardus/pardus-domain-joiner/src/DomainJoinerCli.py "$@"
+
+if [[ $UID -eq 0 ]] ; then
+    exec /usr/bin/python3 /usr/share/pardus/pardus-domain-joiner/src/DomainJoinerCli.py "$@"
+else
+    echo "You must be root!"
+    exit 1
+fi
+

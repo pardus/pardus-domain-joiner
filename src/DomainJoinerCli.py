@@ -6,6 +6,8 @@ import locale
 from locale import gettext as _
 import subprocess
 
+import Actions
+
 # translation constants:
 APPNAME = "pardus-domain-joiner"
 TRANSLATIONS_PATH = "/usr/share/locale"
@@ -43,11 +45,7 @@ def join(computer_name,domain_name,username,password,ou_location,smb_settings):
 
 def check_domain_list(domain):  
     output = subprocess.check_output(["realm", "list"], stderr=subprocess.STDOUT, text=True)
-
-    if domain in output:
-        return True
-    else:
-        return False
+    return domain in output
 
 
 def main():
@@ -76,6 +74,9 @@ def main():
     password = str(args.password)
     idname = str(args.idcheck)
     
+    actions = Actions.main()
+
+    
     if len(sys.argv)==1:
         parser.print_help(sys.stderr)
         sys.exit(1)
@@ -84,12 +85,13 @@ def main():
             subprocess.call(["id", idname])
 
         if args.discover:
-            subprocess.call(["realm", "discover"])
+            subprocess.call(["realm", "discover", "-v", domain_name])
 
         if args.list:
             subprocess.call(["realm", "list"])
             
         if args.leave:
+            actions.leave()
             result = subprocess.run(["realm", "leave", "-v" ])
             if result.returncode == 0:
                 print(_("Successfully left the domain."))
@@ -111,8 +113,28 @@ def main():
             if cl:
                 print(_("Already joined to this domain"))
             else:
-                join(computer_name,domain_name,username,password,ou_location,smb_settings)
+                if domain_name =="None" or computer_name == "None" or username=="None":
+                    print(_("Error: The following arguments are required!"))
+                    print(_("Please enter other commands:\n"), 
+                        _("\t\t [-d/--domain DOMAIN] [-c/--computer COMPUTER]\n"),
+                        _("\t\t [-u/--username USERNAME] [--organizationalunit \"ou=Computers\"]\n"),
+                        _("\t\t [--password PASSWORD]\n"))
+                else:
+                    if(password == "None"):
+                        domain_password = getpass.getpass(_("Enter the password of domain: "))
+                    else:
+                        domain_password = password
 
+                    fulldn = ", dc=" + domain_name.replace(".",",dc=")
+                    if(ou_location == "None"):
+                        ouaddress = "cn=Computers" + fulldn
+                    else:
+                        ouaddress = ou_location + fulldn
+                try:
+                    print(_("Joining Domain..."))
+                    actions.join(computer_name, domain_name, username,domain_password,ouaddress,smb_settings)
+                except Exception as err:
+                    print(err)
 
 if __name__ == "__main__":
     main()

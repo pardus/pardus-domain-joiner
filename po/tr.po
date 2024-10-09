@@ -3,21 +3,22 @@
 # This file is distributed under the same license as the PACKAGE package.
 # busra <busra.cagliyan@pardus.org.tr>, 2024.
 # Fatih Altun <fatih.altun@pardus.org.tr>, 2024.
+# busra cagliyan <busra.cagliyan@pardus.org.tr>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-17 11:05+0300\n"
-"PO-Revision-Date: 2024-05-16 12:33+0300\n"
-"Last-Translator: Fatih Altun <fatih.altun@pardus.org.tr>\n"
+"PO-Revision-Date: 2024-07-30 12:23+0300\n"
+"Last-Translator: busra cagliyan <busra.cagliyan@pardus.org.tr>\n"
 "Language-Team: Turkish <dev@pardus.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: Gtranslator 3.38.0\n"
+"X-Generator: Gtranslator 42.0\n"
 
 #: ui/MainWindow.glade:23
 msgid "OK"
@@ -357,4 +358,4 @@ msgstr "etki alanına dahil ediliyor..."
 
 #: src/Actions.py:178
 msgid "An error occurred! Exit Code:"
-msgstr "Bir hata oluştu!. Çıkış Kodu:"
+msgstr "Bir hata oluştu! Çıkış Kodu:"

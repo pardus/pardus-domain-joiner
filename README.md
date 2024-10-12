@@ -29,19 +29,19 @@ Make sure to install the following dependencies before running the application:
 2. Clone the repository:
 
    ```bash
-   git clone https://git.pardus.net.tr/busra.cagliyan/domain-joiner
+   git clone https://github.com/pardus/pardus-domain-joiner.git
    ```
 
 3. Run the program:
     
     * GUI 
       ```bash
-      sudo python MainWindow.py
+      sudo python3 src/Main.py
       ```
     
     * CLI
       ```bash
-      sudo python DomainJoinerCLI.py -h
+      sudo python3 src/DomainJoinerCLI.py -h
       ```
     
 ## Screenshots

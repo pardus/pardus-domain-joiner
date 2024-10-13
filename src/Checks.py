@@ -9,11 +9,12 @@ def main():
 
     def list():
         cache = apt.cache.Cache()
-        pagkage = cache["realmd"]
+        package = cache["realmd"]
 
-        if not pagkage.is_installed:
-            pagkage.mark_install()
+        if not package.is_installed:
+            package.mark_install()
             cache.commit()
+
         command = subprocess.check_output(["realm", "list"]).decode("utf-8")
 
         with open("/tmp/realmlist", "w") as realmfile:
@@ -25,13 +26,14 @@ def main():
         idfile.write(command)
 
     if len(sys.argv) > 1:
-        if sys.argv[1] == "list":
-            list()
-        elif sys.argv[1] == "id_check":
-            id_check(sys.argv[2])
-        else:
-            print("arg error")
-            sys.exit(1)
+        match sys.argv[1]:
+            case "list":
+                list()
+            case "id_check":
+                id_check(sys.argv[2])
+            case _:
+                print("arg error")
+                sys.exit(1)
     else:
         print("no argument passed")
 

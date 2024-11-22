@@ -40,6 +40,22 @@ class MainWindow:
 
         self.check_realm_list()
 
+        self.about_dialog.set_program_name("Pardus Domain Joiner")
+        if self.about_dialog.get_titlebar is None:
+            about_headerbar = Gtk.HeaderBar.new()
+            about_headerbar.set_show_close_button(True)
+            about_headerbar.set_title("Pardus Domain Joiner")
+            about_headerbar.show_all()
+            self.about_dialog.set_titlebar(about_headerbar)
+
+        try:
+            version = open(
+                os.path.dirname(os.path.abspath(__file__)) + "/__version__"
+            ).readline()
+            self.about_dialog.set_version(version)
+        except:
+            pass
+
         self.window.show_all()
 
     def define_components(self):
@@ -89,6 +105,9 @@ class MainWindow:
         self.leave_dialog = self.builder.get_object("leave_dialog")
         self.leave_dialog.set_title(_("Warning"))
 
+        # about dialog
+        self.about_dialog = self.builder.get_object("about_dialog")
+
         # domain detail
         self.details_revealer = self.builder.get_object("details_revealer")
         self.details_revealer.set_reveal_child(False)
@@ -114,6 +133,10 @@ class MainWindow:
     def on_window_delete_event(self, widget, event):
         self.window.quit()
         return True
+    
+    def on_ui_about_button_clicked(self, button):
+        self.about_dialog.run()
+        self.about_dialog.hide()
 
     def on_subwindow_delete_event(self, widget, event):
         self.id_dialog.hide()

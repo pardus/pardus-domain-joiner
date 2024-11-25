@@ -54,7 +54,7 @@ This screen displays the steps required to join your computer to a domain.
 
 **Error Message Page**
 
-![message page 1](screenshots/error_message_page.png)
+![message page 1](screenshots/message_page1.png)
 
 This screen appears while joining the domain and contains an error message if an error is encountered.
 

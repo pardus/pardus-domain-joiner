@@ -7,7 +7,7 @@
     <property name="type-hint">dialog</property>
     <property name="program-name">Pardus Domain Settings</property>
     <property name="copyright" translatable="yes">© TÜBİTAK BİLGEM</property>
-    <property name="comments" translatable="yes">Pardus Domain Settings Applications</property>
+    <property name="comments" translatable="yes">Pardus Domain Settings Application</property>
     <property name="website">https://github.com/pardus/pardus-domain-joiner</property>
     <property name="authors">Büşra ÇAĞLIYAN</property>
     <property name="translator-credits" translatable="yes">Büşra ÇAĞLIYAN</property>

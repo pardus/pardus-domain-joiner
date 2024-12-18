@@ -40,11 +40,11 @@ class MainWindow:
 
         self.check_realm_list()
 
-        self.about_dialog.set_program_name("Pardus Domain Joiner")
+        self.about_dialog.set_program_name(_("Pardus Domain Settings"))
         if self.about_dialog.get_titlebar is None:
             about_headerbar = Gtk.HeaderBar.new()
             about_headerbar.set_show_close_button(True)
-            about_headerbar.set_title("Pardus Domain Joiner")
+            about_headerbar.set_title(_("Pardus Domain Settings"))
             about_headerbar.show_all()
             self.about_dialog.set_titlebar(about_headerbar)
 

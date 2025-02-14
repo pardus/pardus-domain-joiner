@@ -168,7 +168,9 @@ def main():
 
                 for line in result.split("\n"):
                     if line.strip().startswith("domain-name:"):
-                        if line.split(":")[1] == " " + domain:
+                        discovered_domain_name = line.split(":")[1]
+                        expected_domain_name = " " + domain
+                        if discovered_domain_name.lower() == expected_domain_name.lower():
                             print(_("joining the domain..."))
                         else:
                             print(_("Domain name check: False"))

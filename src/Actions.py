@@ -222,7 +222,6 @@ def main():
                 },
                 f"domain/{domain}": {
                     "default_shell": "/bin/bash",
-                    "ad_server": domain,
                     "krb5_store_password_if_offline": True,
                     "cache_credentials": True,
                     "krb5_realm": domain,

@@ -1,3 +1,61 @@
+pardus-domain-joiner (1.1) unstable; urgency=medium
+
+  [ busra ]
+  * add func to set hostname
+
+  [ Fatih Altun ]
+  * Add domain name to realm discover
+
+  [ busra ]
+  * add restart script and grant sudo permission
+  * add translation
+  * add missing file in setup.py
+  * update .gitignore
+  * fix typo in .gitignore
+
+  [ Fatih Altun ]
+  * Add is installed control for required package
+  * Update pot file
+  * Update Turkish translations
+  * Update po/files
+  * Add update translations script
+  * Update translations
+
+  [ busra ]
+  * update to write of id check file
+
+  [ Fatih Altun ]
+  * Add gnome-session-quit for if restart fails
+
+  [ busra ]
+  * file location corrected
+  * Add a warning message for realm leave command if not in the domain
+  * set executable script as Main.py
+  * remove sudo dependency
+  * add Actions module
+  * update translation
+
+  [ Hugo Carvalho ]
+  * Add portuguese translations
+  * Update update-translations.sh
+  * Update update-translations.sh
+
+  [ Edip Hzr ]
+  * Update README.md fix git repo adress fix python file paths replace python with python3 	modified:   README.md
+
+  [ busra ]
+  * ulakbim -> bilgem
+  * add about dialog
+  * update about dialog icon
+  * update app name in readme
+  * update screenshots
+  * fix typos
+  * fix typo
+  * domain name checking fixed
+  * update sssd.conf
+
+ -- Büşra ÇAĞLIYAN <busra.cagliyan@pardus.org.tr>  Mon, 17 Feb 2025 11:11:30 +0300
+
 pardus-domain-joiner (1.0) unstable; urgency=medium
 
   * first commit

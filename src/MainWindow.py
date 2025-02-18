@@ -6,6 +6,7 @@ import platform
 import locale
 from locale import gettext as _
 
+import re
 import gi
 gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "3.0")
@@ -177,17 +178,35 @@ class MainWindow:
 
     def hostname(self):
         return platform.node().split(".")[0] # just for comp name
+    
+    def sanitize_input(self, input_text):
+        sanitized_input = re.sub(r'[^a-zA-Z0-9,=]', '', input_text)
+        return sanitized_input
+    
+    def generate_ouaddress(self, domain):
+        ouaddress = ""
+        fulldn = ", dc=" + domain.replace(".", ", dc=")
+        if self.ou_default_rb.get_active():
+            ouaddress = "cn=Computers" + fulldn
+        else:
+            input_text = self.ou_specific_entry.get_text()
+            sanitized_ou = self.sanitize_input(input_text)
+            ouaddress = sanitized_ou
+            if "dc=" not in ouaddress:
+                ouaddress += fulldn
+
+        return ouaddress
 
     def on_join_button(self,Widget):
-        self.comp = self.comp_name_entry.get_text()
-        self.domain = self.domain_name_entry.get_text()
-        self.user = self.user_name_entry.get_text()
-        self.passwd = self.password_entry.get_text()
-        self.ouaddress = ""
+        comp = self.comp_name_entry.get_text()
+        domain = self.domain_name_entry.get_text()
+        user = self.user_name_entry.get_text()
+        passwd = self.password_entry.get_text()
+        ouaddress = ""
 
-        if self.comp == "" or self.domain == "" or self.user == "" or self.passwd == "":
+        if comp == "" or domain == "" or user == "" or passwd == "":
             self.required_label.set_markup("<span color='red'>{}</span>".format(_("All blanks must be filled!")))
-        elif self.ou_specific_rb.get_active() and self.ouaddress == "":
+        elif self.ou_specific_rb.get_active() and self.ou_specific_entry.get_text() == "":
             self.ou_warning_label.set_markup("<span color='red'>{}</span>".format(_("The specific organizational unit path was not entered!")))
         else:
             if self.smb_check_button.get_active():
@@ -199,15 +218,8 @@ class MainWindow:
             self.password_entry.set_text("")
             self.required_label.set_text("")
 
-            fulldn = ", dc=" + self.domain.replace(".", ", dc=")
-            if (self.ou_default_rb.get_active()):
-                self.ouaddress = "cn=Computers" + fulldn
-            else:
-                self.ouaddress = self.ou_specific_entry.get_text() + fulldn
+            ouaddress = self.generate_ouaddress(domain)
             self.ou_warning_label.set_text("")
-
-            if self.ou_specific_rb.get_active() and self.ouaddress == ",dc="+fulldn:
-                self.ou_warning_label.set_markup("<span color='red'>{}</span>".format(_("The specific ou path was not entered!")))
 
             self.main_stack.set_visible_child_name("join_page")
             self.second_stack.set_visible_child_name("message_page")
@@ -215,7 +227,7 @@ class MainWindow:
             self.reboot_button.set_sensitive(False)
             try:
                 command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__))
-                           + "/Actions.py","join", self.comp, self.domain, self.user,self.passwd, self.ouaddress,self.smb_check_clicked]
+                           + "/Actions.py","join", comp, domain, user, passwd, ouaddress, self.smb_check_clicked]
                 self.startJoinProcess(command)
                 self.vtetextview.get_buffer().insert(self.vtetextview.get_buffer().get_end_iter(), _("Please wait...") + "\n")
                 self.vtetextview.scroll_to_iter(self.vtetextview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)

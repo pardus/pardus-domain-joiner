@@ -4,4 +4,4 @@ Priority: 0
 Session-Type: Additional
 Session-Interactive-Only: yes
 Session:
-	optional			pam_mkhomedir.so /skel=/etc/skel umask=0077
+	required			pam_mkhomedir.so /skel=/etc/skel umask=0077

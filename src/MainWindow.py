@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import os
+import socket
 import subprocess
-import platform
 import locale
 from locale import gettext as _
 
@@ -177,7 +177,7 @@ class MainWindow:
         pid = self.startLeaveProcess(command)
 
     def hostname(self):
-        return platform.node().split(".")[0] # just for comp name
+        return socket.gethostname().split(".")[0] # just for comp name
     
     def sanitize_input(self, input_text):
         sanitized_input = re.sub(r'[^a-zA-Z0-9,=]', '', input_text)

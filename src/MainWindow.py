@@ -227,7 +227,7 @@ class MainWindow:
             self.reboot_button.set_sensitive(False)
             try:
                 command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__))
-                           + "/Actions.py","join", comp, domain, user, passwd, ouaddress, self.smb_check_clicked]
+                           + "/Actions.py","join", comp, domain.upper(), user, passwd, ouaddress, self.smb_check_clicked]
                 self.startJoinProcess(command)
                 self.vtetextview.get_buffer().insert(self.vtetextview.get_buffer().get_end_iter(), _("Please wait...") + "\n")
                 self.vtetextview.scroll_to_iter(self.vtetextview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)

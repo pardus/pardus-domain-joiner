@@ -115,14 +115,17 @@ class MainWindow:
         self.domain_details_label.set_visible(False)
 
         # used to control button clicks
-        self.id_clicked=False
-        self.smb_check_clicked="False"
+        self.id_clicked = False
+        self.smb_check_clicked = False
+
+        self.client = ""
 
         # checking for errors when joining the domain
-        self.password_check = ""
-        self.domain_check = ""
-        self.domain_name_check = ""
-        self.join_check = ""
+        self.password_check = False
+        self.user_check = False
+        self.domain_check = False
+        self.domain_name_check = False
+        self.join_check = False
 
     def onDestroy(self,Widget):
         self.window.get_application().quit()
@@ -210,7 +213,7 @@ class MainWindow:
             self.ou_warning_label.set_markup("<span color='red'>{}</span>".format(_("The specific organizational unit path was not entered!")))
         else:
             if self.smb_check_button.get_active():
-                self.smb_check_clicked = "True"
+                self.smb_check_clicked = True
 
             self.comp_name_entry.set_text("")
             self.domain_name_entry.set_text("")
@@ -220,6 +223,8 @@ class MainWindow:
 
             ouaddress = self.generate_ouaddress(domain)
             self.ou_warning_label.set_text("")
+
+            self.client = user+"@"+domain.upper()
 
             self.main_stack.set_visible_child_name("join_page")
             self.second_stack.set_visible_child_name("message_page")
@@ -263,13 +268,15 @@ class MainWindow:
         print(line)
 
         if line.strip()==_("Not reachable, check your DNS address."):
-            self.domain_check = "False"
-        if line.strip()==_("Domain name check: False"):
-            self.domain_name_check = "False"
-        if line.strip() == _("Domain username or password check: False"):
-            self.password_check = "False"
+            self.domain_check = True
+        if line.strip()==_("Domain name check: False."):
+            self.domain_name_check = True
+        if line.strip() == _("Preauthentication failed!"):
+            self.password_check = True
+        if line.strip() == _(f"Client {self.client} not found in Kerberos database!"):
+            self.user_check = True
         if line.strip() == _("This computer has been successfully added to the domain."):
-            self.join_check = "True"
+            self.join_check = True
         self.vtetextview.get_buffer().insert(self.vtetextview.get_buffer().get_end_iter(), line)
         self.vtetextview.scroll_to_iter(self.vtetextview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
 
@@ -292,19 +299,23 @@ class MainWindow:
         if status == 32256:
             self.message_label.set_markup("<span color='red'>{}</span>".format(_("You don't enter the password. Try again!")))
         else:
-            if self.domain_check == "False":
+            if self.domain_check:
                 self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your DNS address.")))
                 self.reboot_button.set_label(_("Close"))
-                self.domain_check = ""
-            elif self.domain_name_check == "False":
+                self.domain_check = False
+            elif self.domain_name_check:
                 self.message_label.set_markup("<span color='red'>{}</span>".format(_("Domain name is incorrect.")))
                 self.reboot_button.set_label(_("Back"))
-                self.domain_name_check = ""
-            elif self.password_check == "False":
-                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Your password or username is incorrect.")))
+                self.domain_name_check = False
+            elif self.password_check:
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Preauthentication failed.")))
                 self.reboot_button.set_label(_("Back"))
-                self.password_check = ""
-            elif self.join_check == "True":
+                self.password_check = False
+            elif self.user_check:
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_(f"Client '{self.client}' not found Kerberos database.")))
+                self.reboot_button.set_label(_("Back"))
+                self.user_check = False
+            elif self.join_check:
                 self.message_label.set_markup("<span color='green'>{}</span>".format(_("This computer has been successfully added to the domain.")))
             else:
                 self.message_label.set_markup("<span color='red'>{}</span>".format(_("Error: domain failed to join realm")))

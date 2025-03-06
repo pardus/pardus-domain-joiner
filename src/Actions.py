@@ -160,9 +160,6 @@ def main():
                 print(_("Packages are not installed."))
                 sys.exit(1)
 
-            update_hostname_file(comp_name, domain)
-            update_hosts_file(comp_name, domain)
-
             try:
                 result = subprocess.check_output(["realm", "discover", "-v", domain]).decode("utf-8")
 
@@ -173,7 +170,7 @@ def main():
                         if discovered_domain_name.lower() == expected_domain_name.lower():
                             print(_("joining the domain..."))
                         else:
-                            print(_("Domain name check: False"))
+                            print(_("Domain name check: False."))
                             sys.exit(1)
 
             except subprocess.CalledProcessError as e:
@@ -182,73 +179,83 @@ def main():
                 sys.exit(1)
 
             process = subprocess.Popen(
-                ['realm join -v --computer-ou="' + ouaddress + '" --user="' + user + "@" + domain.upper() + '" ' + domain.lower()], stdin=subprocess.PIPE, stdout=subprocess.PIPE, shell=True
+                ['realm join -v --computer-ou="' + ouaddress + '" --user="' + user + "@" + domain.upper() + '" ' + domain.lower()], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True
             )
-            process.communicate(passwd.encode("utf-8"))
+            stdout, stderr = process.communicate(passwd.encode("utf-8"))
 
-            password_check = process.returncode
-            if password_check == 1:
-                print(_("Domain username or password check: False"), file=sys.stdout)
+            msg = stderr.decode("utf-8").strip().split("*")[-1]
+            client = user+"@"+domain.upper()
 
-            if smb_settings == "True":
-                # Samba Authentication
-                # rewrite file /etc/samba/smb.conf
-                smb_file = "/etc/samba/smb.conf"
-                samba_settings = {
-                    "global": {
-                        "unix charset": "UTF-8",
-                        "workgroup": domain.split(".")[0].upper(),
-                        "client signing": "yes",
-                        "client use spnego": "yes",
-                        "dedicated keytab file": "/etc/krb5.keytab",
-                        "kerberos method": "secrets and keytab",
-                        "realm": domain,
-                        "dns proxy": "no",
-                        "map to guest": "Bad User",
-                        "log file": "/var/log/samba/log.%m",
-                        "max log size": 1000,
-                        "syslog": 0,
+            if "Preauthentication failed" in msg:
+                print(_("Preauthentication failed!"), file=sys.stdout)
+                sys.exit(1)
+            elif f"Client '{client}' not found in Kerberos database" in msg:
+                print(_(f"Client '{client}' not found in Kerberos database!"), file=sys.stdout)
+                sys.exit(1)
+            elif "Successfully enrolled machine in realm" in msg:
+                set_hostname(domain)
+                update_hostname_file(comp_name, domain)
+                update_hosts_file(comp_name, domain)
+
+                if smb_settings:
+                    # Samba Authentication
+                    # rewrite file /etc/samba/smb.conf
+                    smb_file = "/etc/samba/smb.conf"
+                    samba_settings = {
+                        "global": {
+                            "unix charset": "UTF-8",
+                            "workgroup": domain.split(".")[0].upper(),
+                            "client signing": "yes",
+                            "client use spnego": "yes",
+                            "dedicated keytab file": "/etc/krb5.keytab",
+                            "kerberos method": "secrets and keytab",
+                            "realm": domain,
+                            "dns proxy": "no",
+                            "map to guest": "Bad User",
+                            "log file": "/var/log/samba/log.%m",
+                            "max log size": 1000,
+                            "syslog": 0,
+                        },
+                    }
+                    rewrite_conf(smb_file, samba_settings)
+
+                # to check and rewrite file /etc/sssd/sssd.conf
+                sssd_file = "/etc/sssd/sssd.conf"
+                sssd_settings = {
+                    "sssd": {
+                        "domains": domain,
+                        "config_file_version": 2,
+                        "services": "nss, pam",
+                    },
+                    f"domain/{domain}": {
+                        "default_shell": "/bin/bash",
+                        "krb5_store_password_if_offline": True,
+                        "cache_credentials": True,
+                        "krb5_realm": domain,
+                        "realmd_tags": "manages-system joined-with-adcli",
+                        "id_provider": "ad",
+                        "fallback_homedir": "/home/%u@%d",
+                        "ad_domain": domain.upper(),
+                        "use_fully_qualified_names": False,
+                        "ldap_id_mapping": True,
+                        "access_provider": "ad",
+                        "ad_gpo_access_control": "permissive",
+                        "ad_gpo_ignore_unreadable": True,
                     },
                 }
-                rewrite_conf(smb_file, samba_settings)
+                rewrite_conf(sssd_file, sssd_settings)
+                os.chmod(sssd_file, 600)
+                
+                subprocess.call(
+                    ["pam-auth-update", "--enable ", "pardus-pam-config"],
+                    env={**os.environ, "DEBIAN_FRONTEND": "noninteractive"},
+                )
+                subprocess.call(["systemctl", "restart ", "sssd"])
 
-            # to check and rewrite file /etc/sssd/sssd.conf
-            sssd_file = "/etc/sssd/sssd.conf"
-            sssd_settings = {
-                "sssd": {
-                    "domains": domain,
-                    "config_file_version": 2,
-                    "services": "nss, pam",
-                },
-                f"domain/{domain}": {
-                    "default_shell": "/bin/bash",
-                    "krb5_store_password_if_offline": True,
-                    "cache_credentials": True,
-                    "krb5_realm": domain,
-                    "realmd_tags": "manages-system joined-with-adcli",
-                    "id_provider": "ad",
-                    "fallback_homedir": "/home/%u@%d",
-                    "ad_domain": domain.upper(),
-                    "use_fully_qualified_names": False,
-                    "ldap_id_mapping": True,
-                    "access_provider": "ad",
-                    "ad_gpo_access_control": "permissive",
-                    "ad_gpo_ignore_unreadable": True,
-                },
-            }
-            rewrite_conf(sssd_file, sssd_settings)
-            os.chmod(sssd_file, 600)
-            
-            subprocess.call(
-                ["pam-auth-update", "--enable ", "pardus-pam-config"],
-                env={**os.environ, "DEBIAN_FRONTEND": "noninteractive"},
-            )
-            subprocess.call(["systemctl", "restart ", "sssd"])
-
-            if password_check == 0:
-                print(_("This computer has been successfully added to the domain."))
-        except Exception as e:
-            print(e)
+                if process.returncode == 0:
+                    print(_("This computer has been successfully added to the domain."))
+        except subprocess.CalledProcessError as e:
+            print(e.stderr)
 
     def permit():
         subprocess.call(["realm", "permit", "-a"])
@@ -259,7 +266,7 @@ def main():
     if len(sys.argv) > 1:
         if control_lock():
             if sys.argv[1] == "join":
-                set_hostname(sys.argv[2])
+                #set_hostname(sys.argv[2])
                 join(
                     sys.argv[2],
                     sys.argv[3],

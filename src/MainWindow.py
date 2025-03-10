@@ -274,7 +274,7 @@ class MainWindow:
             self.domain_name_check = True
         if line.strip() == _("Preauthentication failed!"):
             self.password_check = True
-        if line.strip() == _(f"Client {self.client} not found in Kerberos database!"):
+        if line.strip() == _(f"Client '{self.client}' not found in Kerberos database!"):
             self.user_check = True
         if line.strip() == _("This computer has been successfully added to the domain."):
             self.join_check = True
@@ -309,11 +309,11 @@ class MainWindow:
                 self.reboot_button.set_label(_("Back"))
                 self.domain_name_check = False
             elif self.password_check:
-                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Preauthentication failed.")))
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Preauthentication failed!")))
                 self.reboot_button.set_label(_("Back"))
                 self.password_check = False
             elif self.user_check:
-                self.message_label.set_markup("<span color='red'>{}</span>".format(_(f"Client '{self.client}' not found Kerberos database.")))
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_(f"Client '{self.client}' not found Kerberos database!")))
                 self.reboot_button.set_label(_("Back"))
                 self.user_check = False
             elif self.join_check:

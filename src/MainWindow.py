@@ -116,7 +116,7 @@ class MainWindow:
 
         # used to control button clicks
         self.id_clicked = False
-        self.smb_check_clicked = False
+        self.smb_check_clicked = "False"
 
         self.client = ""
 
@@ -213,7 +213,7 @@ class MainWindow:
             self.ou_warning_label.set_markup("<span color='red'>{}</span>".format(_("The specific organizational unit path was not entered!")))
         else:
             if self.smb_check_button.get_active():
-                self.smb_check_clicked = True
+                self.smb_check_clicked = "True"
 
             self.comp_name_entry.set_text("")
             self.domain_name_entry.set_text("")
@@ -238,6 +238,7 @@ class MainWindow:
                 self.vtetextview.scroll_to_iter(self.vtetextview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
             except Exception as e:
                 print(_("Error: domain failed to join realm"))
+                print(_(f"Error: {e}"))
                 self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your DNS address.")))
                 self.reboot_button.set_sensitive(True)
                 self.reboot_button.set_label(_("Close"))

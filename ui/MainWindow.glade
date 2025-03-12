@@ -496,6 +496,7 @@
                             <property name="halign">start</property>
                             <property name="draw-indicator">True</property>
                             <property name="group">ou_specific_path_rb</property>
+                            <signal name="clicked" handler="on_radio_button_toggled" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -516,6 +517,7 @@
                                 <property name="halign">start</property>
                                 <property name="draw-indicator">True</property>
                                 <property name="group">ou_default_path_rb</property>
+                                <signal name="clicked" handler="on_radio_button_toggled" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>

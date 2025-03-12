@@ -89,6 +89,7 @@ class MainWindow:
             "ou_specific_path_entry")
         self.ou_warning_label= self.builder.get_object(
             "ou_warning_label")
+        self.ou_specific_entry.set_sensitive(False)
 
         # buttons
         self.reboot_button = self.builder.get_object("reboot_button")
@@ -154,7 +155,13 @@ class MainWindow:
     def set_password_icon_release(self, Widget, icon_pos, event):
         self.password_entry.set_visibility(False)
         self.password_entry.set_icon_from_icon_name(1,'view-conceal-symbolic')
-    
+
+    def on_radio_button_toggled(self, Widget):
+        if self.ou_specific_rb.get_active():
+            self.ou_specific_entry.set_sensitive(True)
+        else:
+            self.ou_specific_entry.set_sensitive(False)
+
     def on_restart_button(self,Widget):
         command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__)) + "/restart.sh"]
         pid = self.startRestartProcess(command)

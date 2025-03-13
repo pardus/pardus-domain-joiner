@@ -275,7 +275,7 @@ class MainWindow:
         line = source.readline()
         print(line)
 
-        if line.strip()==_("Not reachable, check your DNS address."):
+        if line.strip()==_(f"No such realm found {self.client.split('@')[1]}"):
             self.domain_check = True
         if line.strip()==_("Domain name check: False."):
             self.domain_name_check = True
@@ -308,8 +308,8 @@ class MainWindow:
             self.message_label.set_markup("<span color='red'>{}</span>".format(_("You don't enter the password. Try again!")))
         else:
             if self.domain_check:
-                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Not reachable, check your DNS address.")))
-                self.reboot_button.set_label(_("Close"))
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_(f"No such realm found {self.client.split('@')[1]}")))
+                self.reboot_button.set_label(_("Back"))
                 self.domain_check = False
             elif self.domain_name_check:
                 self.message_label.set_markup("<span color='red'>{}</span>".format(_("Domain name is incorrect.")))

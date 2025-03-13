@@ -169,13 +169,10 @@ def main():
                         expected_domain_name = " " + domain
                         if discovered_domain_name.lower() == expected_domain_name.lower():
                             print(_("joining the domain..."))
-                        else:
-                            print(_("Domain name check: False."))
-                            sys.exit(1)
 
             except subprocess.CalledProcessError as e:
                 print(_("An error occurred! Exit Code:"), e.returncode)
-                print(_("Not reachable, check your DNS address."), file=sys.stdout)
+                print(_(f"No such realm found {domain.upper()}"), file=sys.stdout)
                 sys.exit(1)
 
             process = subprocess.Popen(

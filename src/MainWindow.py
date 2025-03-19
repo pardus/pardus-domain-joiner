@@ -11,7 +11,7 @@ import gi
 gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "3.0")
 gi.require_version("Vte", "2.91")
-from gi.repository import GLib, Gtk, Vte
+from gi.repository import GLib, Gtk
 
 # Translation Constants:
 APPNAME = "pardus-domain-joiner"

@@ -2,7 +2,7 @@ Source: pardus-domain-joiner
 Section: utils
 Priority: optional
 Maintainer: Pardus Altyapı <altyapi@pardus.org.tr>
-Build-Depends: debhelper (>= 10), dh-python, python3-all, python3-setuptools
+Build-Depends: debhelper (>= 10), dh-python, python3-all, python3-setuptools, libldap2-dev, libsasl2-dev, python3-dev
 Standards-Version: 4.6.1
 Homepage: https://www.pardus.org.tr
 
@@ -23,6 +23,7 @@ Depends: python3 (>=3.5),
 	 adcli, 
 	 sssd-tools, 
 	 cifs-utils, 
-	 smbclient
+	 smbclient,
+	 python3-ldap
 Description: Pardus Domain Joiner 
   This application is a simple ui/cli application that joins your computer to the domain or leaves it from the domain.

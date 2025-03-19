@@ -39,6 +39,7 @@ data_files = [
         "src/Main.py", 
         "src/MainWindow.py", 
         "src/DomainJoinerCli.py", 
+        "src/domain_joiner_ldap.py",
         "src/Actions.py","src/Checks.py","src/restart.sh",
         "src/__version__"
       ]),

@@ -24,7 +24,7 @@ class LDAP:
 
         try:
             self.conn.simple_bind_s(self.username, self.password)
-            print("Authentication successful!")
+            print("LDAP authentication successful!")
             return True
         except ldap.LDAPError as e:
             print(f"LDAP error: {e}")
@@ -49,8 +49,8 @@ class LDAP:
                 for dn, entry in result:
                     if dn and entry:
                         print(f"Hostname {hostname} already exists in Active Directory!")
-                        print(f"Found dn: {dn}")
-                        print(f"Found entry: {entry}")
+                        # print(f"Found dn: {dn}")
+                        # print(f"Found entry: {entry}")
                         return entry
                     else:
                         print(f"Hostname {hostname} is available to use.")

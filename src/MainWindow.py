@@ -13,6 +13,8 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("Vte", "2.91")
 from gi.repository import GLib, Gtk
 
+from domain_joiner_ldap import LDAP
+
 # Translation Constants:
 APPNAME = "pardus-domain-joiner"
 TRANSLATIONS_PATH = "/usr/share/locale"
@@ -238,11 +240,20 @@ class MainWindow:
             self.message_label.set_text("")
             self.reboot_button.set_sensitive(False)
             try:
-                command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__))
-                           + "/Actions.py","join", comp, domain.upper(), user, passwd, ouaddress, self.smb_check_clicked]
-                self.startJoinProcess(command)
-                self.vtetextview.get_buffer().insert(self.vtetextview.get_buffer().get_end_iter(), _("Please wait...") + "\n")
-                self.vtetextview.scroll_to_iter(self.vtetextview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
+                domain_user = user+"@"+domain
+                ldap_search = LDAP(domain,domain_user,passwd)
+                result = ldap_search.check_computer_exists_in_ad(comp)
+                if not result:
+                    command = ["/usr/bin/pkexec", os.path.dirname(os.path.abspath(__file__))
+                            + "/Actions.py","join", comp, domain.upper(), user, passwd, ouaddress, self.smb_check_clicked]
+                    self.startJoinProcess(command)
+                    self.vtetextview.get_buffer().insert(self.vtetextview.get_buffer().get_end_iter(), _("Please wait...") + "\n")
+                    self.vtetextview.scroll_to_iter(self.vtetextview.get_buffer().get_end_iter(), 0.0, False, 0.0, 0.0)
+                else:
+                    self.vtetextview.get_buffer().insert(self.vtetextview.get_buffer().get_end_iter(), _(f"Hostname {comp} already exists in Active Directory!\nPlease change hostname...") + "\n")
+                    self.message_label.set_markup("<span color='red'>{}</span>".format(_("Please change hostname...")))
+                    self.reboot_button.set_sensitive(True)
+                    self.reboot_button.set_label(_("Back"))
             except Exception as e:
                 print(_("Error: domain failed to join realm"))
                 print(_(f"Error: {e}"))

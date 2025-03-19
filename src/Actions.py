@@ -190,7 +190,6 @@ def main():
                 print(_(f"Client '{client}' not found in Kerberos database!"), file=sys.stdout)
                 sys.exit(1)
             elif "Successfully enrolled machine in realm" in msg:
-                set_hostname(domain)
                 update_hostname_file(comp_name, domain)
                 update_hosts_file(comp_name, domain)
 
@@ -263,7 +262,7 @@ def main():
     if len(sys.argv) > 1:
         if control_lock():
             if sys.argv[1] == "join":
-                #set_hostname(sys.argv[2])
+                set_hostname(sys.argv[2])
                 join(
                     sys.argv[2],
                     sys.argv[3],

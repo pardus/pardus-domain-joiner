@@ -124,10 +124,10 @@ class MainWindow:
         self.client = ""
 
         # checking for errors when joining the domain
-        self.password_check = False
-        self.user_check = False
+        self.user_password_check = False
         self.domain_check = False
         self.domain_name_check = False
+        self.ou_address_check = False
         self.join_check = False
 
     def onDestroy(self,Widget):
@@ -291,9 +291,13 @@ class MainWindow:
         if line.strip()==_("Domain name check: False."):
             self.domain_name_check = True
         if line.strip() == _("Preauthentication failed!"):
-            self.password_check = True
+            self.user_password_check = True
         if line.strip() == _(f"Client '{self.client}' not found in Kerberos database!"):
-            self.user_check = True
+            self.user_password_check = True
+        if line.strip() == _("The organizational unit does not exist."):
+            self.ou_address_check = True
+        if line.strip() == _("Not in the desired organizational unit."):
+            self.ou_address_check = True
         if line.strip() == _("This computer has been successfully added to the domain."):
             self.join_check = True
         self.vtetextview.get_buffer().insert(self.vtetextview.get_buffer().get_end_iter(), line)
@@ -326,14 +330,14 @@ class MainWindow:
                 self.message_label.set_markup("<span color='red'>{}</span>".format(_("Domain name is incorrect.")))
                 self.reboot_button.set_label(_("Back"))
                 self.domain_name_check = False
-            elif self.password_check:
-                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Authentication failed. Username or password is incorrect!")))
+            elif self.user_password_check:
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Username or password is incorrect!")))
                 self.reboot_button.set_label(_("Back"))
-                self.password_check = False
-            elif self.user_check:
-                self.message_label.set_markup("<span color='red'>{}</span>".format(_(f"Authentication failed. Username or password is incorrect!")))
+                self.user_password_check = False
+            elif self.ou_address_check:
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_("The organizational unit does not exist or is incorrect")))
                 self.reboot_button.set_label(_("Back"))
-                self.user_check = False
+                self.ou_address_check = False
             elif self.join_check:
                 self.message_label.set_markup("<span color='green'>{}</span>".format(_("This computer has been successfully added to the domain.")))
             else:

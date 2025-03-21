@@ -189,6 +189,12 @@ def main():
             elif f"Client '{client}' not found in Kerberos database" in msg:
                 print(_(f"Client '{client}' not found in Kerberos database!"), file=sys.stdout)
                 sys.exit(1)
+            elif "The organizational unit does not exist" in msg:
+                print(_("The organizational unit does not exist."), file=sys.stdout)
+                sys.exit(1)
+            elif "not in the desired organizational unit" in msg:
+                print(_("Not in the desired organizational unit."), file=sys.stdout)
+                sys.exit(1)
             elif "Successfully enrolled machine in realm" in msg:
                 update_hostname_file(comp_name, domain)
                 update_hosts_file(comp_name, domain)

@@ -327,11 +327,11 @@ class MainWindow:
                 self.reboot_button.set_label(_("Back"))
                 self.domain_name_check = False
             elif self.password_check:
-                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Preauthentication failed!")))
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_("Authentication failed. Username or password is incorrect!")))
                 self.reboot_button.set_label(_("Back"))
                 self.password_check = False
             elif self.user_check:
-                self.message_label.set_markup("<span color='red'>{}</span>".format(_(f"Client '{self.client}' not found Kerberos database!")))
+                self.message_label.set_markup("<span color='red'>{}</span>".format(_(f"Authentication failed. Username or password is incorrect!")))
                 self.reboot_button.set_label(_("Back"))
                 self.user_check = False
             elif self.join_check:

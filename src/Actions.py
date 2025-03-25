@@ -3,6 +3,7 @@
 
 import configparser
 import os
+import shutil
 import sys
 import subprocess
 import apt_pkg
@@ -175,8 +176,11 @@ def main():
                 print(_(f"No such realm found {domain.upper()}"), file=sys.stdout)
                 sys.exit(1)
 
+            join_command = [
+                "realm", "join", "-v", "--computer-ou", ouaddress, "-U", user, domain
+            ]
             process = subprocess.Popen(
-                ['realm join -v --computer-ou="' + ouaddress + '" --user="' + user + "@" + domain.upper() + '" ' + domain.lower()], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True
+                join_command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE
             )
             stdout, stderr = process.communicate(passwd.encode("utf-8"))
 

@@ -1,17 +1,23 @@
+#!/usr/bin/python3
+
 import sys
 
 import gi
 
 from MainWindow import MainWindow
 
-gi.require_version('Gtk', '3.0')
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gio, GLib
 
 
 class Application(Gtk.Application):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, application_id="tr.org.pardus.domain-joiner",
-                         flags=Gio.ApplicationFlags(8), **kwargs)
+        super().__init__(
+            *args,
+            application_id="tr.org.pardus.domain-joiner",
+            flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE,
+            **kwargs,
+        )
         self.window = None
         GLib.set_prgname("tr.org.pardus.domain-joiner")
 
@@ -20,7 +26,8 @@ class Application(Gtk.Application):
             self.window = MainWindow(self)
         else:
             self.window.control_args()
-            self.window.main_window.present()
+
+        self.window.window.present()
 
     def do_command_line(self, command_line):
         options = command_line.get_options_dict()

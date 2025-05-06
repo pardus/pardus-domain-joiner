@@ -175,6 +175,9 @@ class MainWindow:
         self.leave_dialog.hide()
         return True
 
+    def on_btn_go_page(self, page):
+        self.main_stack.set_visible_child(page)
+
     # == Page 1: Domain Name ==
     def on_domain_entry_activate(self, entry):
         if len(entry.get_text()) != 0:

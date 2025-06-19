@@ -1,6 +1,115 @@
-pardus-domain-joiner (0.2.0) yirmiuc; urgency=medium
+pardus-domain-joiner (0.2.0) UNRELEASED; urgency=medium
+
+  * feat: better ui
+  * feat: new single page ui
+  * feat!: remove cli
+  * feat!: new ui
+  * fix: remove unnecessary build dependencies
+  * fix: little version
+
+ -- Emin Fedar <emin.fedar@pardus.org.tr>  Thu, 19 Jun 2025 12:21:35 +0300
+
+pardus-domain-joiner (0.1.0) yirmiuc; urgency=medium
 
   [ busra ]
+  * .gitignore added
+  * new features added to idcheck part
+  * added domain error checking
+  * added script to check hosts and hostname files
+  * removed error checking for host file
+  * fixed error in id_check
+  * added files to build the deb package
+  * fixed sssd.conf
+  * updated 'join script'
+  * added po file and fixed typo
+  * update changelog
+  * update po file
+  * update files
+  * adding pam config setting
+  * fixed bug in sssd.conf
+  * dependencies updated
+  * fixed sssd.conf settings
+  * update dependencies
+  * Add README.md
+  * Add screenshots file
+  * change screenshots
+  * update README.md
+  * added cli
+  * fix typo
+  * fix radio button in ui
+  * add cli script
+  * add warning when changing hostname
+  * fix parsing hostname
+  * add restart page to show after leaving
+  * add warning for OU parts
+  * fix warning message in join function
+  * fix the return code checking dns
+  * fix ouaddress and fix warning on the ou label
+  * add footer
+  * add samba settings
+  * make str instead of boolean
+  * add samba settings to cli
+  * fix the domain name-checking script and error messages
+  * add translation
+  * fix variables that controls error message
+  * fix translation and warning messages
+  * add dialog for hostname change status
+  * add password visibility
+  * fix size of the join page
+  * update textview
+  * make it more readable
+  * fixed bug in error messages
+  * update README.md
+  * delete old screenshots
+  * fix typo
+  * add translation
+  * fix script layout
+  * update .gitignore
+  * add icon and add parameter to domain-joiner-cli
+  * edit the location of files
+  * fix setup.py and debian files
+  * fix typo
+  * add icon
+  * fix error while creating .deb
+  * update screenshots
+  * fix app name
+  * update translation
+  * delete unnecessary spaces
+  * add discover command for cli
+  * update translation
+  * fix file path
+  * bug fix in .desktop file
+  * add showing help message when there is no command
+
+  [ Fatih Altun ]
+  * Fix icon name of desktop file
+
+  [ busra ]
+  * fix app name
+  * fix app name
+  * add leave dialog
+  * remove sudo from commands
+
+  [ Ali Riza KESKIN ]
+  * some fixes about syntax
+
+  [ busra ]
+  * change join check
+  * fix syntax error
+  * remove hostname dialog and fix some syntax error
+  * remove hostname check in join
+  * update hostname func
+  * add force restart
+  * update force restart
+  * update restart func
+  * add writing conf files with config parser and fix some syntax
+  * fix some syntax
+
+  [ Fatih Altun ]
+  * Fix pardus-domain-joiner typos
+
+  [ busra ]
+  * fix pardus-domain-joiner typos
   * add func to set hostname
 
   [ Fatih Altun ]
@@ -41,7 +150,7 @@ pardus-domain-joiner (0.2.0) yirmiuc; urgency=medium
   * Update update-translations.sh
 
   [ Edip Hzr ]
-  * Update README.md fix git repo, python paths
+  * Update README.md fix git repo, python path
 
   [ busra ]
   * ulakbim -> bilgem
@@ -53,11 +162,25 @@ pardus-domain-joiner (0.2.0) yirmiuc; urgency=medium
   * fix typo
   * domain name checking fixed
   * update sssd.conf
+  * filter with regex when getting ouaddress value
+  * update pam config
+  * update policy setting
+  * capitalize domain in sssd.conf on write
+  * use socket lib for better compatibility
+  * update version
+  * refactor output to match realm output during domain join
+  * fix: Ensure the arguments a sequence of strings
+  * fix error messages
+  * add disable/enable for radio button entry
+  * fix standards-version
+  * edit error message for incorrect domain name
+  * add LDAP search for hostname lookup from AD
+  * remove unnecessary library
+  * set hostname at the beginning of the process
+  * add hostname existence check and warning when adding to domain
+  * edit info messages
+  * edit error messages
+  * update error messages
+  * Fix malicious command executable of subprocess
 
- -- Büşra ÇAĞLIYAN <busra.cagliyan@pardus.org.tr>  Mon, 17 Feb 2025 11:11:30 +0300
-
-pardus-domain-joiner (0.1.0) yirmiuc; urgency=medium
-
-  * first commit
-  
- -- Büşra ÇAĞLIYAN <busra.cagliyan@pardus.org.tr>  Thu, 15 Mar 2024 13:52:56 +0300
+ -- Emin Fedar <emin.fedar@pardus.org.tr>  Thu, 19 Jun 2025 12:19:46 +0300

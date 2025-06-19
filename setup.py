@@ -56,7 +56,10 @@ data_files = [
         "/usr/share/pardus/pardus-domain-joiner/src/managers",
         ["src/managers/ConfigManager.py"],
     ),
-    ("/usr/share/pardus/pardus-domain-joiner/data", ["data/pardus-domain-joiner.svg"]),
+    (
+        "/usr/share/pardus/pardus-domain-joiner/data",
+        ["data/pardus-domain-joiner.svg", "data/style.css"],
+    ),
     ("/usr/share/pardus/pardus-domain-joiner/ui", ["ui/MainWindow.glade"]),
     ("/usr/share/polkit-1/actions", ["data/tr.org.pardus.pkexec.domain-joiner.policy"]),
     ("/usr/share/icons/hicolor/scalable/apps/", ["data/pardus-domain-joiner.svg"]),

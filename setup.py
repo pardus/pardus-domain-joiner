@@ -48,7 +48,6 @@ if os.path.exists(changelog):
 data_files = [
     ("/usr/bin/", ["pardus-domain-joiner"]),
     ("/usr/share/applications/", ["data/tr.org.pardus.domain-joiner.desktop"]),
-    ("/usr/share/pam-configs/", ["data/pardus-pam-config"]),
     (
         "/usr/share/pardus/pardus-domain-joiner/src",
         ["src/Main.py", "src/MainWindow.py", "src/Actions.py", "src/__version__"],

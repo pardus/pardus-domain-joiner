@@ -151,13 +151,14 @@ class MainWindow:
             about_headerbar.show_all()
             self.about_dialog.set_titlebar(about_headerbar)
 
-            try:
-                version = open(
-                    os.path.dirname(os.path.abspath(__file__)) + "/__version__"
-                ).readline()
-                self.about_dialog.set_version(version)
-            except Exception:
-                pass
+        try:
+            version = open(
+                os.path.dirname(os.path.abspath(__file__)) + "/__version__"
+            ).readline()
+
+            self.about_dialog.set_version(version)
+        except Exception:
+            pass
 
     # == FUNCTIONS ==
     """

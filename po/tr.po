@@ -103,11 +103,11 @@ msgstr "Seçimlerinizi Gözden Geçirin:"
 
 #: ui/MainWindow.glade:571
 msgid "Domain:"
-msgstr "Etki Alanı Adı:"
+msgstr "Etki Alanı:"
 
 #: ui/MainWindow.glade:610
 msgid "Username:"
-msgstr "Kullanıcı Adı:"
+msgstr "Kullanıcı:"
 
 #: ui/MainWindow.glade:851 src/MainWindow.py:351
 msgid "Joining to the domain..."

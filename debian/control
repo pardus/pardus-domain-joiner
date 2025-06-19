@@ -12,18 +12,7 @@ Depends: python3 (>=3.5),
          python3-gi,
          gir1.2-glib-2.0,
          gir1.2-gtk-3.0,
-         gir1.2-vte-2.91,
-         python3-apt,
-         realmd,
-         krb5-user, 
-	 samba, 
-	 sssd, 
-	 libsss-sudo, 
-	 packagekit, 
-	 adcli, 
-	 sssd-tools, 
-	 cifs-utils, 
-	 smbclient,
-	 python3-ldap
+		     python3-toml,
+		     pardus-domain-core
 Description: Pardus Domain Joiner 
   This application is a simple ui/cli application that joins your computer to the domain or leaves it from the domain.

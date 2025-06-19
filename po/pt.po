@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-09 23:06+0100\n"
+"POT-Creation-Date: 2025-06-19 11:37+0300\n"
 "PO-Revision-Date: 2024-10-09 23:09+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: \n"
@@ -18,347 +18,364 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: ui/MainWindow.glade:23
-msgid "OK"
-msgstr "OK"
+#: ui/MainWindow.glade:11
+#, fuzzy
+msgid "Join domains easily."
+msgstr "Aderir ao domínio"
 
-#: ui/MainWindow.glade:79
-msgid "Yes"
-msgstr "Sim"
+#: ui/MainWindow.glade:16
+msgid "translator_name"
+msgstr ""
 
-#: ui/MainWindow.glade:99
-msgid "No"
-msgstr "Não"
+#: ui/MainWindow.glade:84 ui/MainWindow.glade:1085 src/MainWindow.py:150
+#, fuzzy
+msgid "Pardus Domain Joiner"
+msgstr "Definições de domínio Pardus"
 
-#: ui/MainWindow.glade:136
-msgid "Your computer will leave the domain. Are you sure?"
-msgstr "O computador sairá do domínio. Tem a certeza?"
-
-#: ui/MainWindow.glade:211
-msgid "Your computer is not part of a domain."
-msgstr "O computador não faz parte de um domínio."
-
-#: ui/MainWindow.glade:241
-msgid "Computer Name:"
-msgstr "Nome do computador:"
-
-#: ui/MainWindow.glade:279
-msgid "Domain Name:"
+#: ui/MainWindow.glade:110
+#, fuzzy
+msgid "Domain Name"
 msgstr "Nome do domínio:"
 
-#: ui/MainWindow.glade:317
-msgid "User Name:"
+#: ui/MainWindow.glade:123
+#, fuzzy
+msgid "Username"
 msgstr "Nome de utilizador:"
 
-#: ui/MainWindow.glade:355
-msgid "Password:"
+#: ui/MainWindow.glade:139
+#, fuzzy
+msgid "Password"
 msgstr "Palavra-passe:"
 
-#: ui/MainWindow.glade:389
-msgid "set samba settings automatically"
-msgstr "definir automaticamente as definições do samba"
+#: ui/MainWindow.glade:152 ui/MainWindow.glade:808
+msgid "Join"
+msgstr ""
 
-#: ui/MainWindow.glade:439
-msgid "Organizational Unit"
+#: ui/MainWindow.glade:181
+#, fuzzy
+msgid "Advanced Settings"
+msgstr "Definições de domínio Pardus"
+
+#: ui/MainWindow.glade:212 ui/MainWindow.glade:649
+msgid "Hostname:"
+msgstr ""
+
+#: ui/MainWindow.glade:233
+msgid "Hostname"
+msgstr ""
+
+#: ui/MainWindow.glade:244
+#, fuzzy
+msgid "Change Hostname"
+msgstr "nome do host alterado: "
+
+#: ui/MainWindow.glade:279 ui/MainWindow.glade:699
+msgid "Connection Type:"
+msgstr ""
+
+#: ui/MainWindow.glade:321
+msgid "sssd bilgilendirmesi"
+msgstr ""
+
+#: ui/MainWindow.glade:362
+msgid "winbind bilgilendirmesi"
+msgstr ""
+
+#: ui/MainWindow.glade:401 ui/MainWindow.glade:738
+#, fuzzy
+msgid "Organizational Unit:"
 msgstr "Unidade organizacional"
 
-#: ui/MainWindow.glade:452
+#: ui/MainWindow.glade:420
 msgid "Default Container (Computers)"
 msgstr "Contentor predefinido (computadores)"
 
-#: ui/MainWindow.glade:472
+#: ui/MainWindow.glade:436
 msgid "Specific OU Path:"
 msgstr "Caminho específico da OU:"
 
-#: ui/MainWindow.glade:490
-msgid "e.g. cn=Computers, dc=afad, dc=local"
-msgstr "ex: cn=Computadores, dc=domínio, dc=local"
-
-#: ui/MainWindow.glade:491
-msgid "e.g. cn=Computers, dc=domain, dc=name"
-msgstr "ex: cn=Computadores, dc=domínio, dc=nome"
-
-#: ui/MainWindow.glade:526
-msgid "Join Domain"
-msgstr "Aderir ao domínio"
-
-#: ui/MainWindow.glade:560
-msgid "Messages"
-msgstr "Mensagens"
-
-#: ui/MainWindow.glade:626 ui/MainWindow.glade:901 src/MainWindow.py:254
-msgid "Restart"
-msgstr "Reiniciar"
-
-#: ui/MainWindow.glade:691
-msgid "is in the domain."
-msgstr "está no domínio."
-
-#: ui/MainWindow.glade:736
-msgid "details"
-msgstr "detalhes"
-
-#: ui/MainWindow.glade:784
-msgid "Leave Domain"
-msgstr "Sair do domínio"
-
-#: ui/MainWindow.glade:831
-msgid "e.g. user name"
-msgstr "ex: nome de utilizador"
-
-#: ui/MainWindow.glade:842
-msgid "ID Check"
-msgstr "Verificação de ID"
-
-#: ui/MainWindow.glade:888
-msgid ""
-"Successfully left the domain.\n"
-"<b>Please restart your computer</b>"
-msgstr ""
-"Saiu do domínio com sucesso.\n"
-"<b>Reinicie o computador</b>"
-
-#: src/MainWindow.py:36
-msgid "Pardus Domain Settings"
-msgstr "Definições de domínio Pardus"
-
-#: src/MainWindow.py:86
-msgid "Information"
-msgstr "Informação"
-
-#: src/MainWindow.py:90
-msgid "Warning"
-msgstr "Aviso"
-
-#: src/MainWindow.py:166
-msgid "All blanks must be filled!"
-msgstr "Todos os espaços em branco devem ser preenchidos!"
-
-#: src/MainWindow.py:168
-msgid "The specific organizational unit path was not entered!"
-msgstr "O caminho específico da unidade organizacional não foi introduzido!"
-
-#: src/MainWindow.py:187
-msgid "The specific ou path was not entered!"
-msgstr "O caminho específico OU não foi introduzido!"
-
-#: src/MainWindow.py:197
-msgid "Please wait..."
-msgstr "Aguarde..."
-
-#: src/MainWindow.py:200 src/MainWindow.py:275
-msgid "Error: domain failed to join realm"
-msgstr "Erro: o domínio não conseguiu aderir ao realm"
-
-#: src/MainWindow.py:201 src/MainWindow.py:230 src/MainWindow.py:261
-#: src/Actions.py:179
-msgid "Not reachable, check your DNS address."
-msgstr "Inacessível, verifique o seu endereço DNS."
-
-#: src/MainWindow.py:203 src/MainWindow.py:212 src/MainWindow.py:262
-#: src/MainWindow.py:276
-msgid "Close"
-msgstr "Fechar"
-
-#: src/MainWindow.py:206 src/MainWindow.py:266 src/MainWindow.py:270
+#: ui/MainWindow.glade:478 ui/MainWindow.glade:794 ui/MainWindow.glade:948
 msgid "Back"
 msgstr "Voltar"
 
-#: src/MainWindow.py:232 src/Actions.py:174
-msgid "Domain name check: False"
-msgstr "Verificação do nome de domínio: Falso"
-
-#: src/MainWindow.py:234 src/Actions.py:189
-msgid "Domain username or password check: False"
+#: ui/MainWindow.glade:492
+msgid "Save"
 msgstr ""
-"Verificação do nome de utilizador ou da palavra-passe do domínio: Falso"
 
-#: src/MainWindow.py:236 src/MainWindow.py:273 src/Actions.py:248
-msgid "This computer has been successfully added to the domain."
-msgstr "Este computador foi adicionado com sucesso ao domínio."
-
-#: src/MainWindow.py:258
-msgid "You don't enter the password. Try again!"
-msgstr "Não introduziu a palavra-passe. Tente novamente!"
-
-#: src/MainWindow.py:265
-msgid "Domain name is incorrect."
-msgstr "O nome de domínio está incorreto."
-
-#: src/MainWindow.py:269
-msgid "Your password or username is incorrect."
-msgstr "A sua palavra-passe ou nome de utilizador está incorreto."
-
-#: src/MainWindow.py:315
-msgid "Your computer"
-msgstr "O seu computador"
-
-#: src/MainWindow.py:329
-msgid "user not found. Try again!"
-msgstr "utilizador não encontrado. Tente novamente!"
-
-#: src/MainWindow.py:331
-msgid "No such user"
-msgstr "Não existe tal utilizador"
-
-#: src/MainWindow.py:333
-msgid "Error!"
-msgstr "Erro!"
-
-#: src/MainWindow.py:392
-msgid "Successful"
-msgstr "Bem sucedido"
-
-#: src/DomainJoinerCli.py:23 src/DomainJoinerCli.py:117
-msgid "Error: The following arguments are required!"
-msgstr "Erro: são necessários os seguintes argumentos!"
-
-#: src/DomainJoinerCli.py:24 src/DomainJoinerCli.py:118
-msgid "Please enter other commands:\n"
-msgstr "Introduza outros comandos:\n"
-
-#: src/DomainJoinerCli.py:25 src/DomainJoinerCli.py:119
-msgid "\t\t [-d/--domain DOMAIN] [-c/--computer COMPUTER]\n"
-msgstr "\t\t [-d/--domain DOMÍNIO] [-c/--computer COMPUTADOR]\n"
-
-#: src/DomainJoinerCli.py:26 src/DomainJoinerCli.py:120
-msgid "\t\t [-u/--username USERNAME] [--organizationalunit \"ou=Computers\"]\n"
+#: ui/MainWindow.glade:533
+msgid "Review Your Choices:"
 msgstr ""
-"\t\t [-u/--username NOME DE UTILIZADOR] [--organizationalunit "
-"\"ou=Computadores\"]\n"
 
-#: src/DomainJoinerCli.py:27 src/DomainJoinerCli.py:121
-msgid "\t\t [--password PASSWORD]\n"
-msgstr "\t\t [--password PALAVRA-PASSE]\n"
+#: ui/MainWindow.glade:571
+#, fuzzy
+msgid "Domain:"
+msgstr "Nome do domínio:"
 
-#: src/DomainJoinerCli.py:30 src/DomainJoinerCli.py:124
-msgid "Enter the password of domain: "
-msgstr "Introduza a palavra-passe do domínio: "
+#: ui/MainWindow.glade:610
+#, fuzzy
+msgid "Username:"
+msgstr "Nome de utilizador:"
 
-#: src/DomainJoinerCli.py:41 src/DomainJoinerCli.py:134
-msgid "Joining Domain..."
-msgstr "Aderir ao domínio..."
-
-#: src/DomainJoinerCli.py:53
-msgid ""
-"This application is a simple CLI application that joins your computer to the "
-"domain or leaves it from the domain."
-msgstr ""
-"Esta aplicação é uma aplicação CLI simples que adere o computador ao domínio "
-"ou o retira do domínio."
-
-#: src/DomainJoinerCli.py:56
-msgid "joins your computer to the domain"
-msgstr "adere o computador ao domínio"
-
-#: src/DomainJoinerCli.py:57
-msgid "domain name"
-msgstr "nome do domínio"
-
-#: src/DomainJoinerCli.py:58
-msgid "computer name"
-msgstr "nome do computador"
-
-#: src/DomainJoinerCli.py:59
-msgid "domain user name"
-msgstr "nome do utilizador do domínio"
-
-#: src/DomainJoinerCli.py:60
-msgid "organizational unit"
-msgstr "unidade organizacional"
-
-#: src/DomainJoinerCli.py:61
-msgid "password of domain user"
-msgstr "palavra-passe do utilizador do domínio"
-
-#: src/DomainJoinerCli.py:62
-msgid ""
-"adds samba settings when joining your computer to the domain, it is used "
-"with join"
-msgstr ""
-"adiciona definições samba quando adere o computador ao domínio, é utilizado "
-"com join"
-
-#: src/DomainJoinerCli.py:63
-msgid "to leave the domain"
-msgstr "para sair do domínio"
-
-#: src/DomainJoinerCli.py:64
-msgid "lists domain information"
-msgstr "lista as informações do domínio"
-
-#: src/DomainJoinerCli.py:65
-msgid "shows the users ids in the domain"
-msgstr "mostra os IDs dos utilizadores no domínio"
-
-#: src/DomainJoinerCli.py:66
-msgid "discovers whether the domain is reachable or not"
-msgstr "descobre se o domínio é acessível ou não"
-
-#: src/DomainJoinerCli.py:97
-msgid "Successfully left the domain."
-msgstr "Saiu do domínio com sucesso."
-
-#: src/DomainJoinerCli.py:98
-msgid "Please restart your computer"
-msgstr "Reinicie o computador"
-
-#: src/DomainJoinerCli.py:101
-msgid "Not yet joined in the domain."
-msgstr "Ainda não aderiu ao domínio."
-
-#: src/DomainJoinerCli.py:114
-msgid "Already joined to this domain"
-msgstr "Já aderiu a este domínio"
-
-#: src/Actions.py:59
-msgid "changed hostname: "
-msgstr "nome do host alterado: "
-
-#: src/Actions.py:66
-msgid "checking /etc/hostname file..."
-msgstr "a verificar o ficheiro /etc/hostname..."
-
-#: src/Actions.py:68
-msgid "added domain name to /etc/hostname file"
-msgstr "adicionou o nome do domínio ao ficheiro /etc/hostname"
-
-#: src/Actions.py:73 src/Actions.py:98
-msgid "done"
-msgstr "concluído"
-
-#: src/Actions.py:80
-msgid "checking /etc/hosts file..."
-msgstr "a verificar o ficheiro /etc/hosts..."
-
-#: src/Actions.py:100
-msgid "added domain name to /etc/hosts file"
-msgstr "adicionou o nome do domínio ao ficheiro /etc/hosts"
-
-#: src/Actions.py:137 src/Actions.py:154
-msgid "{} is not installed."
-msgstr "{} não está instalado."
-
-#: src/Actions.py:141 src/Actions.py:152
-msgid "{} is installed."
-msgstr "{} está instalado."
-
-#: src/Actions.py:144
-msgid "Required packages are installing."
-msgstr "Os pacotes necessários estão a ser instalados."
-
-#: src/Actions.py:156
-msgid "Required packages already installed."
-msgstr "Os pacotes necessários já estão instalados."
-
-#: src/Actions.py:160
-msgid "Packages are not installed."
-msgstr "Os pacotes não estão instalados."
-
-#: src/Actions.py:172
-msgid "joining the domain..."
+#: ui/MainWindow.glade:851 src/MainWindow.py:351
+#, fuzzy
+msgid "Joining to the domain..."
 msgstr "aderir ao domínio..."
 
-#: src/Actions.py:178
-msgid "An error occurred! Exit Code:"
+#: ui/MainWindow.glade:931
+msgid "Cancel"
+msgstr ""
+
+#: ui/MainWindow.glade:1028
+#, fuzzy
+msgid "You are in the domain."
+msgstr "está no domínio."
+
+#: ui/MainWindow.glade:1038
+msgid "Leave"
+msgstr ""
+
+#: src/MainWindow.py:300
+msgid "Are you sure?"
+msgstr ""
+
+#: src/MainWindow.py:301
+msgid ""
+"Hostname will be changed.\n"
+"\n"
+"Old: {}\n"
+"New: {}"
+msgstr ""
+
+#: src/MainWindow.py:329
+#, fuzzy
+msgid "Couldn't change hostname"
+msgstr "nome do host alterado: "
+
+#: src/MainWindow.py:402
+#, fuzzy
+msgid "An error occured while joining."
 msgstr "Ocorreu um erro! Código de saída:"
+
+#, fuzzy
+#~ msgid "CN=Computers, DC=domain, DC=name"
+#~ msgstr "ex: cn=Computadores, dc=domínio, dc=nome"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Yes"
+#~ msgstr "Sim"
+
+#~ msgid "No"
+#~ msgstr "Não"
+
+#~ msgid "Your computer will leave the domain. Are you sure?"
+#~ msgstr "O computador sairá do domínio. Tem a certeza?"
+
+#~ msgid "Your computer is not part of a domain."
+#~ msgstr "O computador não faz parte de um domínio."
+
+#~ msgid "Computer Name:"
+#~ msgstr "Nome do computador:"
+
+#~ msgid "set samba settings automatically"
+#~ msgstr "definir automaticamente as definições do samba"
+
+#~ msgid "e.g. cn=Computers, dc=afad, dc=local"
+#~ msgstr "ex: cn=Computadores, dc=domínio, dc=local"
+
+#~ msgid "Messages"
+#~ msgstr "Mensagens"
+
+#~ msgid "Restart"
+#~ msgstr "Reiniciar"
+
+#~ msgid "details"
+#~ msgstr "detalhes"
+
+#~ msgid "Leave Domain"
+#~ msgstr "Sair do domínio"
+
+#~ msgid "e.g. user name"
+#~ msgstr "ex: nome de utilizador"
+
+#~ msgid "ID Check"
+#~ msgstr "Verificação de ID"
+
+#~ msgid ""
+#~ "Successfully left the domain.\n"
+#~ "<b>Please restart your computer</b>"
+#~ msgstr ""
+#~ "Saiu do domínio com sucesso.\n"
+#~ "<b>Reinicie o computador</b>"
+
+#~ msgid "Information"
+#~ msgstr "Informação"
+
+#~ msgid "Warning"
+#~ msgstr "Aviso"
+
+#~ msgid "All blanks must be filled!"
+#~ msgstr "Todos os espaços em branco devem ser preenchidos!"
+
+#~ msgid "The specific organizational unit path was not entered!"
+#~ msgstr "O caminho específico da unidade organizacional não foi introduzido!"
+
+#~ msgid "The specific ou path was not entered!"
+#~ msgstr "O caminho específico OU não foi introduzido!"
+
+#~ msgid "Please wait..."
+#~ msgstr "Aguarde..."
+
+#~ msgid "Error: domain failed to join realm"
+#~ msgstr "Erro: o domínio não conseguiu aderir ao realm"
+
+#~ msgid "Not reachable, check your DNS address."
+#~ msgstr "Inacessível, verifique o seu endereço DNS."
+
+#~ msgid "Close"
+#~ msgstr "Fechar"
+
+#~ msgid "Domain name check: False"
+#~ msgstr "Verificação do nome de domínio: Falso"
+
+#~ msgid "Domain username or password check: False"
+#~ msgstr ""
+#~ "Verificação do nome de utilizador ou da palavra-passe do domínio: Falso"
+
+#~ msgid "This computer has been successfully added to the domain."
+#~ msgstr "Este computador foi adicionado com sucesso ao domínio."
+
+#~ msgid "You don't enter the password. Try again!"
+#~ msgstr "Não introduziu a palavra-passe. Tente novamente!"
+
+#~ msgid "Domain name is incorrect."
+#~ msgstr "O nome de domínio está incorreto."
+
+#~ msgid "Your password or username is incorrect."
+#~ msgstr "A sua palavra-passe ou nome de utilizador está incorreto."
+
+#~ msgid "Your computer"
+#~ msgstr "O seu computador"
+
+#~ msgid "user not found. Try again!"
+#~ msgstr "utilizador não encontrado. Tente novamente!"
+
+#~ msgid "No such user"
+#~ msgstr "Não existe tal utilizador"
+
+#~ msgid "Error!"
+#~ msgstr "Erro!"
+
+#~ msgid "Successful"
+#~ msgstr "Bem sucedido"
+
+#~ msgid "Error: The following arguments are required!"
+#~ msgstr "Erro: são necessários os seguintes argumentos!"
+
+#~ msgid "Please enter other commands:\n"
+#~ msgstr "Introduza outros comandos:\n"
+
+#~ msgid "\t\t [-d/--domain DOMAIN] [-c/--computer COMPUTER]\n"
+#~ msgstr "\t\t [-d/--domain DOMÍNIO] [-c/--computer COMPUTADOR]\n"
+
+#~ msgid ""
+#~ "\t\t [-u/--username USERNAME] [--organizationalunit \"ou=Computers\"]\n"
+#~ msgstr ""
+#~ "\t\t [-u/--username NOME DE UTILIZADOR] [--organizationalunit "
+#~ "\"ou=Computadores\"]\n"
+
+#~ msgid "\t\t [--password PASSWORD]\n"
+#~ msgstr "\t\t [--password PALAVRA-PASSE]\n"
+
+#~ msgid "Enter the password of domain: "
+#~ msgstr "Introduza a palavra-passe do domínio: "
+
+#~ msgid "Joining Domain..."
+#~ msgstr "Aderir ao domínio..."
+
+#~ msgid ""
+#~ "This application is a simple CLI application that joins your computer to "
+#~ "the domain or leaves it from the domain."
+#~ msgstr ""
+#~ "Esta aplicação é uma aplicação CLI simples que adere o computador ao "
+#~ "domínio ou o retira do domínio."
+
+#~ msgid "joins your computer to the domain"
+#~ msgstr "adere o computador ao domínio"
+
+#~ msgid "domain name"
+#~ msgstr "nome do domínio"
+
+#~ msgid "computer name"
+#~ msgstr "nome do computador"
+
+#~ msgid "domain user name"
+#~ msgstr "nome do utilizador do domínio"
+
+#~ msgid "organizational unit"
+#~ msgstr "unidade organizacional"
+
+#~ msgid "password of domain user"
+#~ msgstr "palavra-passe do utilizador do domínio"
+
+#~ msgid ""
+#~ "adds samba settings when joining your computer to the domain, it is used "
+#~ "with join"
+#~ msgstr ""
+#~ "adiciona definições samba quando adere o computador ao domínio, é "
+#~ "utilizado com join"
+
+#~ msgid "to leave the domain"
+#~ msgstr "para sair do domínio"
+
+#~ msgid "lists domain information"
+#~ msgstr "lista as informações do domínio"
+
+#~ msgid "shows the users ids in the domain"
+#~ msgstr "mostra os IDs dos utilizadores no domínio"
+
+#~ msgid "discovers whether the domain is reachable or not"
+#~ msgstr "descobre se o domínio é acessível ou não"
+
+#~ msgid "Successfully left the domain."
+#~ msgstr "Saiu do domínio com sucesso."
+
+#~ msgid "Please restart your computer"
+#~ msgstr "Reinicie o computador"
+
+#~ msgid "Already joined to this domain"
+#~ msgstr "Já aderiu a este domínio"
+
+#~ msgid "checking /etc/hostname file..."
+#~ msgstr "a verificar o ficheiro /etc/hostname..."
+
+#~ msgid "added domain name to /etc/hostname file"
+#~ msgstr "adicionou o nome do domínio ao ficheiro /etc/hostname"
+
+#~ msgid "done"
+#~ msgstr "concluído"
+
+#~ msgid "checking /etc/hosts file..."
+#~ msgstr "a verificar o ficheiro /etc/hosts..."
+
+#~ msgid "added domain name to /etc/hosts file"
+#~ msgstr "adicionou o nome do domínio ao ficheiro /etc/hosts"
+
+#~ msgid "{} is not installed."
+#~ msgstr "{} não está instalado."
+
+#~ msgid "{} is installed."
+#~ msgstr "{} está instalado."
+
+#~ msgid "Required packages are installing."
+#~ msgstr "Os pacotes necessários estão a ser instalados."
+
+#~ msgid "Required packages already installed."
+#~ msgstr "Os pacotes necessários já estão instalados."
+
+#~ msgid "Packages are not installed."
+#~ msgstr "Os pacotes não estão instalados."
+
+#~ msgid "Not yet joined in the domain."
+#~ msgstr "Ainda não aderiu ao domínio."

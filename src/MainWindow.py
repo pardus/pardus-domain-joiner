@@ -5,6 +5,9 @@ import subprocess
 import locale
 from locale import gettext as _
 
+from pardus_domain_core import domain_operations
+import managers.ConfigManager as ConfigManager
+
 import re
 import gi
 
@@ -24,6 +27,8 @@ SYSTEM_LANGUAGE = os.environ.get("LANG")
 locale.bindtextdomain(APPNAME, TRANSLATIONS_PATH)
 locale.textdomain(APPNAME)
 locale.setlocale(locale.LC_ALL, SYSTEM_LANGUAGE)
+
+CWD = os.path.dirname(os.path.abspath(__file__))
 
 
 class Model:
@@ -51,8 +56,6 @@ class MainWindow:
         self.setup_variables()
 
         self.setup_about_dialog()
-
-        # self.check_realm_list()
 
     # == SETUPS ==
     def setup_ui_builder(self):
@@ -96,7 +99,9 @@ class MainWindow:
         self.change_hostname_btn = UI("change_hostname_btn")
 
         self.sssd_radio = UI("sssd_radio")
+        self.winbind_radio = UI("winbind_radio")
 
+        self.ou_default_radio = UI("ou_default_radio")
         self.ou_path_radio = UI("ou_path_radio")
         self.ou_path_entry = UI("ou_path_entry")
 
@@ -107,18 +112,34 @@ class MainWindow:
         self.service_prejoin_label = UI("service_prejoin_label")
         self.ou_prejoin_label = UI("ou_prejoin_label")
 
+        # Joining Page
+        self.joining_viewport = UI("joining_viewport")
+        self.joining_log_label = UI("joining_log_label")
+        self.joining_spinner = UI("joining_spinner")
+        self.joining_title_label = UI("joining_title_label")
+        self.cancel_btn_stack = UI("cancel_btn_stack")
+
     def setup_variables(self):
+        config = ConfigManager.read_config()
+
         self.model = Model()
-
+        self.model.username = config["username"]
+        self.model.domain = config["domain"]
+        self.model.connection_type = config["connection_type"]
+        self.model.organizational_unit = config["organizational_unit"]
         self.model.hostname = os.uname()[1]
-        self.hostname_entry.set_text(self.model.hostname)
 
-        # checking for errors when joining the domain
-        # self.user_password_check = False
-        # self.domain_check = False
-        # self.domain_name_check = False
-        # self.ou_address_check = False
-        # self.join_check = False
+        # Main Page
+        self.domain_entry.set_text(self.model.domain)
+        self.username_entry.set_text(self.model.username)
+
+        # Advanced Settings Page
+        self.hostname_entry.set_text(self.model.hostname)
+        self.sssd_radio.set_active(self.model.connection_type == "sssd")
+        self.winbind_radio.set_active(self.model.connection_type == "winbind")
+
+        self.ou_default_radio.set_active(self.model.organizational_unit == "")
+        self.ou_path_radio.set_active(self.model.organizational_unit != "")
 
     def setup_about_dialog(self):
         self.about_dialog = self.builder.get_object("about_dialog")
@@ -168,6 +189,38 @@ class MainWindow:
 
         self.prejoin_btn.set_sensitive(is_valid)
 
+    def save_config(self):
+        config = vars(self.model).copy()
+
+        config.pop("password")
+        config.pop("hostname")
+        config.pop("computer_name")
+
+        ConfigManager.save_config(config)
+
+    def spawn_process(self, params, on_stdout, on_stderr, on_exit):
+        pid, _stdin, stdout, stderr = GLib.spawn_async(
+            params,
+            flags=GLib.SPAWN_SEARCH_PATH
+            | GLib.SPAWN_LEAVE_DESCRIPTORS_OPEN
+            | GLib.SPAWN_DO_NOT_REAP_CHILD,
+            standard_input=False,
+            standard_output=True,
+            standard_error=True,
+        )
+
+        if on_stdout:
+            GLib.io_add_watch(
+                GLib.IOChannel(stdout), GLib.IO_IN | GLib.IO_HUP, on_stdout
+            )
+
+        if on_stderr:
+            GLib.io_add_watch(
+                GLib.IOChannel(stderr), GLib.IO_IN | GLib.IO_HUP, on_stderr
+            )
+
+        GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, on_exit)
+
     # === CALLBACKS ===
     def on_destroy(self, win):
         win.get_application().quit()
@@ -186,7 +239,11 @@ class MainWindow:
         self.username_prejoin_label.set_text(self.model.username)
         self.hostname_prejoin_label.set_text(self.model.hostname)
         self.service_prejoin_label.set_text(self.model.connection_type)
-        self.ou_prejoin_label.set_text(self.model.organizational_unit)
+        self.ou_prejoin_label.set_text(
+            "-"
+            if not self.model.organizational_unit
+            else self.model.organizational_unit
+        )
 
         self.main_stack.set_visible_child_name("prejoin")
 
@@ -199,6 +256,7 @@ class MainWindow:
         self.main_stack.set_visible_child_name("main")
 
     def on_save_btn_clicked(self, btn):
+        # Update model
         self.model.organizational_unit = (
             self.ou_path_entry.get_text() if self.ou_path_radio.get_active() else ""
         )
@@ -206,6 +264,8 @@ class MainWindow:
         self.model.connection_type = (
             "sssd" if self.sssd_radio.get_active() else "winbind"
         )
+
+        self.save_config()
 
         self.main_stack.set_visible_child_name("main")
 
@@ -248,15 +308,127 @@ class MainWindow:
         )
 
         response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            stderr_text = ""
+
+            def on_stderr(source, condition):
+                if condition == GLib.IO_HUP:
+                    return False
+
+                line = source.readline().strip()
+                if line != "":
+                    stderr_text += line + "\n"
+
+                return True
+
+            def on_exit(pid, status):
+                print(stderr_text)
+                if status == 0:
+                    self.model.hostname = new_hostname
+                elif status == 126:
+                    pass
+                else:
+                    dialog = Gtk.MessageDialog(
+                        buttons=Gtk.ButtonsType.OK,
+                        text=_("Couldn't change hostname"),
+                        secondary_text=stderr_text,
+                    )
+                    dialog.run()
+                    dialog.hide()
+
+            self.spawn_process(
+                ["pkexec", f"{CWD}/Actions.py", "hostname", new_hostname],
+                None,
+                on_stderr,
+                on_exit,
+            )
+
         dialog.hide()
-        print(response)
 
     def on_ou_path_radio_toggled(self, btn):
         self.ou_path_entry.set_sensitive(btn.get_active())
 
     # Pre Join
     def on_join_btn_clicked(self, btn):
+        # Clear UI
+        self.joining_spinner.start()
+        self.joining_title_label.set_text(_("Joining to the domain..."))
+        self.joining_log_label.set_text("")
+        self.cancel_btn_stack.set_visible_child_name("cancel")
+
         self.main_stack.set_visible_child_name("joining")
+
+        def on_stdout(source, condition):
+            if condition == GLib.IO_HUP:
+                return False
+
+            line = source.readline().strip()
+            if line == "":
+                return True
+
+            lbl = self.joining_log_label
+            lbl.set_markup(lbl.get_label() + line + "\n")
+
+            adj = self.joining_viewport.get_vadjustment()
+            adj.set_value(adj.get_upper() - adj.get_page_size())
+
+            return True
+
+        def on_stderr(source, condition):
+            if condition == GLib.IO_HUP:
+                return False
+
+            line = source.readline().strip()
+            if line == "":
+                return True
+
+            lbl = self.joining_log_label
+            lbl.set_markup(lbl.get_label() + f'<span color="red">{line}</span>' + "\n")
+
+            adj = self.joining_viewport.get_vadjustment()
+            adj.set_value(adj.get_upper() - adj.get_page_size())
+
+            return True
+
+        def on_exit(pid, status):
+            print("exit status:", status)
+
+            if status != 0:
+                lbl = self.joining_log_label
+                lbl.set_markup(
+                    lbl.get_label() + _("Process exit code:{}").format(status)
+                )
+
+            adj = self.joining_viewport.get_vadjustment()
+            adj.set_value(adj.get_upper() - adj.get_page_size())
+
+            if status == 0:
+                self.main_stack.set_visible_child_name("in_domain")
+                self.save_config()
+            elif status == 15 or status == 32256 or status == 32512 or status == 126:
+                # Cancelled pkexec dialog
+                self.main_stack.set_visible_child_name("prejoin")
+            else:
+                self.joining_title_label.set_text(_("An error occured while joining."))
+                self.joining_spinner.stop()
+                self.cancel_btn_stack.set_visible_child_name("back")
+
+        self.spawn_process(
+            [
+                "pkexec",
+                f"{CWD}/Actions.py",
+                "join",
+                self.model.hostname,
+                self.model.domain,
+                self.model.username,
+                self.model.username,
+                self.model.organizational_unit,
+                self.model.connection_type,
+            ],
+            on_stdout,
+            on_stderr,
+            on_exit,
+        )
 
     # Joining Page
     def on_cancel_joining_btn_clicked(self, btn):

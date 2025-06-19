@@ -7,13 +7,13 @@
     <property name="type-hint">dialog</property>
     <property name="program-name">Pardus Domain Joiner</property>
     <property name="version">0.1.0</property>
-    <property name="copyright" translatable="yes">© TÜBİTAK BİLGEM</property>
+    <property name="copyright">© TÜBİTAK BİLGEM</property>
     <property name="comments" translatable="yes">Join domains easily.</property>
     <property name="website">https://github.com/pardus/pardus-domain-joiner</property>
-    <property name="license" translatable="yes">GPL 3.0</property>
+    <property name="license">GPL 3.0</property>
     <property name="authors">Büşra ÇAĞLIYAN
 Emin Fedar</property>
-    <property name="translator-credits" translatable="yes">Emin Fedar</property>
+    <property name="translator-credits" translatable="yes">translator_name</property>
     <property name="logo-icon-name">pardus-domain-joiner</property>
     <child internal-child="vbox">
       <object class="GtkBox">
@@ -65,6 +65,9 @@ Emin Fedar</property>
           <object class="GtkStack" id="main_stack">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="hhomogeneous">False</property>
+            <property name="vhomogeneous">False</property>
+            <property name="interpolate-size">True</property>
             <child>
               <object class="GtkBox">
                 <property name="width-request">300</property>
@@ -250,21 +253,6 @@ Emin Fedar</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">To change the hostname, please press the button</property>
-                        <style>
-                          <class name="dim-label"/>
-                        </style>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -288,7 +276,7 @@ Emin Fedar</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="halign">start</property>
-                    <property name="label" translatable="yes">Which Services:</property>
+                    <property name="label" translatable="yes">Connection Type:</property>
                     <style>
                       <class name="heading"/>
                     </style>
@@ -312,7 +300,7 @@ Emin Fedar</property>
                         <property name="spacing">7</property>
                         <child>
                           <object class="GtkRadioButton" id="sssd_radio">
-                            <property name="label" translatable="yes">Sssd</property>
+                            <property name="label">Sssd</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">False</property>
@@ -353,7 +341,7 @@ Emin Fedar</property>
                         <property name="spacing">7</property>
                         <child>
                           <object class="GtkRadioButton" id="winbind_radio">
-                            <property name="label" translatable="yes">Winbind</property>
+                            <property name="label">Winbind</property>
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">False</property>
@@ -465,7 +453,7 @@ Emin Fedar</property>
                         <property name="visible">True</property>
                         <property name="sensitive">False</property>
                         <property name="can-focus">True</property>
-                        <property name="placeholder-text" translatable="yes">CN=Computers, DC=domain, DC=name</property>
+                        <property name="placeholder-text">CN=Computers, DC=domain, DC=name</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -595,7 +583,7 @@ Emin Fedar</property>
                           <object class="GtkLabel" id="domain_prejoin_label">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -634,7 +622,7 @@ Emin Fedar</property>
                           <object class="GtkLabel" id="username_prejoin_label">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -673,7 +661,7 @@ Emin Fedar</property>
                           <object class="GtkLabel" id="hostname_prejoin_label">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -708,7 +696,7 @@ Emin Fedar</property>
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">Service:</property>
+                            <property name="label" translatable="yes">Connection Type:</property>
                             <style>
                               <class name="heading"/>
                             </style>
@@ -723,7 +711,7 @@ Emin Fedar</property>
                           <object class="GtkLabel" id="service_prejoin_label">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -763,7 +751,7 @@ Emin Fedar</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
-                            <property name="label" translatable="yes">-</property>
+                            <property name="label">-</property>
                             <property name="wrap">True</property>
                           </object>
                           <packing>
@@ -857,12 +845,13 @@ Emin Fedar</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">11</property>
                 <child>
-                  <object class="GtkSpinner">
-                    <property name="width-request">36</property>
-                    <property name="height-request">36</property>
+                  <object class="GtkLabel" id="joining_title_label">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="active">True</property>
+                    <property name="label" translatable="yes">Joining to the domain...</property>
+                    <style>
+                      <class name="title-3"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -871,13 +860,12 @@ Emin Fedar</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="joining_title_label">
+                  <object class="GtkSpinner" id="joining_spinner">
+                    <property name="width-request">36</property>
+                    <property name="height-request">36</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Joining to the domain...</property>
-                    <style>
-                      <class name="heading"/>
-                    </style>
+                    <property name="active">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -891,20 +879,26 @@ Emin Fedar</property>
                     <property name="can-focus">False</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkScrolledWindow">
+                      <object class="GtkScrolledWindow" id="joining_scrolledwindow">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <child>
-                          <object class="GtkViewport">
+                          <object class="GtkViewport" id="joining_viewport">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <property name="shadow-type">none</property>
                             <child>
-                              <object class="GtkLabel">
+                              <object class="GtkLabel" id="joining_log_label">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="halign">start</property>
                                 <property name="valign">start</property>
+                                <property name="margin-start">7</property>
+                                <property name="margin-end">7</property>
+                                <property name="margin-top">7</property>
+                                <property name="margin-bottom">7</property>
+                                <property name="use-markup">True</property>
+                                <property name="selectable">True</property>
                                 <style>
                                   <class name="monospace"/>
                                 </style>
@@ -930,17 +924,41 @@ Emin Fedar</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton">
-                    <property name="label" translatable="yes">Cancel</property>
-                    <property name="width-request">200</property>
+                  <object class="GtkStack" id="cancel_btn_stack">
                     <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="receives-default">True</property>
-                    <property name="halign">center</property>
-                    <signal name="clicked" handler="on_cancel_joining_btn_clicked" swapped="no"/>
-                    <style>
-                      <class name="destructive-action"/>
-                    </style>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="label" translatable="yes">Cancel</property>
+                        <property name="width-request">200</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="halign">center</property>
+                        <signal name="clicked" handler="on_cancel_joining_btn_clicked" swapped="no"/>
+                        <style>
+                          <class name="destructive-action"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="name">cancel</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="label" translatable="yes">Back</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="halign">start</property>
+                        <property name="margin-start">7</property>
+                        <signal name="clicked" handler="on_back_to_main_btn_clicked" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="name">back</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -1008,7 +1026,7 @@ Emin Fedar</property>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">You are in domain.</property>
+                    <property name="label" translatable="yes">You are in the domain.</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -1032,13 +1050,9 @@ Emin Fedar</property>
                 </child>
               </object>
               <packing>
-                <property name="name">page0</property>
-                <property name="title" translatable="yes">page0</property>
+                <property name="name">in_domain</property>
                 <property name="position">4</property>
               </packing>
-            </child>
-            <child>
-              <placeholder/>
             </child>
           </object>
           <packing>
@@ -1052,7 +1066,7 @@ Emin Fedar</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="margin-top">7</property>
-            <property name="label" translatable="yes">TÜBİTAK BİLGEM</property>
+            <property name="label">TÜBİTAK BİLGEM</property>
             <style>
               <class name="dim-label"/>
             </style>

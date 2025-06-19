@@ -1,4 +1,4 @@
-pardus-domain-joiner (1.1) unstable; urgency=medium
+pardus-domain-joiner (0.2) yirmiuc; urgency=medium
 
   [ busra ]
   * add func to set hostname
@@ -41,7 +41,7 @@ pardus-domain-joiner (1.1) unstable; urgency=medium
   * Update update-translations.sh
 
   [ Edip Hzr ]
-  * Update README.md fix git repo adress fix python file paths replace python with python3 	modified:   README.md
+  * Update README.md fix git repo, python paths
 
   [ busra ]
   * ulakbim -> bilgem
@@ -56,7 +56,7 @@ pardus-domain-joiner (1.1) unstable; urgency=medium
 
  -- Büşra ÇAĞLIYAN <busra.cagliyan@pardus.org.tr>  Mon, 17 Feb 2025 11:11:30 +0300
 
-pardus-domain-joiner (1.0) unstable; urgency=medium
+pardus-domain-joiner (0.1) yirmiuc; urgency=medium
 
   * first commit
   

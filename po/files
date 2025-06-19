@@ -1,4 +1,2 @@
 ui/MainWindow.glade
 src/MainWindow.py
-src/DomainJoinerCli.py
-src/Actions.py

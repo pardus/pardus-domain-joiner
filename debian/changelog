@@ -1,4 +1,4 @@
-pardus-domain-joiner (0.2) yirmiuc; urgency=medium
+pardus-domain-joiner (0.2.0) yirmiuc; urgency=medium
 
   [ busra ]
   * add func to set hostname
@@ -56,7 +56,7 @@ pardus-domain-joiner (0.2) yirmiuc; urgency=medium
 
  -- Büşra ÇAĞLIYAN <busra.cagliyan@pardus.org.tr>  Mon, 17 Feb 2025 11:11:30 +0300
 
-pardus-domain-joiner (0.1) yirmiuc; urgency=medium
+pardus-domain-joiner (0.1.0) yirmiuc; urgency=medium
 
   * first commit
   

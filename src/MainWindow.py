@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import os
-import subprocess
 import locale
 from locale import gettext as _
 
@@ -56,6 +55,8 @@ class MainWindow:
         self.setup_variables()
 
         self.setup_about_dialog()
+
+        self.check_domain_already_joined()
 
     # == SETUPS ==
     def setup_ui_builder(self):
@@ -119,6 +120,9 @@ class MainWindow:
         self.joining_title_label = UI("joining_title_label")
         self.cancel_btn_stack = UI("cancel_btn_stack")
 
+        # Joined Page
+        self.joined_domain_label = UI("joined_domain_label")
+
     def setup_variables(self):
         config = ConfigManager.read_config()
 
@@ -161,6 +165,62 @@ class MainWindow:
             pass
 
     # == FUNCTIONS ==
+    def check_domain_already_joined(self):
+        # Go to directly joined page if already joined
+        self.stderr_text = ""
+        self.stdout_text = ""
+
+        def on_stdout(source, condition):
+            if condition == GLib.IO_HUP:
+                return False
+
+            line = source.readline().strip()
+            print("stdout", line)
+            if line:
+                self.stdout_text += line
+
+            return True
+
+        def on_stderr(source, condition):
+            if condition == GLib.IO_HUP:
+                return False
+
+            line = source.readline().strip()
+            print("stderr", line)
+            if line:
+                self.stderr_text += line + "\n"
+
+            return True
+
+        def on_exit(pid, status):
+            if status == 0:
+                domain = self.stdout_text.strip()
+                print(f"joined domain name: '{domain}'")
+
+                if domain:
+                    self.joined_domain_label.set_text(domain)
+                    self.main_stack.set_visible_child_name("in_domain")
+                else:
+                    self.main_stack.set_visible_child_name("main")
+
+            else:
+                dialog = Gtk.MessageDialog(
+                    buttons=Gtk.ButtonsType.OK,
+                    text=_("An error occured on joined domain check."),
+                    secondary_text=self.stderr_text,
+                )
+                dialog.run()
+                dialog.hide()
+
+                self.main_stack.set_visible_child_name("main")
+
+        self.spawn_process(
+            ["pkexec", f"{CWD}/Actions.py", "check_domain"],
+            on_stdout,
+            on_stderr,
+            on_exit,
+        )
+
     """
     def sanitize_input(self, input_text):
         sanitized_input = re.sub(r"[^a-zA-Z0-9,=]", "", input_text)
@@ -310,20 +370,20 @@ class MainWindow:
 
         response = dialog.run()
         if response == Gtk.ResponseType.OK:
-            stderr_text = ""
+            self.stderr_text = ""
 
             def on_stderr(source, condition):
                 if condition == GLib.IO_HUP:
                     return False
 
                 line = source.readline().strip()
-                if line != "":
-                    stderr_text += line + "\n"
+                if line:
+                    self.stderr_text += line + "\n"
 
                 return True
 
             def on_exit(pid, status):
-                print(stderr_text)
+                print(self.stderr_text)
                 if status == 0:
                     self.model.hostname = new_hostname
                 elif status == 126:
@@ -332,7 +392,7 @@ class MainWindow:
                     dialog = Gtk.MessageDialog(
                         buttons=Gtk.ButtonsType.OK,
                         text=_("Couldn't change hostname"),
-                        secondary_text=stderr_text,
+                        secondary_text=self.stderr_text,
                     )
                     dialog.run()
                     dialog.hide()
@@ -405,6 +465,8 @@ class MainWindow:
 
             if status == 0:
                 self.main_stack.set_visible_child_name("in_domain")
+                self.joined_domain_label.set_text(self.model.domain)
+
                 self.save_config()
             elif status == 15 or status == 32256 or status == 32512 or status == 126:
                 # Cancelled pkexec dialog
@@ -422,7 +484,7 @@ class MainWindow:
                 self.model.hostname,
                 self.model.domain,
                 self.model.username,
-                self.model.username,
+                self.model.password,
                 self.model.organizational_unit,
                 self.model.connection_type,
             ],
@@ -434,3 +496,38 @@ class MainWindow:
     # Joining Page
     def on_cancel_joining_btn_clicked(self, btn):
         print("cancel joining")
+
+    # In Domain page
+    def on_leave_domain_btn_clicked(self, btn):
+        self.stderr_text = ""
+
+        def on_stderr(source, condition):
+            if condition == GLib.IO_HUP:
+                return False
+
+            line = source.readline().strip()
+            print("stderr", line)
+            if line:
+                self.stderr_text += line + "\n"
+
+            return True
+
+        def on_exit(pid, status):
+            if status == 0:
+                self.main_stack.set_visible_child_name("main")
+
+            else:
+                dialog = Gtk.MessageDialog(
+                    buttons=Gtk.ButtonsType.OK,
+                    text=_("An error occured on leaving the domain."),
+                    secondary_text=self.stderr_text,
+                )
+                dialog.run()
+                dialog.hide()
+
+        self.spawn_process(
+            ["pkexec", f"{CWD}/Actions.py", "leave"],
+            None,
+            on_stderr,
+            on_exit,
+        )

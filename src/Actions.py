@@ -3,7 +3,7 @@
 import sys
 from pardus_domain_core import domain_operations
 
-if len(sys.argv) > 2:
+if len(sys.argv) >= 2:
     cmd = sys.argv[1]
 
     if cmd == "hostname":
@@ -29,3 +29,15 @@ if len(sys.argv) > 2:
             connection_type == "sssd",
             connection_type == "winbind",
         )
+    elif cmd == "leave":
+        domain_operations.leave(realmd=True)
+    elif cmd == "check_domain":
+        joined_domain_name = domain_operations.list(realmd=True)
+
+        if joined_domain_name:
+            print(joined_domain_name)
+            exit(0)
+
+        joined_domain_name = domain_operations.list(winbind=True)
+        if joined_domain_name:
+            print(joined_domain_name)

@@ -7,7 +7,7 @@ from locale import gettext as _
 from pardus_domain_core import domain_operations
 import managers.ConfigManager as ConfigManager
 
-import re
+import subprocess
 import gi
 
 gi.require_version("GLib", "2.0")
@@ -141,9 +141,10 @@ class MainWindow:
         self.hostname_entry.set_text(self.model.hostname)
         self.sssd_radio.set_active(self.model.connection_type == "sssd")
         self.winbind_radio.set_active(self.model.connection_type == "winbind")
-
         self.ou_default_radio.set_active(self.model.organizational_unit == "")
         self.ou_path_radio.set_active(self.model.organizational_unit != "")
+
+        self.joining_process_pid = None
 
     def setup_about_dialog(self):
         self.about_dialog = self.builder.get_object("about_dialog")
@@ -282,6 +283,8 @@ class MainWindow:
 
         GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, on_exit)
 
+        return pid
+
     # === CALLBACKS ===
     def on_destroy(self, win):
         win.get_application().quit()
@@ -291,7 +294,7 @@ class MainWindow:
         self.about_dialog.hide()
 
     # Main Page
-    def on_prejoin_btn_clicked(self, btn):
+    def on_prejoin_btn_clicked(self, _):
         self.model.domain = self.domain_entry.get_text()
         self.model.username = self.username_entry.get_text()
         self.model.password = self.password_entry.get_text()
@@ -307,8 +310,6 @@ class MainWindow:
         )
 
         self.main_stack.set_visible_child_name("prejoin")
-
-        print(vars(self.model))
 
     def on_advanced_settings_btn_clicked(self, btn):
         self.main_stack.set_visible_child_name("advanced_settings")
@@ -339,6 +340,9 @@ class MainWindow:
     def on_password_entry_icon_release(self, entry, icon_pos, event):
         entry.set_visibility(False)
         entry.set_icon_from_icon_name(1, "view-conceal-symbolic")
+
+    def on_password_entry_activate(self, entry):
+        self.on_prejoin_btn_clicked(None)
 
     def on_domain_entry_changed(self, entry):
         self.check_credentials()
@@ -452,6 +456,7 @@ class MainWindow:
             return True
 
         def on_exit(pid, status):
+            self.joining_process_pid = None
             print("exit status:", status)
 
             if status != 0:
@@ -476,7 +481,7 @@ class MainWindow:
                 self.joining_spinner.stop()
                 self.cancel_btn_stack.set_visible_child_name("back")
 
-        self.spawn_process(
+        self.joining_process_pid = self.spawn_process(
             [
                 "pkexec",
                 f"{CWD}/Actions.py",
@@ -495,7 +500,23 @@ class MainWindow:
 
     # Joining Page
     def on_cancel_joining_btn_clicked(self, btn):
-        print("cancel joining")
+        if not self.joining_process_pid:
+            return
+
+        print("pid", self.joining_process_pid)
+
+        dialog = Gtk.MessageDialog(
+            buttons=Gtk.ButtonsType.OK_CANCEL,
+            text=_("Are you sure?"),
+            secondary_text=_("Do you want to cancel the joining process?"),
+        )
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            subprocess.run(
+                ["pkexec", f"{CWD}/Actions.py", "cancel", str(self.joining_process_pid)]
+            )
+
+        dialog.hide()
 
     # In Domain page
     def on_leave_domain_btn_clicked(self, btn):

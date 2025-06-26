@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 
 import sys
+import signal
+import os
 from pardus_domain_core import domain_operations
 
 if len(sys.argv) >= 2:
@@ -41,3 +43,7 @@ if len(sys.argv) >= 2:
         joined_domain_name = domain_operations.list(winbind=True)
         if joined_domain_name:
             print(joined_domain_name)
+    elif cmd == "cancel":
+        pid = int(sys.argv[2])
+
+        os.kill(pid, signal.SIGKILL)

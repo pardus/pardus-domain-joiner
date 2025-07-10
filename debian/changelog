@@ -1,4 +1,17 @@
-pardus-domain-joiner (0.2.0) UNRELEASED; urgency=medium
+pardus-domain-joiner (0.2.1) yirmiuc; urgency=medium
+
+  * fix: remove pam config
+  * fix: add styles.css to setup
+  * fix: translations and __version__
+  * feat: added leave & domain check functionality
+  * feat: added cancelling joining functionality
+  * fix: better ui
+  * fix: prevent user opening the app without password
+  * fix: remove unnecessary prints
+
+ -- Emin Fedar <emin.fedar@pardus.org.tr>  Thu, 10 Jul 2025 11:03:35 +0300
+
+pardus-domain-joiner (0.2.0) yirmiuc; urgency=medium
 
   * feat: better ui
   * feat: new single page ui

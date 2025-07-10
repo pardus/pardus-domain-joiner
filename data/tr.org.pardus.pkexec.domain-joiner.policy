@@ -7,7 +7,7 @@
     <vendor>Pardus Developer</vendor>
     <vendor_url>http://www.pardus.org.tr/</vendor_url>
 
-    <action id="org.freedesktop.policykit.pkexec.domain-joiner-gui-actions">
+    <action id="tr.org.pardus.pkexec.domain-joiner-gui.actions">
         <description>Run domain joiner program</description>
         <message>Authentication is required to run the Pardus Domain Joiner</message>
         <message xml:lang="tr">Pardus Etki Alanına Dahil Edici için yetkilendirme gerekiyor.</message>

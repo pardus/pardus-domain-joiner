@@ -213,7 +213,7 @@ class MainWindow:
                 dialog.run()
                 dialog.hide()
 
-                self.main_stack.set_visible_child_name("main")
+                self.application.quit()
 
         self.spawn_process(
             ["pkexec", f"{CWD}/Actions.py", "check_domain"],

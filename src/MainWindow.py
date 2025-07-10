@@ -331,8 +331,6 @@ class MainWindow:
 
         self.main_stack.set_visible_child_name("main")
 
-        print(vars(self.model))
-
     def on_password_entry_icon_press(self, entry, icon_pos, event):
         entry.set_visibility(True)
         entry.set_icon_from_icon_name(1, "view-reveal-symbolic")
@@ -457,7 +455,6 @@ class MainWindow:
 
         def on_exit(pid, status):
             self.joining_process_pid = None
-            print("exit status:", status)
 
             if status != 0:
                 lbl = self.joining_log_label
@@ -502,8 +499,6 @@ class MainWindow:
     def on_cancel_joining_btn_clicked(self, btn):
         if not self.joining_process_pid:
             return
-
-        print("pid", self.joining_process_pid)
 
         dialog = Gtk.MessageDialog(
             buttons=Gtk.ButtonsType.OK_CANCEL,

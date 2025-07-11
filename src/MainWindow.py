@@ -31,13 +31,13 @@ CWD = os.path.dirname(os.path.abspath(__file__))
 
 
 class Model:
-    def __init__(self):
-        self.domain = ""
-        self.computer_name = ""
-        self.username = ""
-        self.password = ""
-        self.organizational_unit = ""
-        self.connection_type = "sssd"
+    domain = ""
+    computer_name = ""
+    username = ""
+    password = ""
+    organizational_unit = ""
+    connection_type = "sssd"
+    hostname = ""
 
 
 class MainWindow:
@@ -205,13 +205,7 @@ class MainWindow:
                     self.main_stack.set_visible_child_name("main")
 
             else:
-                dialog = Gtk.MessageDialog(
-                    buttons=Gtk.ButtonsType.OK,
-                    text=_("An error occured on joined domain check."),
-                    secondary_text=self.stderr_text,
-                )
-                dialog.run()
-                dialog.hide()
+                print(self.stderr_text)
 
                 self.application.quit()
 
@@ -221,26 +215,6 @@ class MainWindow:
             on_stderr,
             on_exit,
         )
-
-    """
-    def sanitize_input(self, input_text):
-        sanitized_input = re.sub(r"[^a-zA-Z0-9,=]", "", input_text)
-        return sanitized_input
-
-    def generate_ouaddress(self, domain):
-        ouaddress = ""
-        fulldn = ", dc=" + domain.replace(".", ", dc=")
-        if self.ou_default_rb.get_active():
-            ouaddress = "cn=Computers" + fulldn
-        else:
-            input_text = self.ou_specific_entry.get_text()
-            sanitized_ou = self.sanitize_input(input_text)
-            ouaddress = sanitized_ou
-            if "dc=" not in ouaddress:
-                ouaddress += fulldn
-
-        return ouaddress
-    """
 
     def check_credentials(self):
         is_valid = (

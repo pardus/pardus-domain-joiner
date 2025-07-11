@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-19 11:37+0300\n"
+"POT-Creation-Date: 2025-07-11 15:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,107 +25,111 @@ msgstr ""
 msgid "translator_name"
 msgstr ""
 
-#: ui/MainWindow.glade:84 ui/MainWindow.glade:1085 src/MainWindow.py:150
+#: ui/MainWindow.glade:85
+msgid "Checking joined domain list..."
+msgstr ""
+
+#: ui/MainWindow.glade:129 ui/MainWindow.glade:1186 src/MainWindow.py:156
 msgid "Pardus Domain Joiner"
 msgstr ""
 
-#: ui/MainWindow.glade:110
+#: ui/MainWindow.glade:155
 msgid "Domain Name"
 msgstr ""
 
-#: ui/MainWindow.glade:123
+#: ui/MainWindow.glade:168
 msgid "Username"
 msgstr ""
 
-#: ui/MainWindow.glade:139
+#: ui/MainWindow.glade:184
 msgid "Password"
 msgstr ""
 
-#: ui/MainWindow.glade:152 ui/MainWindow.glade:808
+#: ui/MainWindow.glade:198 ui/MainWindow.glade:855
 msgid "Join"
 msgstr ""
 
-#: ui/MainWindow.glade:181
+#: ui/MainWindow.glade:227
 msgid "Advanced Settings"
 msgstr ""
 
-#: ui/MainWindow.glade:212 ui/MainWindow.glade:649
+#: ui/MainWindow.glade:259 ui/MainWindow.glade:696
 msgid "Hostname:"
 msgstr ""
 
-#: ui/MainWindow.glade:233
+#: ui/MainWindow.glade:280
 msgid "Hostname"
 msgstr ""
 
-#: ui/MainWindow.glade:244
+#: ui/MainWindow.glade:291
 msgid "Change Hostname"
 msgstr ""
 
-#: ui/MainWindow.glade:279 ui/MainWindow.glade:699
+#: ui/MainWindow.glade:326 ui/MainWindow.glade:746
 msgid "Connection Type:"
 msgstr ""
 
-#: ui/MainWindow.glade:321
-msgid "sssd bilgilendirmesi"
+#: ui/MainWindow.glade:368
+msgid "Connect to AD with sssd(realm) service."
 msgstr ""
 
-#: ui/MainWindow.glade:362
-msgid "winbind bilgilendirmesi"
+#: ui/MainWindow.glade:409
+msgid "Connect to AD with winbind service."
 msgstr ""
 
-#: ui/MainWindow.glade:401 ui/MainWindow.glade:738
+#: ui/MainWindow.glade:448 ui/MainWindow.glade:785
 msgid "Organizational Unit:"
 msgstr ""
 
-#: ui/MainWindow.glade:420
+#: ui/MainWindow.glade:467
 msgid "Default Container (Computers)"
 msgstr ""
 
-#: ui/MainWindow.glade:436
+#: ui/MainWindow.glade:483
 msgid "Specific OU Path:"
 msgstr ""
 
-#: ui/MainWindow.glade:478 ui/MainWindow.glade:794 ui/MainWindow.glade:948
+#: ui/MainWindow.glade:525 ui/MainWindow.glade:841 ui/MainWindow.glade:997
 msgid "Back"
 msgstr ""
 
-#: ui/MainWindow.glade:492
+#: ui/MainWindow.glade:539
 msgid "Save"
 msgstr ""
 
-#: ui/MainWindow.glade:533
+#: ui/MainWindow.glade:580
 msgid "Review Your Choices:"
 msgstr ""
 
-#: ui/MainWindow.glade:571
+#: ui/MainWindow.glade:618
 msgid "Domain:"
 msgstr ""
 
-#: ui/MainWindow.glade:610
+#: ui/MainWindow.glade:657
 msgid "Username:"
 msgstr ""
 
-#: ui/MainWindow.glade:851 src/MainWindow.py:351
+#: ui/MainWindow.glade:899 src/MainWindow.py:398
 msgid "Joining to the domain..."
 msgstr ""
 
-#: ui/MainWindow.glade:931
+#: ui/MainWindow.glade:980
 msgid "Cancel"
 msgstr ""
 
-#: ui/MainWindow.glade:1028
+#: ui/MainWindow.glade:1086
 msgid "You are in the domain."
 msgstr ""
 
-#: ui/MainWindow.glade:1038
+#: ui/MainWindow.glade:1131
 msgid "Leave"
 msgstr ""
 
-#: src/MainWindow.py:300
+#: src/MainWindow.py:340 src/MainWindow.py:485
 msgid "Are you sure?"
 msgstr ""
 
-#: src/MainWindow.py:301
+#: src/MainWindow.py:341
 msgid ""
 "Hostname will be changed.\n"
 "\n"
@@ -133,10 +137,26 @@ msgid ""
 "New: {}"
 msgstr ""
 
-#: src/MainWindow.py:329
+#: src/MainWindow.py:366
+msgid "Hostname changed."
+msgstr ""
+
+#: src/MainWindow.py:376
 msgid "Couldn't change hostname"
 msgstr ""
 
-#: src/MainWindow.py:402
+#: src/MainWindow.py:442
+msgid "Process exit code:{}"
+msgstr ""
+
+#: src/MainWindow.py:457
 msgid "An error occured while joining."
+msgstr ""
+
+#: src/MainWindow.py:486
+msgid "Do you want to cancel the joining process?"
+msgstr ""
+
+#: src/MainWindow.py:518
+msgid "An error occured on leaving the domain."
 msgstr ""

@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import os
+import sys
 import locale
 from locale import gettext as _
 
@@ -176,7 +177,6 @@ class MainWindow:
                 return False
 
             line = source.readline().strip()
-            print("stdout", line)
             if line:
                 self.stdout_text += line
 
@@ -187,7 +187,6 @@ class MainWindow:
                 return False
 
             line = source.readline().strip()
-            print("stderr", line)
             if line:
                 self.stderr_text += line + "\n"
 
@@ -205,7 +204,7 @@ class MainWindow:
                     self.main_stack.set_visible_child_name("main")
 
             else:
-                print(self.stderr_text)
+                sys.stderr.write(self.stderr_text + "\n")
 
                 self.application.quit()
 
@@ -238,7 +237,7 @@ class MainWindow:
         pid, _stdin, stdout, stderr = GLib.spawn_async(
             params,
             flags=GLib.SPAWN_SEARCH_PATH
-            | GLib.SPAWN_LEAVE_DESCRIPTORS_OPEN
+            # | GLib.SPAWN_LEAVE_DESCRIPTORS_OPEN
             | GLib.SPAWN_DO_NOT_REAP_CHILD,
             standard_input=False,
             standard_output=True,
@@ -359,9 +358,16 @@ class MainWindow:
                 return True
 
             def on_exit(pid, status):
-                print(self.stderr_text)
                 if status == 0:
                     self.model.hostname = new_hostname
+
+                    dialog = Gtk.MessageDialog(
+                        buttons=Gtk.ButtonsType.OK,
+                        text=_("Hostname changed."),
+                    )
+
+                    dialog.run()
+                    dialog.hide()
                 elif status == 126:
                     pass
                 else:
@@ -420,7 +426,7 @@ class MainWindow:
                 return True
 
             lbl = self.joining_log_label
-            lbl.set_markup(lbl.get_label() + f'<span color="red">{line}</span>' + "\n")
+            lbl.set_markup(lbl.get_label() + f'<span color="gray">{line}</span>' + "\n")
 
             adj = self.joining_viewport.get_vadjustment()
             adj.set_value(adj.get_upper() - adj.get_page_size())

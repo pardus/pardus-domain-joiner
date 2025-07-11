@@ -5,7 +5,6 @@ import sys
 import locale
 from locale import gettext as _
 
-from pardus_domain_core import domain_operations
 import managers.ConfigManager as ConfigManager
 
 import subprocess
@@ -13,10 +12,7 @@ import gi
 
 gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "3.0")
-gi.require_version("Vte", "2.91")
 from gi.repository import GLib, Gtk, Gdk
-
-# from domain_joiner_ldap import LDAP
 
 # Translation Constants:
 APPNAME = "pardus-domain-joiner"
@@ -26,7 +22,6 @@ SYSTEM_LANGUAGE = os.environ.get("LANG")
 # Translation functions:
 locale.bindtextdomain(APPNAME, TRANSLATIONS_PATH)
 locale.textdomain(APPNAME)
-locale.setlocale(locale.LC_ALL, SYSTEM_LANGUAGE)
 
 CWD = os.path.dirname(os.path.abspath(__file__))
 

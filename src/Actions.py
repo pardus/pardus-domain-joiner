@@ -27,7 +27,6 @@ if len(sys.argv) >= 2:
             user,
             password,
             ouaddress,
-            None,
             connection_type == "sssd",
             connection_type == "winbind",
         )

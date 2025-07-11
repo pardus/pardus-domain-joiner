@@ -9,17 +9,17 @@ if len(sys.argv) >= 2:
     cmd = sys.argv[1]
 
     if cmd == "hostname":
-        hostname = sys.argv[2]
+        hostname = sys.argv[2].strip()
 
         domain_operations.config_manager.set_hostname(hostname)
 
     elif cmd == "join":
-        hostname = sys.argv[2]
-        domain = sys.argv[3]
-        user = sys.argv[4]
-        password = sys.argv[5]
-        ouaddress = sys.argv[6]
-        connection_type = sys.argv[7]
+        hostname = sys.argv[2].strip()
+        domain = sys.argv[3].strip()
+        user = sys.argv[4].strip()
+        password = sys.argv[5].strip()
+        ouaddress = sys.argv[6].strip()
+        connection_type = sys.argv[7].strip()
 
         domain_operations.join(
             hostname,

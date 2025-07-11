@@ -228,9 +228,9 @@ class MainWindow:
     def save_config(self):
         config = vars(self.model).copy()
 
-        config.pop("password")
-        config.pop("hostname")
-        config.pop("computer_name")
+        config.pop("password", None)
+        config.pop("hostname", None)
+        config.pop("computer_name", None)
 
         ConfigManager.save_config(config)
 

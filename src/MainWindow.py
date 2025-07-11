@@ -495,6 +495,7 @@ class MainWindow:
 
     # In Domain page
     def on_leave_domain_btn_clicked(self, btn):
+        self.main_stack.set_visible_child_name("spinner")
         self.stderr_text = ""
 
         def on_stderr(source, condition):
@@ -520,6 +521,10 @@ class MainWindow:
                 )
                 dialog.run()
                 dialog.hide()
+
+                sys.stderr.write(self.stderr_text + "\n")
+
+                self.main_stack.set_visible_child_name("in_domain")
 
         self.spawn_process(
             ["pkexec", f"{CWD}/Actions.py", "leave"],

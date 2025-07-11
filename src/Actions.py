@@ -31,7 +31,12 @@ if len(sys.argv) >= 2:
             connection_type == "winbind",
         )
     elif cmd == "leave":
-        domain_operations.leave(realmd=True)
+        if len(sys.argv) == 4:
+            username = sys.argv[2].strip()
+            password = sys.argv[3].strip()
+            domain_operations.leave(user=username, password=password, winbind=True)
+        else:
+            domain_operations.leave(realmd=True)
     elif cmd == "check_domain":
         joined_domain_name = domain_operations.list(realmd=True)
 

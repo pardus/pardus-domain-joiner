@@ -124,6 +124,12 @@ class MainWindow:
         # Joined Page
         self.joined_domain_label = UI("joined_domain_label")
 
+        # AD Password asking dialog
+        self.password_dialog = UI("password_dialog")
+        self.password_dialog_username_label = UI("password_dialog_username_label")
+        self.password_dialog_entry = UI("password_dialog_entry")
+        self.password_dialog_ok_btn = UI("password_dialog_ok_btn")
+
     def setup_variables(self):
         config = ConfigManager.read_config()
 
@@ -495,8 +501,20 @@ class MainWindow:
 
     # In Domain page
     def on_leave_domain_btn_clicked(self, btn):
-        self.main_stack.set_visible_child_name("spinner")
         self.stderr_text = ""
+
+        username = self.model.username
+        password = ""
+
+        if self.model.connection_type == "winbind":
+            self.password_dialog_username_label.set_label(self.model.username)
+            response = self.password_dialog.run()
+            self.password_dialog.hide()
+
+            if response == Gtk.ResponseType.OK:
+                password = self.password_dialog_entry.get_text()
+            else:
+                return
 
         def on_stderr(source, condition):
             if condition == GLib.IO_HUP:
@@ -526,9 +544,19 @@ class MainWindow:
 
                 self.main_stack.set_visible_child_name("in_domain")
 
+        args = None
+        if self.model.connection_type == "winbind":
+            args = ["pkexec", f"{CWD}/Actions.py", "leave", username, password]
+        else:
+            args = ["pkexec", f"{CWD}/Actions.py", "leave"]
+
         self.spawn_process(
-            ["pkexec", f"{CWD}/Actions.py", "leave"],
+            args,
             None,
             on_stderr,
             on_exit,
         )
+        self.main_stack.set_visible_child_name("spinner")
+
+    def on_password_dialog_entry_changed(self, entry):
+        self.password_dialog_ok_btn.set_sensitive(len(entry.get_text()) != 0)

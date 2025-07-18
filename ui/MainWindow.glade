@@ -2,47 +2,6 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
-  <object class="GtkAboutDialog" id="about_dialog">
-    <property name="can-focus">False</property>
-    <property name="type-hint">dialog</property>
-    <property name="program-name">Pardus Domain Joiner</property>
-    <property name="version">0.1.0</property>
-    <property name="copyright">© TÜBİTAK BİLGEM</property>
-    <property name="comments" translatable="yes">Join domains easily.</property>
-    <property name="website">https://github.com/pardus/pardus-domain-joiner</property>
-    <property name="license">GPL 3.0</property>
-    <property name="authors">Büşra ÇAĞLIYAN
-Emin Fedar</property>
-    <property name="translator-credits" translatable="yes">translator_name</property>
-    <property name="logo-icon-name">pardus-domain-joiner</property>
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="can-focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="can-focus">False</property>
-            <property name="layout-style">end</property>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-      </object>
-    </child>
-  </object>
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -1190,13 +1149,56 @@ Emin Fedar</property>
       </object>
     </child>
   </object>
+  <object class="GtkAboutDialog" id="about_dialog">
+    <property name="can-focus">False</property>
+    <property name="type-hint">dialog</property>
+    <property name="transient-for">main_window</property>
+    <property name="attached-to">main_window</property>
+    <property name="program-name">Pardus Domain Joiner</property>
+    <property name="version">0.1.0</property>
+    <property name="copyright">© TÜBİTAK BİLGEM</property>
+    <property name="comments" translatable="yes">Join domains easily.</property>
+    <property name="website">https://github.com/pardus/pardus-domain-joiner</property>
+    <property name="license">GPL 3.0</property>
+    <property name="authors">Büşra ÇAĞLIYAN
+Emin Fedar</property>
+    <property name="translator-credits" translatable="yes">translator_name</property>
+    <property name="logo-icon-name">pardus-domain-joiner</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can-focus">False</property>
+            <property name="layout-style">end</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+  </object>
   <object class="GtkDialog" id="password_dialog">
     <property name="can-focus">False</property>
-    <property name="title" translatable="yes">Enter Password</property>
+    <property name="modal">True</property>
     <property name="default-width">400</property>
     <property name="default-height">250</property>
     <property name="type-hint">dialog</property>
-    <property name="decorated">False</property>
+    <property name="transient-for">main_window</property>
     <child internal-child="vbox">
       <object class="GtkBox">
         <property name="visible">True</property>
@@ -1259,25 +1261,37 @@ Emin Fedar</property>
             <property name="orientation">vertical</property>
             <property name="spacing">11</property>
             <child>
-              <object class="GtkLabel" id="lbl_password_dialog_username">
+              <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label">name</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Enter your AD password:</property>
-                <style>
-                  <class name="heading"/>
-                </style>
+                <property name="spacing">7</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">AD Username:</property>
+                    <style>
+                      <class name="heading"/>
+                    </style>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="password_dialog_username_lbl">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label">name</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -1286,13 +1300,40 @@ Emin Fedar</property>
               </packing>
             </child>
             <child>
-              <object class="GtkEntry" id="password_dialog_entry">
+              <object class="GtkBox">
                 <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="halign">center</property>
-                <property name="visibility">False</property>
-                <property name="invisible-char">•</property>
-                <signal name="changed" handler="on_password_dialog_entry_changed" swapped="no"/>
+                <property name="can-focus">False</property>
+                <property name="spacing">7</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">AD Password:</property>
+                    <style>
+                      <class name="heading"/>
+                    </style>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="password_dialog_entry">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="halign">center</property>
+                    <property name="visibility">False</property>
+                    <property name="invisible-char">•</property>
+                    <signal name="changed" handler="on_password_dialog_entry_changed" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -1306,6 +1347,21 @@ Emin Fedar</property>
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">button1</action-widget>
+      <action-widget response="-5">password_dialog_ok_btn</action-widget>
+    </action-widgets>
+    <child type="titlebar">
+      <object class="GtkHeaderBar">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="title" translatable="yes">Enter AD Password to Leave</property>
+        <property name="has-subtitle">False</property>
+        <child>
+          <placeholder/>
         </child>
       </object>
     </child>

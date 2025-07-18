@@ -121,7 +121,7 @@ class MainWindow:
 
         # AD Password asking dialog
         self.password_dialog = UI("password_dialog")
-        self.password_dialog_username_label = UI("password_dialog_username_label")
+        self.password_dialog_username_lbl = UI("password_dialog_username_lbl")
         self.password_dialog_entry = UI("password_dialog_entry")
         self.password_dialog_ok_btn = UI("password_dialog_ok_btn")
 
@@ -501,15 +501,14 @@ class MainWindow:
         username = self.model.username
         password = ""
 
-        if self.model.connection_type == "winbind":
-            self.password_dialog_username_label.set_label(self.model.username)
-            response = self.password_dialog.run()
-            self.password_dialog.hide()
+        self.password_dialog_username_lbl.set_label(self.model.username)
+        response = self.password_dialog.run()
+        self.password_dialog.hide()
 
-            if response == Gtk.ResponseType.OK:
-                password = self.password_dialog_entry.get_text()
-            else:
-                return
+        if response == Gtk.ResponseType.OK:
+            password = self.password_dialog_entry.get_text()
+        else:
+            return
 
         def on_stderr(source, condition):
             if condition == GLib.IO_HUP:
@@ -539,11 +538,14 @@ class MainWindow:
 
                 self.main_stack.set_visible_child_name("in_domain")
 
-        args = None
-        if self.model.connection_type == "winbind":
-            args = ["pkexec", f"{CWD}/Actions.py", "leave", username, password]
-        else:
-            args = ["pkexec", f"{CWD}/Actions.py", "leave"]
+        args = [
+            "pkexec",
+            f"{CWD}/Actions.py",
+            "leave",
+            username,
+            password,
+            self.model.connection_type,
+        ]
 
         self.spawn_process(
             args,

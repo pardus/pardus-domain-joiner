@@ -459,7 +459,7 @@ class MainWindow:
                 # Cancelled pkexec dialog
                 self.main_stack.set_visible_child_name("prejoin")
             else:
-                self.joining_title_label.set_text(_("An error occured while joining."))
+                self.joining_title_label.set_text(_("Joining Failed"))
                 self.joining_spinner.stop()
                 self.cancel_btn_stack.set_visible_child_name("back")
 
@@ -532,7 +532,7 @@ class MainWindow:
             else:
                 dialog = Gtk.MessageDialog(
                     buttons=Gtk.ButtonsType.OK,
-                    text=_("An error occured on leaving the domain."),
+                    text=_("Joining Failed"),
                     secondary_text=self.stderr_text,
                 )
                 dialog.run()

@@ -199,8 +199,12 @@ class MainWindow:
 
         def on_exit(pid, status):
             if status == 0:
-                domain = self.stdout_text.strip()
-                print(f"joined domain name: '{domain}'")
+                output = self.stdout_text.strip()
+                domain = ""
+                if "joined=" in output:
+                    domain = output.split("=")[1]
+
+                    print(f"returned domain name: '{domain}'")
 
                 if domain:
                     self.joined_domain_label.set_text(domain)

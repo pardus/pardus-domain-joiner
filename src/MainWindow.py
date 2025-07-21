@@ -515,6 +515,8 @@ class MainWindow:
         else:
             return
 
+        self.spinner_label.set_text(_("Leaving the domain..."))
+
         def on_stderr(source, condition):
             if condition == GLib.IO_HUP:
                 return False

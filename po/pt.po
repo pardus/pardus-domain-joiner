@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-21 10:50+0300\n"
+"POT-Creation-Date: 2025-07-21 11:08+0300\n"
 "PO-Revision-Date: 2024-10-09 23:09+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: \n"
@@ -182,7 +182,7 @@ msgstr "nome do host alterado: "
 msgid "Process exit code:{}"
 msgstr ""
 
-#: src/MainWindow.py:462 src/MainWindow.py:535
+#: src/MainWindow.py:462 src/MainWindow.py:538
 #, fuzzy
 msgid "Joining Failed"
 msgstr "Aderir ao domínio..."
@@ -190,6 +190,15 @@ msgstr "Aderir ao domínio..."
 #: src/MainWindow.py:491
 msgid "Do you want to cancel the joining process?"
 msgstr ""
+
+#: src/MainWindow.py:518
+#, fuzzy
+msgid "Leaving the domain..."
+msgstr "aderir ao domínio..."
+
+#, fuzzy
+#~ msgid "Leaving..."
+#~ msgstr "Sair do domínio"
 
 #, fuzzy
 #~ msgid "Enter your AD password:"
@@ -239,9 +248,6 @@ msgstr ""
 
 #~ msgid "details"
 #~ msgstr "detalhes"
-
-#~ msgid "Leave Domain"
-#~ msgstr "Sair do domínio"
 
 #~ msgid "e.g. user name"
 #~ msgstr "ex: nome de utilizador"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-21 10:50+0300\n"
+"POT-Creation-Date: 2025-07-21 11:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -165,10 +165,14 @@ msgstr ""
 msgid "Process exit code:{}"
 msgstr ""
 
-#: src/MainWindow.py:462 src/MainWindow.py:535
+#: src/MainWindow.py:462 src/MainWindow.py:538
 msgid "Joining Failed"
 msgstr ""
 
 #: src/MainWindow.py:491
 msgid "Do you want to cancel the joining process?"
+msgstr ""
+
+#: src/MainWindow.py:518
+msgid "Leaving the domain..."
 msgstr ""

@@ -36,6 +36,7 @@
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="valign">center</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkSpinner">
@@ -47,14 +48,28 @@
                     <property name="halign">center</property>
                     <property name="valign">center</property>
                     <property name="margin-bottom">11</property>
-                    <property name="hexpand">True</property>
-                    <property name="vexpand">True</property>
                     <property name="active">True</property>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
+                    <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="spinner_label">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <style>
+                      <class name="title-4"/>
+                    </style>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
               </object>
@@ -449,7 +464,7 @@
                         <property name="visible">True</property>
                         <property name="sensitive">False</property>
                         <property name="can-focus">True</property>
-                        <property name="placeholder-text">CN=Computers, DC=domain, DC=name</property>
+                        <property name="placeholder-text">Computers</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>

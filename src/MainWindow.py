@@ -85,6 +85,9 @@ class MainWindow:
 
         self.main_stack = UI("main_stack")
 
+        # Spinner Page
+        self.spinner_label = UI("spinner_label")
+
         # Main Page
         self.domain_entry = UI("domain_entry")
         self.username_entry = UI("username_entry")
@@ -172,6 +175,7 @@ class MainWindow:
         # Go to directly joined page if already joined
         self.stderr_text = ""
         self.stdout_text = ""
+        self.spinner_label.set_text(_("Checking AD servers..."))
 
         def on_stdout(source, condition):
             if condition == GLib.IO_HUP:

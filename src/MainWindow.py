@@ -506,6 +506,7 @@ class MainWindow:
         password = ""
 
         self.password_dialog_username_lbl.set_label(self.model.username)
+        self.password_dialog_entry.set_text("")
         response = self.password_dialog.run()
         self.password_dialog.hide()
 

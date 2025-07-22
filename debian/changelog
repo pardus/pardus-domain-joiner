@@ -1,3 +1,15 @@
+pardus-domain-joiner (0.3.0) yirmiuc; urgency=medium
+
+  * feat: ask password for every connection type
+  * fix: changed ou placeholder, added spinner label
+  * translation: updated
+  * fix: bug, clear password entry
+  * fix: leaving label
+  * fix: joined domain stdout format
+  * feat!: new library name
+
+ -- Emin Fedar <emin.fedar@pardus.org.tr>  Tue, 22 Jul 2025 15:58:23 +0300
+
 pardus-domain-joiner (0.2.4) yirmiuc; urgency=medium
 
   * fix: translations

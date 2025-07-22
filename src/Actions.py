@@ -3,7 +3,7 @@
 import sys
 import signal
 import os
-from pardus_domain_core import domain_operations
+from pardus_domain_joiner import domain_operations
 
 if len(sys.argv) >= 2:
     cmd = sys.argv[1]

@@ -15,6 +15,6 @@ Depends: ${misc:Depends},
          gir1.2-glib-2.0,
          gir1.2-gtk-3.0,
 		     python3-toml,
-		     pardus-domain-core
+		     libpardus-domain-joiner
 Description: Join domains easily.
  Joins your computer to the domain or leaves it from the domain.

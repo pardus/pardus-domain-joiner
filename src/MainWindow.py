@@ -5,6 +5,7 @@ import sys
 import locale
 from locale import gettext as _
 
+from pardus_domain_joiner import domain_operations
 import managers.ConfigManager as ConfigManager
 
 import subprocess
@@ -12,7 +13,7 @@ import gi
 
 gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import GLib, Gtk, Gdk
+from gi.repository import GLib, Gtk, Gdk, Gio
 
 # Translation Constants:
 APPNAME = "pardus-domain-joiner"
@@ -127,6 +128,12 @@ class MainWindow:
         self.password_dialog_username_lbl = UI("password_dialog_username_lbl")
         self.password_dialog_entry = UI("password_dialog_entry")
         self.password_dialog_ok_btn = UI("password_dialog_ok_btn")
+
+        # AD Password asking dialog
+        self.input_dialog = UI("input_dialog")
+        self.input_dialog_lbl = UI("input_dialog_lbl")
+        self.input_dialog_entry = UI("input_dialog_entry")
+        self.input_dialog_ok_btn = UI("input_dialog_ok_btn")
 
     def setup_variables(self):
         config = ConfigManager.read_config()
@@ -266,6 +273,106 @@ class MainWindow:
         GLib.child_watch_add(GLib.PRIORITY_DEFAULT, pid, on_exit)
 
         return pid
+
+    def show_input_dialog(self, title):
+        self.input_dialog_lbl.set_text(title)
+
+        response = self.input_dialog.run()
+        self.input_dialog.hide()
+        if response == Gtk.ResponseType.OK:
+            return self.input_dialog_entry.get_text()
+        else:
+            return ""
+
+    def spawn_joining_process(self, workgroup):
+        def on_stdout(source, condition):
+            if condition == GLib.IO_HUP:
+                return False
+
+            line = source.readline().strip()
+            if line == "":
+                return True
+
+            lbl = self.joining_log_label
+            lbl.set_markup(lbl.get_label() + line + "\n")
+
+            adj = self.joining_viewport.get_vadjustment()
+            adj.set_value(adj.get_upper() - adj.get_page_size())
+
+            return True
+
+        def on_stderr(source, condition):
+            if condition == GLib.IO_HUP:
+                return False
+
+            line = source.readline().strip()
+            if line == "":
+                return True
+
+            lbl = self.joining_log_label
+            lbl.set_markup(lbl.get_label() + f'<span color="gray">{line}</span>' + "\n")
+
+            adj = self.joining_viewport.get_vadjustment()
+            adj.set_value(adj.get_upper() - adj.get_page_size())
+
+            return True
+
+        def on_exit(pid, status):
+            self.joining_process_pid = None
+
+            if status != 0:
+                lbl = self.joining_log_label
+                lbl.set_markup(
+                    lbl.get_label() + _("Process exit code:{}").format(status)
+                )
+
+            adj = self.joining_viewport.get_vadjustment()
+            adj.set_value(adj.get_upper() - adj.get_page_size())
+
+            if status == 0:
+                self.main_stack.set_visible_child_name("in_domain")
+                self.joined_domain_label.set_text(self.model.domain)
+
+                self.save_config()
+            elif status == 15 or status == 32256 or status == 32512 or status == 126:
+                # Cancelled pkexec dialog
+                self.main_stack.set_visible_child_name("prejoin")
+            else:
+                self.joining_title_label.set_text(_("Joining Failed"))
+                self.joining_spinner.stop()
+                self.cancel_btn_stack.set_visible_child_name("back")
+
+        self.joining_process_pid = self.spawn_process(
+            [
+                "pkexec",
+                f"{CWD}/Actions.py",
+                "join",
+                self.model.hostname,
+                self.model.domain,
+                self.model.username,
+                self.model.password,
+                self.model.organizational_unit,
+                self.model.connection_type,
+                workgroup,
+            ],
+            on_stdout,
+            on_stderr,
+            on_exit,
+        )
+
+    def check_workgroup(self, task, source_object, task_data, cancellable):
+        workgroup = domain_operations.get_netbios_name(self.model.domain)
+
+        if not workgroup:
+            # Workgroup not found automatically, ask from user:
+            workgroup = self.show_input_dialog(_("Enter WORKSPACE value."))
+
+            if not workgroup:
+                workgroup = ""
+
+        print("founded workgroup:", workgroup)
+
+        self.spawn_joining_process(workgroup)
 
     # === CALLBACKS ===
     def on_destroy(self, win):
@@ -410,79 +517,13 @@ class MainWindow:
 
         self.main_stack.set_visible_child_name("joining")
 
-        def on_stdout(source, condition):
-            if condition == GLib.IO_HUP:
-                return False
+        if self.model.connection_type == "winbind":
+            self.joining_log_label.set_text(_("Checking WORKGROUP...") + "\n")
 
-            line = source.readline().strip()
-            if line == "":
-                return True
-
-            lbl = self.joining_log_label
-            lbl.set_markup(lbl.get_label() + line + "\n")
-
-            adj = self.joining_viewport.get_vadjustment()
-            adj.set_value(adj.get_upper() - adj.get_page_size())
-
-            return True
-
-        def on_stderr(source, condition):
-            if condition == GLib.IO_HUP:
-                return False
-
-            line = source.readline().strip()
-            if line == "":
-                return True
-
-            lbl = self.joining_log_label
-            lbl.set_markup(lbl.get_label() + f'<span color="gray">{line}</span>' + "\n")
-
-            adj = self.joining_viewport.get_vadjustment()
-            adj.set_value(adj.get_upper() - adj.get_page_size())
-
-            return True
-
-        def on_exit(pid, status):
-            self.joining_process_pid = None
-
-            if status != 0:
-                lbl = self.joining_log_label
-                lbl.set_markup(
-                    lbl.get_label() + _("Process exit code:{}").format(status)
-                )
-
-            adj = self.joining_viewport.get_vadjustment()
-            adj.set_value(adj.get_upper() - adj.get_page_size())
-
-            if status == 0:
-                self.main_stack.set_visible_child_name("in_domain")
-                self.joined_domain_label.set_text(self.model.domain)
-
-                self.save_config()
-            elif status == 15 or status == 32256 or status == 32512 or status == 126:
-                # Cancelled pkexec dialog
-                self.main_stack.set_visible_child_name("prejoin")
-            else:
-                self.joining_title_label.set_text(_("Joining Failed"))
-                self.joining_spinner.stop()
-                self.cancel_btn_stack.set_visible_child_name("back")
-
-        self.joining_process_pid = self.spawn_process(
-            [
-                "pkexec",
-                f"{CWD}/Actions.py",
-                "join",
-                self.model.hostname,
-                self.model.domain,
-                self.model.username,
-                self.model.password,
-                self.model.organizational_unit,
-                self.model.connection_type,
-            ],
-            on_stdout,
-            on_stderr,
-            on_exit,
-        )
+            task = Gio.Task.new()
+            task.run_in_thread(self.check_workgroup)
+        else:
+            self.spawn_joining_process("")
 
     # Joining Page
     def on_cancel_joining_btn_clicked(self, btn):
@@ -511,13 +552,15 @@ class MainWindow:
 
         self.password_dialog_username_lbl.set_label(self.model.username)
         self.password_dialog_entry.set_text("")
-        response = self.password_dialog.run()
-        self.password_dialog.hide()
 
-        if response == Gtk.ResponseType.OK:
-            password = self.password_dialog_entry.get_text()
-        else:
-            return
+        if self.model.connection_type == "winbind":
+            response = self.password_dialog.run()
+            self.password_dialog.hide()
+
+            if response == Gtk.ResponseType.OK:
+                password = self.password_dialog_entry.get_text()
+            else:
+                return
 
         self.spinner_label.set_text(_("Leaving the domain..."))
 
@@ -568,3 +611,6 @@ class MainWindow:
 
     def on_password_dialog_entry_changed(self, entry):
         self.password_dialog_ok_btn.set_sensitive(len(entry.get_text()) != 0)
+
+    def on_input_dialog_entry_changed(self, entry):
+        self.input_dialog_ok_btn.set_sensitive(len(entry.get_text()) != 0)

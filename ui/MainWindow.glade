@@ -1229,7 +1229,7 @@ Emin Fedar</property>
             <property name="can-focus">False</property>
             <property name="layout-style">end</property>
             <child>
-              <object class="GtkButton" id="button1">
+              <object class="GtkButton" id="button">
                 <property name="label" translatable="yes">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
@@ -1366,7 +1366,7 @@ Emin Fedar</property>
       </object>
     </child>
     <action-widgets>
-      <action-widget response="-6">button1</action-widget>
+      <action-widget response="-6">button</action-widget>
       <action-widget response="-5">password_dialog_ok_btn</action-widget>
     </action-widgets>
     <child type="titlebar">
@@ -1381,8 +1381,111 @@ Emin Fedar</property>
       </object>
     </child>
     <action-widgets>
-      <action-widget response="-6">button1</action-widget>
+      <action-widget response="-6">button</action-widget>
       <action-widget response="-5">password_dialog_ok_btn</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkDialog" id="input_dialog">
+    <property name="width-request">300</property>
+    <property name="height-request">150</property>
+    <property name="can-focus">False</property>
+    <property name="type-hint">dialog</property>
+    <property name="decorated">False</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can-focus">False</property>
+            <property name="layout-style">end</property>
+            <child>
+              <object class="GtkButton" id="button1">
+                <property name="label" translatable="yes">Cancel</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="input_dialog_ok_btn">
+                <property name="label" translatable="yes">Ok</property>
+                <property name="visible">True</property>
+                <property name="sensitive">False</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <style>
+                  <class name="suggested-action"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="valign">center</property>
+            <property name="vexpand">True</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">7</property>
+            <child>
+              <object class="GtkLabel" id="input_dialog_lbl">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-top">7</property>
+                <style>
+                  <class name="heading"/>
+                </style>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="input_dialog_entry">
+                <property name="width-request">200</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="halign">center</property>
+                <signal name="changed" handler="on_input_dialog_entry_changed" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-6">button1</action-widget>
+      <action-widget response="-5">input_dialog_ok_btn</action-widget>
     </action-widgets>
   </object>
 </interface>

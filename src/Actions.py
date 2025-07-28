@@ -20,15 +20,17 @@ if len(sys.argv) >= 2:
         password = sys.argv[5].strip()
         ouaddress = sys.argv[6].strip()
         connection_type = sys.argv[7].strip()
+        workgroup = sys.argv[8].strip()
 
         domain_operations.join(
             hostname,
             domain,
             user,
             password,
-            ouaddress,
-            connection_type == "sssd",
-            connection_type == "winbind",
+            ouaddress=ouaddress,
+            realmd=connection_type == "sssd",
+            winbind=connection_type == "winbind",
+            workgroup=workgroup,
         )
     elif cmd == "leave":
         username = sys.argv[2].strip()

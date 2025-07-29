@@ -1,3 +1,9 @@
+pardus-domain-joiner (0.3.1) yirmiuc; urgency=medium
+
+  * feat: ask Workgroup value from the user
+
+ -- Emin Fedar <emin.fedar@pardus.org.tr>  Tue, 29 Jul 2025 10:13:20 +0300
+
 pardus-domain-joiner (0.3.0) yirmiuc; urgency=medium
 
   * feat: ask password for every connection type

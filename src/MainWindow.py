@@ -382,6 +382,9 @@ class MainWindow:
 
         print("founded workgroup:", workgroup)
 
+        lbl = self.joining_log_label
+        lbl.set_markup(lbl.get_label() + f"Workgroup:{workgroup}\n")
+
         self.spawn_joining_process(workgroup)
 
     # === CALLBACKS ===

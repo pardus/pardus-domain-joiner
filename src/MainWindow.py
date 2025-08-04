@@ -289,7 +289,7 @@ class MainWindow:
         dialog = Gtk.MessageDialog(
             buttons=Gtk.ButtonsType.OK,
             text=title,
-            secondary_text=subprocess,
+            secondary_text=subtitle,
         )
         dialog.run()
         dialog.hide()

@@ -107,8 +107,6 @@ class MainWindow:
         self.sssd_radio = UI("sssd_radio")
         self.winbind_radio = UI("winbind_radio")
 
-        self.ou_default_radio = UI("ou_default_radio")
-        self.ou_path_radio = UI("ou_path_radio")
         self.ou_path_entry = UI("ou_path_entry")
 
         # Prejoin Page
@@ -158,8 +156,6 @@ class MainWindow:
         self.hostname_entry.set_text(self.model.hostname)
         self.sssd_radio.set_active(self.model.connection_type == "sssd")
         self.winbind_radio.set_active(self.model.connection_type == "winbind")
-        self.ou_default_radio.set_active(self.model.organizational_unit == "")
-        self.ou_path_radio.set_active(self.model.organizational_unit != "")
 
         self.joining_process_pid = None
 
@@ -422,9 +418,7 @@ class MainWindow:
 
     def on_save_btn_clicked(self, btn):
         # Update model
-        self.model.organizational_unit = (
-            self.ou_path_entry.get_text() if self.ou_path_radio.get_active() else ""
-        )
+        self.model.organizational_unit = self.ou_path_entry.get_text()
 
         self.model.connection_type = (
             "sssd" if self.sssd_radio.get_active() else "winbind"
@@ -521,9 +515,6 @@ class MainWindow:
             )
 
         dialog.hide()
-
-    def on_ou_path_radio_toggled(self, btn):
-        self.ou_path_entry.set_sensitive(btn.get_active())
 
     # Pre Join
     def on_join_btn_clicked(self, btn):

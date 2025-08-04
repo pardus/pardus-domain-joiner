@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import os
+import re
 import sys
 import locale
 from locale import gettext as _
@@ -25,6 +26,10 @@ locale.bindtextdomain(APPNAME, TRANSLATIONS_PATH)
 locale.textdomain(APPNAME)
 
 CWD = os.path.dirname(os.path.abspath(__file__))
+
+HOSTNAME_REGEX = (
+    r"""^([a-zA-Z0-9](?:(?:[a-zA-Z0-9-]*|(?<!-)\.(?![-.]))*[a-zA-Z0-9]+)?)$"""
+)
 
 
 class Model:
@@ -284,6 +289,15 @@ class MainWindow:
         else:
             return ""
 
+    def show_info_dialog(self, title, subtitle):
+        dialog = Gtk.MessageDialog(
+            buttons=Gtk.ButtonsType.OK,
+            text=title,
+            secondary_text=subprocess,
+        )
+        dialog.run()
+        dialog.hide()
+
     def spawn_joining_process(self, workgroup):
         def on_stdout(source, condition):
             if condition == GLib.IO_HUP:
@@ -451,6 +465,21 @@ class MainWindow:
         if current_hostname == new_hostname:
             return
 
+        if len(new_hostname) > 63:
+            self.show_info_dialog(
+                _("Hostname is not valid!"),
+                _("Maximum length is 63. Your hostname length is:")
+                + str(len(new_hostname)),
+            )
+            return
+
+        if re.fullmatch(HOSTNAME_REGEX, new_hostname) is None:
+            self.show_info_dialog(
+                _("Hostname is not valid!"),
+                _("Valid chars: Letters, numbers, '.', '-'."),
+            )
+            return
+
         dialog = Gtk.MessageDialog(
             buttons=Gtk.ButtonsType.OK_CANCEL,
             text=_("Are you sure?"),
@@ -477,23 +506,12 @@ class MainWindow:
                 if status == 0:
                     self.model.hostname = new_hostname
 
-                    dialog = Gtk.MessageDialog(
-                        buttons=Gtk.ButtonsType.OK,
-                        text=_("Hostname changed."),
-                    )
+                    self.show_info_dialog(_("Hostname changed."), "")
 
-                    dialog.run()
-                    dialog.hide()
                 elif status == 126:
                     pass
                 else:
-                    dialog = Gtk.MessageDialog(
-                        buttons=Gtk.ButtonsType.OK,
-                        text=_("Couldn't change hostname"),
-                        secondary_text=self.stderr_text,
-                    )
-                    dialog.run()
-                    dialog.hide()
+                    self.show_info_dialog(_("Couldn't change hostname"), "")
 
             self.spawn_process(
                 ["pkexec", f"{CWD}/Actions.py", "hostname", new_hostname],
@@ -580,13 +598,7 @@ class MainWindow:
                 self.main_stack.set_visible_child_name("main")
 
             else:
-                dialog = Gtk.MessageDialog(
-                    buttons=Gtk.ButtonsType.OK,
-                    text=_("Joining Failed"),
-                    secondary_text=self.stderr_text,
-                )
-                dialog.run()
-                dialog.hide()
+                self.show_info_dialog(_("Joining Failed"), self.stderr_text)
 
                 sys.stderr.write(self.stderr_text + "\n")
 

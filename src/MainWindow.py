@@ -127,10 +127,10 @@ class MainWindow:
         self.joined_domain_label = UI("joined_domain_label")
 
         # AD Password asking dialog
-        self.password_dialog = UI("password_dialog")
-        self.password_dialog_username_lbl = UI("password_dialog_username_lbl")
-        self.password_dialog_entry = UI("password_dialog_entry")
-        self.password_dialog_ok_btn = UI("password_dialog_ok_btn")
+        self.ad_dialog = UI("ad_dialog")
+        self.ad_dialog_username_entry = UI("ad_dialog_username_entry")
+        self.ad_dialog_password_entry = UI("ad_dialog_password_entry")
+        self.ad_dialog_ok_btn = UI("ad_dialog_ok_btn")
 
         # AD Password asking dialog
         self.input_dialog = UI("input_dialog")
@@ -572,20 +572,20 @@ class MainWindow:
     def on_leave_domain_btn_clicked(self, btn):
         self.stderr_text = ""
 
-        username = self.model.username
+        username = ""
         password = ""
 
-        self.password_dialog_username_lbl.set_label(self.model.username)
-        self.password_dialog_entry.set_text("")
+        self.ad_dialog_username_entry.set_text("")
+        self.ad_dialog_password_entry.set_text("")
 
-        if self.model.connection_type == "winbind":
-            response = self.password_dialog.run()
-            self.password_dialog.hide()
+        response = self.ad_dialog.run()
+        self.ad_dialog.hide()
 
-            if response == Gtk.ResponseType.OK:
-                password = self.password_dialog_entry.get_text()
-            else:
-                return
+        if response == Gtk.ResponseType.OK:
+            username = self.ad_dialog_username_entry.get_text()
+            password = self.ad_dialog_password_entry.get_text()
+        else:
+            return
 
         self.spinner_label.set_text(_("Leaving the domain..."))
 
@@ -628,8 +628,19 @@ class MainWindow:
         )
         self.main_stack.set_visible_child_name("spinner")
 
-    def on_password_dialog_entry_changed(self, entry):
-        self.password_dialog_ok_btn.set_sensitive(len(entry.get_text()) != 0)
+    def on_ad_dialog_username_entry_changed(self, entry):
+        is_sensitive = (
+            len(entry.get_text()) != 0
+            and len(self.ad_dialog_password_entry.get_text()) != 0
+        )
+        self.ad_dialog_ok_btn.set_sensitive(is_sensitive)
+
+    def on_ad_dialog_password_entry_changed(self, entry):
+        is_sensitive = (
+            len(entry.get_text()) != 0
+            and len(self.ad_dialog_username_entry.get_text()) != 0
+        )
+        self.ad_dialog_ok_btn.set_sensitive(is_sensitive)
 
     def on_input_dialog_entry_changed(self, entry):
         self.input_dialog_ok_btn.set_sensitive(len(entry.get_text()) != 0)

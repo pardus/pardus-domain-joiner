@@ -397,7 +397,16 @@ class MainWindow:
         self.about_dialog.hide()
 
     # Main Page
-    def on_prejoin_btn_clicked(self, _):
+    def on_prejoin_btn_clicked(self, btn):
+        domain = self.domain_entry.get_text().strip()
+        if domain.endswith(".local"):
+            self.show_info_dialog(
+                _("Warning"),
+                _(
+                    "Domains end with '.local' can cause to mDNS resolving or another problems."
+                ),
+            )
+
         self.model.domain = self.domain_entry.get_text()
         self.model.username = self.username_entry.get_text()
         self.model.password = self.password_entry.get_text()

@@ -430,7 +430,7 @@
                       <object class="GtkEntry" id="ou_path_entry">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
-                        <property name="placeholder-text">Computers</property>
+                        <property name="placeholder-text">CN=Computers,DC=domain,DC=name</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>

@@ -421,20 +421,8 @@ class MainWindow:
         self.main_stack.set_visible_child_name("main")
 
     def on_save_btn_clicked(self, btn):
-        new_ou = self.ou_path_entry.get_text().strip()
-
-        if "=" in new_ou or " " in new_ou or "-" in new_ou:
-            self.show_info_dialog(
-                _("Invalid Organization Unit"),
-                _("Wrong")
-                + ':\n<span foreground="red"><tt>ou=example_ou, dc=XXX, dc=YYY\n</tt></span>\n'
-                + _("Correct")
-                + ':\n<span foreground="green"><tt>example_ou</tt></span>',
-            )
-            return
-
         # Update model
-        self.model.organizational_unit = self.ou_path_entry.get_text()
+        self.model.organizational_unit = self.ou_path_entry.get_text().strip()
 
         self.model.connection_type = (
             "sssd" if self.sssd_radio.get_active() else "winbind"

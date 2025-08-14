@@ -1275,6 +1275,7 @@ Emin Fedar</property>
                   <object class="GtkEntry" id="ad_dialog_username_entry">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
+                    <property name="has-focus">True</property>
                     <property name="halign">center</property>
                     <signal name="changed" handler="on_ad_dialog_username_entry_changed" swapped="no"/>
                   </object>
@@ -1318,7 +1319,10 @@ Emin Fedar</property>
                     <property name="hexpand">True</property>
                     <property name="visibility">False</property>
                     <property name="invisible-char">•</property>
+                    <property name="secondary-icon-name">view-conceal-symbolic</property>
                     <signal name="changed" handler="on_ad_dialog_password_entry_changed" swapped="no"/>
+                    <signal name="icon-press" handler="on_ad_dialog_password_entry_icon_press" swapped="no"/>
+                    <signal name="icon-release" handler="on_ad_dialog_password_entry_icon_release" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>

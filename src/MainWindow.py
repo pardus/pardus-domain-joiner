@@ -156,6 +156,7 @@ class MainWindow:
         self.hostname_entry.set_text(self.model.hostname)
         self.sssd_radio.set_active(self.model.connection_type == "sssd")
         self.winbind_radio.set_active(self.model.connection_type == "winbind")
+        self.ou_path_entry.set_text(self.model.organizational_unit)
 
         self.joining_process_pid = None
 
@@ -629,6 +630,7 @@ class MainWindow:
         )
         self.main_stack.set_visible_child_name("spinner")
 
+    # AD Leave Dialog
     def on_ad_dialog_username_entry_changed(self, entry):
         is_sensitive = (
             len(entry.get_text()) != 0
@@ -645,3 +647,11 @@ class MainWindow:
 
     def on_input_dialog_entry_changed(self, entry):
         self.input_dialog_ok_btn.set_sensitive(len(entry.get_text()) != 0)
+
+    def on_ad_dialog_password_entry_icon_press(self, entry, icon_pos, event):
+        entry.set_visibility(True)
+        entry.set_icon_from_icon_name(1, "view-reveal-symbolic")
+
+    def on_ad_dialog_password_entry_icon_release(self, entry, icon_pos, event):
+        entry.set_visibility(False)
+        entry.set_icon_from_icon_name(1, "view-conceal-symbolic")

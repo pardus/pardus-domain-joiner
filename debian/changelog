@@ -1,3 +1,11 @@
+pardus-domain-joiner (0.3.3) UNRELEASED; urgency=medium
+
+  * fix: revert changes when pressed back
+  * feat: added reveal icon to ad leave password dialog
+  * translations: updated
+
+ -- Emin Fedar <emin.fedar@pardus.org.tr>  Thu, 14 Aug 2025 13:50:46 +0300
+
 pardus-domain-joiner (0.3.2) yirmiuc; urgency=medium
 
   * fix: added hostname regex control, refactored dialogs

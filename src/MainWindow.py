@@ -7,6 +7,7 @@ import locale
 from locale import gettext as _
 
 from pardus_domain_joiner import domain_operations
+from pardus_domain_joiner import domain_joiner_ldap
 import managers.ConfigManager as ConfigManager
 
 import subprocess
@@ -589,6 +590,23 @@ class MainWindow:
         else:
             return
 
+        # Authenticate on LDAP
+        ldap_username = f"{username}@{self.model.domain.upper()}"
+        ldap = domain_joiner_ldap.LDAP(self.model.domain, ldap_username, password)
+
+        print("Authenticating the user on LDAP...")
+
+        is_authenticated = ldap.authenticate()
+        ldap._unbind_connection()
+
+        # Is credentials valid?
+        if not is_authenticated:
+            self.show_info_dialog(
+                _("Error"),
+                _("Wrong username or password."),
+            )
+            return
+
         self.spinner_label.set_text(_("Leaving the domain..."))
 
         def on_stderr(source, condition):
@@ -605,24 +623,6 @@ class MainWindow:
         def on_exit(pid, status):
             if status == 0:
                 self.main_stack.set_visible_child_name("main")
-
-                print(
-                    "checking if hostname is in ad:",
-                    self.model.domain,
-                    self.model.hostname,
-                )
-
-                hostname_in_ad = domain_operations.check_hostname_in_ad(
-                    self.model.domain, self.model.hostname, username, password
-                )
-                print("is hostname_in_ad:", hostname_in_ad)
-                if hostname_in_ad:
-                    self.show_info_dialog(
-                        _("Information"),
-                        _(
-                            "You have successfully left the domain. But your computer still exists in Active Directory."
-                        ),
-                    )
 
             else:
                 self.show_info_dialog(_("Joining Failed"), self.stderr_text)

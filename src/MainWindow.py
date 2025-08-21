@@ -597,7 +597,6 @@ class MainWindow:
         print("Authenticating the user on LDAP...")
 
         is_authenticated = ldap.authenticate()
-        ldap._unbind_connection()
 
         # Is credentials valid?
         if not is_authenticated:
@@ -605,6 +604,7 @@ class MainWindow:
                 _("Error"),
                 _("Wrong username or password."),
             )
+            ldap._unbind_connection()
             return
 
         self.spinner_label.set_text(_("Leaving the domain..."))
@@ -622,6 +622,23 @@ class MainWindow:
 
         def on_exit(pid, status):
             if status == 0:
+                # Check if hostname still exists in AD
+                print(f"Checking if '{self.model.hostname}' still exists in the AD")
+                is_hostname_in_ad = ldap.check_computer_exists_in_ad(
+                    self.model.hostname
+                )
+                print("is hostname exists in AD:", is_hostname_in_ad)
+
+                if is_hostname_in_ad:
+                    self.show_info_dialog(
+                        _("Information"),
+                        _(
+                            "You have successfully left the domain. But your computer still exists in Active Directory."
+                        ),
+                    )
+
+                ldap._unbind_connection()
+
                 self.main_stack.set_visible_child_name("main")
 
             else:

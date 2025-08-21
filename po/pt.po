@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-21 09:35+0300\n"
+"POT-Creation-Date: 2025-08-21 12:57+0300\n"
 "PO-Revision-Date: 2024-10-09 23:09+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: \n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: ui/MainWindow.glade:93 ui/MainWindow.glade:1126 src/MainWindow.py:169
+#: ui/MainWindow.glade:93 ui/MainWindow.glade:1126 src/MainWindow.py:170
 #, fuzzy
 msgid "Pardus Domain Joiner"
 msgstr "Definições de domínio Pardus"
@@ -104,7 +104,7 @@ msgstr "Nome de utilizador:"
 msgid "Organizational Unit:"
 msgstr "Unidade organizacional"
 
-#: ui/MainWindow.glade:839 src/MainWindow.py:541
+#: ui/MainWindow.glade:839 src/MainWindow.py:542
 #, fuzzy
 msgid "Joining to the domain..."
 msgstr "aderir ao domínio..."
@@ -149,50 +149,50 @@ msgstr "Palavra-passe:"
 msgid "Enter account information to leave"
 msgstr ""
 
-#: src/MainWindow.py:187
+#: src/MainWindow.py:188
 msgid "Checking AD servers..."
 msgstr ""
 
-#: src/MainWindow.py:338
+#: src/MainWindow.py:339
 msgid "Process exit code:{}"
 msgstr ""
 
-#: src/MainWindow.py:353 src/MainWindow.py:622
+#: src/MainWindow.py:354 src/MainWindow.py:645
 #, fuzzy
 msgid "Joining Failed"
 msgstr "Aderir ao domínio..."
 
-#: src/MainWindow.py:380
+#: src/MainWindow.py:381
 msgid "Enter WORKSPACE value."
 msgstr ""
 
-#: src/MainWindow.py:405
+#: src/MainWindow.py:406
 msgid "Warning"
 msgstr "Aviso"
 
-#: src/MainWindow.py:407
+#: src/MainWindow.py:408
 msgid ""
 "Domains that end with '.local' can cause mDNS to resolve and the domain to "
 "not be found."
 msgstr ""
 
-#: src/MainWindow.py:482 src/MainWindow.py:490
+#: src/MainWindow.py:483 src/MainWindow.py:491
 msgid "Hostname is not valid!"
 msgstr ""
 
-#: src/MainWindow.py:483
+#: src/MainWindow.py:484
 msgid "Maximum length is 63. Your hostname length is:"
 msgstr ""
 
-#: src/MainWindow.py:491
+#: src/MainWindow.py:492
 msgid "Valid chars: Letters, numbers, '.', '-'."
 msgstr ""
 
-#: src/MainWindow.py:497 src/MainWindow.py:562
+#: src/MainWindow.py:498 src/MainWindow.py:563
 msgid "Are you sure?"
 msgstr ""
 
-#: src/MainWindow.py:498
+#: src/MainWindow.py:499
 msgid ""
 "Hostname will be changed.\n"
 "\n"
@@ -200,33 +200,41 @@ msgid ""
 "New: {}"
 msgstr ""
 
-#: src/MainWindow.py:521
+#: src/MainWindow.py:522
 msgid "Hostname changed."
 msgstr ""
 
-#: src/MainWindow.py:526
+#: src/MainWindow.py:527
 #, fuzzy
 msgid "Couldn't change hostname"
 msgstr "nome do host alterado: "
 
-#: src/MainWindow.py:548
+#: src/MainWindow.py:549
 msgid "Checking WORKGROUP..."
 msgstr ""
 
-#: src/MainWindow.py:563
+#: src/MainWindow.py:564
 msgid "Do you want to cancel the joining process?"
 msgstr ""
 
-#: src/MainWindow.py:592
+#: src/MainWindow.py:604
+msgid "Error"
+msgstr ""
+
+#: src/MainWindow.py:605
+msgid "Wrong username or password."
+msgstr ""
+
+#: src/MainWindow.py:610
 #, fuzzy
 msgid "Leaving the domain..."
 msgstr "aderir ao domínio..."
 
-#: src/MainWindow.py:615
+#: src/MainWindow.py:634
 msgid "Information"
 msgstr ""
 
-#: src/MainWindow.py:617
+#: src/MainWindow.py:636
 msgid ""
 "You have successfully left the domain. But your computer still exists in "
 "Active Directory."

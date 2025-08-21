@@ -404,7 +404,7 @@ class MainWindow:
             self.show_info_dialog(
                 _("Warning"),
                 _(
-                    "Domains end with '.local' can cause to mDNS resolving or another problems."
+                    "Domains that end with '.local' can cause mDNS to resolve and the domain to not be found."
                 ),
             )
 
@@ -605,6 +605,24 @@ class MainWindow:
         def on_exit(pid, status):
             if status == 0:
                 self.main_stack.set_visible_child_name("main")
+
+                print(
+                    "checking if hostname is in ad:",
+                    self.model.domain,
+                    self.model.hostname,
+                )
+
+                hostname_in_ad = domain_operations.check_hostname_in_ad(
+                    self.model.domain, self.model.hostname, username, password
+                )
+                print("is hostname_in_ad:", hostname_in_ad)
+                if hostname_in_ad:
+                    self.show_info_dialog(
+                        _("Information"),
+                        _(
+                            "You have successfully left the domain. But your computer still exists in Active Directory."
+                        ),
+                    )
 
             else:
                 self.show_info_dialog(_("Joining Failed"), self.stderr_text)

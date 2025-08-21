@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 13:47+0300\n"
+"POT-Creation-Date: 2025-08-21 09:35+0300\n"
 "PO-Revision-Date: 2024-07-30 12:23+0300\n"
 "Last-Translator: busra cagliyan <busra.cagliyan@pardus.org.tr>\n"
 "Language-Team: Turkish <dev@pardus.org.tr>\n"
@@ -144,7 +144,7 @@ msgstr "Sunucular kontrol ediliyor..."
 msgid "Process exit code:{}"
 msgstr "Program çıkış kodu:{}"
 
-#: src/MainWindow.py:353 src/MainWindow.py:610
+#: src/MainWindow.py:353 src/MainWindow.py:622
 msgid "Joining Failed"
 msgstr "Katılma Başarısız"
 
@@ -158,9 +158,11 @@ msgstr "Uyarı"
 
 #: src/MainWindow.py:407
 msgid ""
-"Domains end with '.local' can cause to mDNS resolving or another problems."
+"Domains that end with '.local' can cause mDNS to resolve and the domain to "
+"not be found."
 msgstr ""
-"'.local' ile biten domainler mDNS çözümlemesine veya başka problemlere yol açabilir."
+"'.local' ile biten domainler mDNS çözümlemesine ve domain'in bulunamamasına "
+"yol açabilir."
 
 #: src/MainWindow.py:482 src/MainWindow.py:490
 msgid "Hostname is not valid!"
@@ -209,3 +211,14 @@ msgstr "Katılmayı iptal etmek istiyor musunuz?"
 #: src/MainWindow.py:592
 msgid "Leaving the domain..."
 msgstr "Etki alanından ayrılınıyor..."
+
+#: src/MainWindow.py:615
+msgid "Information"
+msgstr "Bilgi"
+
+#: src/MainWindow.py:617
+msgid ""
+"You have successfully left the domain. But your computer still exists in "
+"Active Directory."
+msgstr ""
+"Domain'den başarıyla ayrıldınız. Fakat bilgisayarınız AD'den silinemedi."

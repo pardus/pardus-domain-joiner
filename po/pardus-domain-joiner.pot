@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 13:47+0300\n"
+"POT-Creation-Date: 2025-08-21 09:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,7 +141,7 @@ msgstr ""
 msgid "Process exit code:{}"
 msgstr ""
 
-#: src/MainWindow.py:353 src/MainWindow.py:610
+#: src/MainWindow.py:353 src/MainWindow.py:622
 msgid "Joining Failed"
 msgstr ""
 
@@ -155,7 +155,8 @@ msgstr ""
 
 #: src/MainWindow.py:407
 msgid ""
-"Domains end with '.local' can cause to mDNS resolving or another problems."
+"Domains that end with '.local' can cause mDNS to resolve and the domain to "
+"not be found."
 msgstr ""
 
 #: src/MainWindow.py:482 src/MainWindow.py:490
@@ -200,4 +201,14 @@ msgstr ""
 
 #: src/MainWindow.py:592
 msgid "Leaving the domain..."
+msgstr ""
+
+#: src/MainWindow.py:615
+msgid "Information"
+msgstr ""
+
+#: src/MainWindow.py:617
+msgid ""
+"You have successfully left the domain. But your computer still exists in "
+"Active Directory."
 msgstr ""

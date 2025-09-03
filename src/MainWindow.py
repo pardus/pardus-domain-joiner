@@ -439,8 +439,8 @@ class MainWindow:
         self.main_stack.set_visible_child_name("advanced_settings")
 
     def on_back_to_main_btn_clicked(self, btn):
+        self.hostname_entry.set_text(self.model.hostname)
         self.ou_path_entry.set_text(self.model.organizational_unit)
-
         self.sssd_radio.set_active(self.model.connection_type == "sssd")
 
         self.main_stack.set_visible_child_name("main")

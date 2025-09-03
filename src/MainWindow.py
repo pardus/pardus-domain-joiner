@@ -582,7 +582,9 @@ class MainWindow:
         dialog = Gtk.MessageDialog(
             buttons=Gtk.ButtonsType.OK_CANCEL,
             text=_("Reboot the computer?"),
-            secondary_text=_("Please save and close other applications before."),
+            secondary_text=_(
+                "Please don't forget to save your progress in other applications before the reboot."
+            ),
         )
         response = dialog.run()
         if response == Gtk.ResponseType.OK:

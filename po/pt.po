@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-03 09:12+0300\n"
+"POT-Creation-Date: 2025-09-03 11:05+0300\n"
 "PO-Revision-Date: 2024-10-09 23:09+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: \n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: ui/MainWindow.glade:93 ui/MainWindow.glade:1147 src/MainWindow.py:171
+#: ui/MainWindow.glade:93 ui/MainWindow.glade:1147 src/MainWindow.py:172
 #, fuzzy
 msgid "Pardus Domain Joiner"
 msgstr "Definições de domínio Pardus"
@@ -104,7 +104,7 @@ msgstr "Nome de utilizador:"
 msgid "Organizational Unit:"
 msgstr "Unidade organizacional"
 
-#: ui/MainWindow.glade:839 src/MainWindow.py:545
+#: ui/MainWindow.glade:839 src/MainWindow.py:552
 #, fuzzy
 msgid "Joining to the domain..."
 msgstr "aderir ao domínio..."
@@ -153,50 +153,50 @@ msgstr "Palavra-passe:"
 msgid "Enter account information to leave"
 msgstr ""
 
-#: src/MainWindow.py:189
+#: src/MainWindow.py:190
 msgid "Checking AD servers..."
 msgstr ""
 
-#: src/MainWindow.py:340
+#: src/MainWindow.py:347
 msgid "Process exit code:{}"
 msgstr ""
 
-#: src/MainWindow.py:357 src/MainWindow.py:665
+#: src/MainWindow.py:364 src/MainWindow.py:669
 #, fuzzy
 msgid "Joining Failed"
 msgstr "Aderir ao domínio..."
 
-#: src/MainWindow.py:384
+#: src/MainWindow.py:391
 msgid "Enter WORKSPACE value."
 msgstr ""
 
-#: src/MainWindow.py:409
+#: src/MainWindow.py:416
 msgid "Warning"
 msgstr "Aviso"
 
-#: src/MainWindow.py:411
+#: src/MainWindow.py:418
 msgid ""
 "Domains that end with '.local' can cause mDNS to resolve and the domain to "
 "not be found."
 msgstr ""
 
-#: src/MainWindow.py:486 src/MainWindow.py:494
+#: src/MainWindow.py:493 src/MainWindow.py:501
 msgid "Hostname is not valid!"
 msgstr ""
 
-#: src/MainWindow.py:487
+#: src/MainWindow.py:494
 msgid "Maximum length is 63. Your hostname length is:"
 msgstr ""
 
-#: src/MainWindow.py:495
+#: src/MainWindow.py:502
 msgid "Valid chars: Letters, numbers, '.', '-'."
 msgstr ""
 
-#: src/MainWindow.py:501 src/MainWindow.py:566
+#: src/MainWindow.py:508 src/MainWindow.py:573
 msgid "Are you sure?"
 msgstr ""
 
-#: src/MainWindow.py:502
+#: src/MainWindow.py:509
 msgid ""
 "Hostname will be changed.\n"
 "\n"
@@ -204,52 +204,61 @@ msgid ""
 "New: {}"
 msgstr ""
 
-#: src/MainWindow.py:525
+#: src/MainWindow.py:532
 msgid "Hostname changed."
 msgstr ""
 
-#: src/MainWindow.py:530
+#: src/MainWindow.py:537
 #, fuzzy
 msgid "Couldn't change hostname"
 msgstr "nome do host alterado: "
 
-#: src/MainWindow.py:552
+#: src/MainWindow.py:559
 msgid "Checking WORKGROUP..."
 msgstr ""
 
-#: src/MainWindow.py:567
+#: src/MainWindow.py:574
 msgid "Do you want to cancel the joining process?"
 msgstr ""
 
-#: src/MainWindow.py:584
+#: src/MainWindow.py:605 src/MainWindow.py:607
+msgid "Invalid credentials."
+msgstr ""
+
+#: src/MainWindow.py:607 src/MainWindow.py:615 src/MainWindow.py:622
+#: src/MainWindow.py:629
+msgid "Error"
+msgstr ""
+
+#: src/MainWindow.py:613 src/MainWindow.py:615
+msgid "Server is not reachable."
+msgstr ""
+
+#: src/MainWindow.py:658
+msgid "Information"
+msgstr ""
+
+#: src/MainWindow.py:660
+msgid ""
+"You have successfully left the domain. But your computer still exists in "
+"Active Directory."
+msgstr ""
+
+#: src/MainWindow.py:691
+#, fuzzy
+msgid "Leaving the domain..."
+msgstr "aderir ao domínio..."
+
+#: src/MainWindow.py:699
 msgid "Reboot the computer?"
 msgstr ""
 
-#: src/MainWindow.py:586
+#: src/MainWindow.py:701
 msgid ""
 "Please don't forget to save your progress in other applications before the "
 "reboot."
 msgstr ""
 
-#: src/MainWindow.py:624
-msgid "Error"
-msgstr ""
-
-#: src/MainWindow.py:625
-msgid "Wrong username or password."
-msgstr ""
-
-#: src/MainWindow.py:630
-#, fuzzy
-msgid "Leaving the domain..."
-msgstr "aderir ao domínio..."
-
-#: src/MainWindow.py:654
-msgid "Information"
-msgstr ""
-
-#: src/MainWindow.py:656
-msgid ""
-"You have successfully left the domain. But your computer still exists in "
-"Active Directory."
+#: src/MainWindow.py:735
+msgid "Checking credentials..."
 msgstr ""

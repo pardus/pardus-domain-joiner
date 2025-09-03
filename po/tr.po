@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-03 09:12+0300\n"
+"POT-Creation-Date: 2025-09-03 11:05+0300\n"
 "PO-Revision-Date: 2024-07-30 12:23+0300\n"
 "Last-Translator: busra cagliyan <busra.cagliyan@pardus.org.tr>\n"
 "Language-Team: Turkish <dev@pardus.org.tr>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Gtranslator 42.0\n"
 
-#: ui/MainWindow.glade:93 ui/MainWindow.glade:1147 src/MainWindow.py:171
+#: ui/MainWindow.glade:93 ui/MainWindow.glade:1147 src/MainWindow.py:172
 msgid "Pardus Domain Joiner"
 msgstr "Pardus Etki Alanı Ayarları"
 
@@ -96,7 +96,7 @@ msgstr "Kullanıcı:"
 msgid "Organizational Unit:"
 msgstr "Organizasyonel Birim (OU):"
 
-#: ui/MainWindow.glade:839 src/MainWindow.py:545
+#: ui/MainWindow.glade:839 src/MainWindow.py:552
 msgid "Joining to the domain..."
 msgstr "Etki Alanına dahil ediliyor..."
 
@@ -140,27 +140,27 @@ msgstr "AD Parola:"
 msgid "Enter account information to leave"
 msgstr "Ayrılmak için hesap bilgilerinizi giriniz"
 
-#: src/MainWindow.py:189
+#: src/MainWindow.py:190
 msgid "Checking AD servers..."
 msgstr "Sunucular kontrol ediliyor..."
 
-#: src/MainWindow.py:340
+#: src/MainWindow.py:347
 msgid "Process exit code:{}"
 msgstr "Program çıkış kodu:{}"
 
-#: src/MainWindow.py:357 src/MainWindow.py:665
+#: src/MainWindow.py:364 src/MainWindow.py:669
 msgid "Joining Failed"
 msgstr "Katılma Başarısız"
 
-#: src/MainWindow.py:384
+#: src/MainWindow.py:391
 msgid "Enter WORKSPACE value."
 msgstr "WORKSPACE değerini giriniz."
 
-#: src/MainWindow.py:409
+#: src/MainWindow.py:416
 msgid "Warning"
 msgstr "Uyarı"
 
-#: src/MainWindow.py:411
+#: src/MainWindow.py:418
 msgid ""
 "Domains that end with '.local' can cause mDNS to resolve and the domain to "
 "not be found."
@@ -168,23 +168,23 @@ msgstr ""
 "'.local' ile biten domainler mDNS çözümlemesine ve domain'in bulunamamasına "
 "yol açabilir."
 
-#: src/MainWindow.py:486 src/MainWindow.py:494
+#: src/MainWindow.py:493 src/MainWindow.py:501
 msgid "Hostname is not valid!"
 msgstr "Hostname geçersiz!"
 
-#: src/MainWindow.py:487
+#: src/MainWindow.py:494
 msgid "Maximum length is 63. Your hostname length is:"
 msgstr "Maksimum uzunluk 63 karakterdir. Girilen değerin uzunluğu:"
 
-#: src/MainWindow.py:495
+#: src/MainWindow.py:502
 msgid "Valid chars: Letters, numbers, '.', '-'."
 msgstr "Geçerli karakterler: Harfler, numaralar, '.', '-'."
 
-#: src/MainWindow.py:501 src/MainWindow.py:566
+#: src/MainWindow.py:508 src/MainWindow.py:573
 msgid "Are you sure?"
 msgstr "Emin misiniz?"
 
-#: src/MainWindow.py:502
+#: src/MainWindow.py:509
 msgid ""
 "Hostname will be changed.\n"
 "\n"
@@ -196,27 +196,55 @@ msgstr ""
 "Eski: {}\n"
 "Yeni: {}"
 
-#: src/MainWindow.py:525
+#: src/MainWindow.py:532
 msgid "Hostname changed."
 msgstr "Bilgisayar adı değiştirildi."
 
-#: src/MainWindow.py:530
+#: src/MainWindow.py:537
 msgid "Couldn't change hostname"
 msgstr "Bilgisayar Adı değiştirilemedi."
 
-#: src/MainWindow.py:552
+#: src/MainWindow.py:559
 msgid "Checking WORKGROUP..."
 msgstr "WORKGROUP kontrol ediliyor..."
 
-#: src/MainWindow.py:567
+#: src/MainWindow.py:574
 msgid "Do you want to cancel the joining process?"
 msgstr "Katılmayı iptal etmek istiyor musunuz?"
 
-#: src/MainWindow.py:584
+#: src/MainWindow.py:605 src/MainWindow.py:607
+msgid "Invalid credentials."
+msgstr "Geçersiz kimlik."
+
+#: src/MainWindow.py:607 src/MainWindow.py:615 src/MainWindow.py:622
+#: src/MainWindow.py:629
+msgid "Error"
+msgstr "Hata"
+
+#: src/MainWindow.py:613 src/MainWindow.py:615
+msgid "Server is not reachable."
+msgstr "Sunucuya erişilemiyor."
+
+#: src/MainWindow.py:658
+msgid "Information"
+msgstr "Bilgi"
+
+#: src/MainWindow.py:660
+msgid ""
+"You have successfully left the domain. But your computer still exists in "
+"Active Directory."
+msgstr ""
+"Domain'den başarıyla ayrıldınız. Fakat bilgisayarınız AD'den silinemedi."
+
+#: src/MainWindow.py:691
+msgid "Leaving the domain..."
+msgstr "Etki alanından ayrılınıyor..."
+
+#: src/MainWindow.py:699
 msgid "Reboot the computer?"
 msgstr "Bilgisayarı Yeniden Başlat?"
 
-#: src/MainWindow.py:586
+#: src/MainWindow.py:701
 msgid ""
 "Please don't forget to save your progress in other applications before the "
 "reboot."
@@ -224,25 +252,6 @@ msgstr ""
 "Lütfen yeniden başlatmadan önce diğer uygulamalardaki işlerinizi kaydetmeyi "
 "unutmayın."
 
-#: src/MainWindow.py:624
-msgid "Error"
-msgstr "Hata"
-
-#: src/MainWindow.py:625
-msgid "Wrong username or password."
-msgstr "Kullanıcı adı veya parola yanlış."
-
-#: src/MainWindow.py:630
-msgid "Leaving the domain..."
-msgstr "Etki alanından ayrılınıyor..."
-
-#: src/MainWindow.py:654
-msgid "Information"
-msgstr "Bilgi"
-
-#: src/MainWindow.py:656
-msgid ""
-"You have successfully left the domain. But your computer still exists in "
-"Active Directory."
-msgstr ""
-"Domain'den başarıyla ayrıldınız. Fakat bilgisayarınız AD'den silinemedi."
+#: src/MainWindow.py:735
+msgid "Checking credentials..."
+msgstr "Kimlik kontrol ediliyor..."

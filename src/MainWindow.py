@@ -582,10 +582,13 @@ class MainWindow:
         dialog.hide()
 
     # In Domain page
-    def authenticate_ldap(self, task, source_object, task_data, cancellable):
+    def authenticate_and_leave(self, task, source_object, task_data, cancellable):
         # Authenticate on LDAP
         if not self._temp_ldap_username_password:
             return
+
+        print("Authenticating the user on LDAP...")
+        self.show_spinner(_("Checking credentials..."))
 
         (username, password) = self._temp_ldap_username_password
 
@@ -725,14 +728,10 @@ class MainWindow:
         else:
             return
 
-        print("Authenticating the user on LDAP...")
-
         # We set this useless temporary variable because set_task_data is broken. (pardus23)
         self._temp_ldap_username_password = (username, password)
         task = Gio.Task.new()
-        task.run_in_thread(self.authenticate_ldap)
-
-        self.show_spinner(_("Checking credentials..."))
+        task.run_in_thread(self.authenticate_and_leave)
 
     # AD Leave Dialog
     def on_ad_dialog_username_entry_changed(self, entry):

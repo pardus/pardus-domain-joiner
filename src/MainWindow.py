@@ -666,6 +666,23 @@ class MainWindow:
 
                 ldap_client._unbind_connection()
 
+                # Inform for logout
+                env = os.environ["PATH"]
+                new_env = env + ":/sbin:/usr/sbin"
+
+                dialog = Gtk.MessageDialog(
+                    buttons=Gtk.ButtonsType.OK_CANCEL,
+                    text=_("Reboot the computer?"),
+                    secondary_text=_(
+                        "Please don't forget to save your progress in other applications before the reboot."
+                    ),
+                )
+                response = dialog.run()
+                if response == Gtk.ResponseType.OK:
+                    subprocess.run(["shutdown", "-r", "now"], env={"PATH": new_env})
+
+                dialog.hide()
+
                 self.main_stack.set_visible_child_name("main")
 
             else:

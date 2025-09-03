@@ -1,3 +1,16 @@
+pardus-domain-joiner (0.3.5) yirmiuc; urgency=medium
+
+  * feat: check if hostname still exists after leave
+  * feat: add reboot button after joined
+  * fix: updated translations
+  * fix: ui block when leaving from domain
+  * fix: updated translations
+  * fix: little
+  * fix: restore hostname when pressed back
+  * feat: add logout after leave
+
+ -- Emin Fedar <emin.fedar@pardus.org.tr>  Wed, 03 Sep 2025 13:22:28 +0300
+
 pardus-domain-joiner (0.3.4) yirmiuc; urgency=medium
 
   * feat: added warning on leave from AD

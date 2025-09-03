@@ -4,6 +4,7 @@ import os
 import re
 import sys
 import locale
+import ldap
 from locale import gettext as _
 
 from pardus_domain_joiner import domain_operations
@@ -298,6 +299,12 @@ class MainWindow:
         dialog.run()
         dialog.hide()
 
+    def show_spinner(self, text=None):
+        if text:
+            self.spinner_label.set_text(text)
+
+        self.main_stack.set_visible_child_name("spinner")
+
     def spawn_joining_process(self, workgroup):
         def on_stdout(source, condition):
             if condition == GLib.IO_HUP:
@@ -575,6 +582,114 @@ class MainWindow:
         dialog.hide()
 
     # In Domain page
+    def authenticate_ldap(self, task, source_object, task_data, cancellable):
+        # Authenticate on LDAP
+        if not self._temp_ldap_username_password:
+            return
+
+        (username, password) = self._temp_ldap_username_password
+
+        ldap_username = f"{username}@{self.model.domain.upper()}"
+        ldap_client = domain_joiner_ldap.LDAP(
+            self.model.domain, ldap_username, password
+        )
+
+        # remove temporary value from global context.
+        self._temp_ldap_username_password = None
+
+        # Validate credentials, return if false
+        try:
+            ldap_client.authenticate()
+
+        except ldap.INVALID_CREDENTIALS:
+            print(_("Invalid credentials."))
+
+            self.show_info_dialog(_("Error"), _("Invalid credentials."))
+            ldap_client._unbind_connection()
+
+            self.main_stack.set_visible_child_name("in_domain")
+            return
+        except ldap.SERVER_DOWN:
+            print(_("Server is not reachable."))
+
+            self.show_info_dialog(_("Error"), _("Server is not reachable."))
+            ldap_client._unbind_connection()
+
+            self.main_stack.set_visible_child_name("in_domain")
+            return
+        except ldap.LDAPError as err:
+            print("Other LDAPError:", err)
+            self.show_info_dialog(_("Error"), f"LDAP Error:\n{err}")
+            ldap_client._unbind_connection()
+
+            self.main_stack.set_visible_child_name("in_domain")
+            return
+        except Exception as e:
+            print("LDAP Authenticate Exception:", e)
+            self.show_info_dialog(_("Error"), f"Exception: {e}")
+
+            ldap_client._unbind_connection()
+            self.main_stack.set_visible_child_name("in_domain")
+            return
+
+        # Credentials are valid, continue...
+        def on_stderr(source, condition):
+            if condition == GLib.IO_HUP:
+                return False
+
+            line = source.readline().strip()
+            print("stderr", line)
+            if line:
+                self.stderr_text += line + "\n"
+
+            return True
+
+        def on_exit(pid, status):
+            if status == 0:
+                # Check if hostname still exists in AD
+                print(f"Checking if '{self.model.hostname}' still exists in the AD")
+                is_hostname_in_ad = ldap_client.check_computer_exists_in_ad(
+                    self.model.hostname
+                )
+                print("is hostname exists in AD:", is_hostname_in_ad)
+
+                if is_hostname_in_ad:
+                    self.show_info_dialog(
+                        _("Information"),
+                        _(
+                            "You have successfully left the domain. But your computer still exists in Active Directory."
+                        ),
+                    )
+
+                ldap_client._unbind_connection()
+
+                self.main_stack.set_visible_child_name("main")
+
+            else:
+                self.show_info_dialog(_("Joining Failed"), self.stderr_text)
+
+                sys.stderr.write(self.stderr_text + "\n")
+
+                self.main_stack.set_visible_child_name("in_domain")
+
+        args = [
+            "pkexec",
+            f"{CWD}/Actions.py",
+            "leave",
+            ldap_client.username,
+            ldap_client.password,
+            self.model.connection_type,
+        ]
+
+        self.spawn_process(
+            args,
+            None,
+            on_stderr,
+            on_exit,
+        )
+
+        self.show_spinner(_("Leaving the domain..."))
+
     def on_restart_computer_btn_clicked(self, btn):
         env = os.environ["PATH"]
         new_env = env + ":/sbin:/usr/sbin"
@@ -610,80 +725,14 @@ class MainWindow:
         else:
             return
 
-        # Authenticate on LDAP
-        ldap_username = f"{username}@{self.model.domain.upper()}"
-        ldap = domain_joiner_ldap.LDAP(self.model.domain, ldap_username, password)
-
         print("Authenticating the user on LDAP...")
 
-        is_authenticated = ldap.authenticate()
+        # We set this useless temporary variable because set_task_data is broken. (pardus23)
+        self._temp_ldap_username_password = (username, password)
+        task = Gio.Task.new()
+        task.run_in_thread(self.authenticate_ldap)
 
-        # Is credentials valid?
-        if not is_authenticated:
-            self.show_info_dialog(
-                _("Error"),
-                _("Wrong username or password."),
-            )
-            ldap._unbind_connection()
-            return
-
-        self.spinner_label.set_text(_("Leaving the domain..."))
-
-        def on_stderr(source, condition):
-            if condition == GLib.IO_HUP:
-                return False
-
-            line = source.readline().strip()
-            print("stderr", line)
-            if line:
-                self.stderr_text += line + "\n"
-
-            return True
-
-        def on_exit(pid, status):
-            if status == 0:
-                # Check if hostname still exists in AD
-                print(f"Checking if '{self.model.hostname}' still exists in the AD")
-                is_hostname_in_ad = ldap.check_computer_exists_in_ad(
-                    self.model.hostname
-                )
-                print("is hostname exists in AD:", is_hostname_in_ad)
-
-                if is_hostname_in_ad:
-                    self.show_info_dialog(
-                        _("Information"),
-                        _(
-                            "You have successfully left the domain. But your computer still exists in Active Directory."
-                        ),
-                    )
-
-                ldap._unbind_connection()
-
-                self.main_stack.set_visible_child_name("main")
-
-            else:
-                self.show_info_dialog(_("Joining Failed"), self.stderr_text)
-
-                sys.stderr.write(self.stderr_text + "\n")
-
-                self.main_stack.set_visible_child_name("in_domain")
-
-        args = [
-            "pkexec",
-            f"{CWD}/Actions.py",
-            "leave",
-            username,
-            password,
-            self.model.connection_type,
-        ]
-
-        self.spawn_process(
-            args,
-            None,
-            on_stderr,
-            on_exit,
-        )
-        self.main_stack.set_visible_child_name("spinner")
+        self.show_spinner(_("Checking credentials..."))
 
     # AD Leave Dialog
     def on_ad_dialog_username_entry_changed(self, entry):

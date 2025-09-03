@@ -126,6 +126,7 @@ class MainWindow:
 
         # Joined Page
         self.joined_domain_label = UI("joined_domain_label")
+        self.joined_btn_stack = UI("joined_btn_stack")
 
         # AD Password asking dialog
         self.ad_dialog = UI("ad_dialog")
@@ -343,6 +344,8 @@ class MainWindow:
             adj.set_value(adj.get_upper() - adj.get_page_size())
 
             if status == 0:
+                # Successfully joined to the domain
+                self.joined_btn_stack.set_visible_child_name("restart_button")
                 self.main_stack.set_visible_child_name("in_domain")
                 self.joined_domain_label.set_text(self.model.domain)
 
@@ -572,6 +575,21 @@ class MainWindow:
         dialog.hide()
 
     # In Domain page
+    def on_restart_computer_btn_clicked(self, btn):
+        env = os.environ["PATH"]
+        new_env = env + ":/sbin:/usr/sbin"
+
+        dialog = Gtk.MessageDialog(
+            buttons=Gtk.ButtonsType.OK_CANCEL,
+            text=_("Reboot the computer?"),
+            secondary_text=_("Please save and close other applications before."),
+        )
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            subprocess.run(["shutdown", "-r", "now"], env={"PATH": new_env})
+
+        dialog.hide()
+
     def on_leave_domain_btn_clicked(self, btn):
         self.stderr_text = ""
 

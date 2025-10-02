@@ -28,6 +28,7 @@ locale.bindtextdomain(APPNAME, TRANSLATIONS_PATH)
 locale.textdomain(APPNAME)
 
 CWD = os.path.dirname(os.path.abspath(__file__))
+ACTIONS_PY = f"{CWD}/Actions.py"
 
 HOSTNAME_REGEX = (
     r"""^([a-zA-Z0-9](?:(?:[a-zA-Z0-9-]*|(?<!-)\.(?![-.]))*[a-zA-Z0-9]+)?)$"""
@@ -104,11 +105,13 @@ class MainWindow:
 
         # Advanced Settings Page
         self.hostname_entry = UI("hostname_entry")
-        self.change_hostname_btn = UI("change_hostname_btn")
+        self.adv_save_btn = UI("adv_save_btn")
 
         self.sssd_radio = UI("sssd_radio")
         self.winbind_radio = UI("winbind_radio")
 
+        self.ou_default_radio = UI("ou_default_radio")
+        self.ou_specific_radio = UI("ou_specific_radio")
         self.ou_path_entry = UI("ou_path_entry")
 
         # Prejoin Page
@@ -159,7 +162,11 @@ class MainWindow:
         self.hostname_entry.set_text(self.model.hostname)
         self.sssd_radio.set_active(self.model.connection_type == "sssd")
         self.winbind_radio.set_active(self.model.connection_type == "winbind")
+
+        print("org_unit:", self.model.organizational_unit, "status:", self.model.organizational_unit != "")
         self.ou_path_entry.set_text(self.model.organizational_unit)
+        self.ou_default_radio.set_active(self.model.organizational_unit == "")
+        self.ou_specific_radio.set_active(self.model.organizational_unit != "")
 
         self.joining_process_pid = None
 
@@ -230,7 +237,7 @@ class MainWindow:
                 self.application.quit()
 
         self.spawn_process(
-            ["pkexec", f"{CWD}/Actions.py", "check_domain"],
+            ["pkexec", ACTIONS_PY, "check_domain"],
             on_stdout,
             on_stderr,
             on_exit,
@@ -245,14 +252,82 @@ class MainWindow:
 
         self.prejoin_btn.set_sensitive(is_valid)
 
-    def save_config(self):
+    def save_config_to_file(self):
         config = vars(self.model).copy()
 
+        # Delete unnecessary variables
         config.pop("password", None)
         config.pop("hostname", None)
         config.pop("computer_name", None)
 
         ConfigManager.save_config(config)
+
+    def save_settings(self, task, source_object, task_data, cancellable):
+        if not self.change_hostname():
+            return
+
+        # Update model
+
+        # self.model.hostname is set in self.change_hostname()
+
+        self.model.connection_type = (
+            "sssd" if self.sssd_radio.get_active() else "winbind"
+        )
+
+        if self.ou_specific_radio.get_active():
+            self.model.organizational_unit = self.ou_path_entry.get_text().strip()
+        else:
+            self.model.organizational_unit = ""
+
+        self.save_config_to_file()
+
+        self.main_stack.set_visible_child_name("main")
+
+    def change_hostname(self):
+        current_hostname = self.model.hostname
+        new_hostname = self.hostname_entry.get_text()
+
+        if current_hostname == new_hostname:
+            return True
+
+        if len(new_hostname) > 63:
+            self.show_info_dialog(
+                _("Hostname is not valid!"),
+                _("Maximum length is 63. Your hostname length is:")
+                + str(len(new_hostname)),
+            )
+            return False
+
+        if re.fullmatch(HOSTNAME_REGEX, new_hostname) is None:
+            self.show_info_dialog(
+                _("Hostname is not valid!"),
+                _("Valid chars: Letters, numbers, '.', '-'."),
+            )
+            return False
+
+        dialog = Gtk.MessageDialog(
+            buttons=Gtk.ButtonsType.OK_CANCEL,
+            text=_("Are you sure?"),
+            secondary_text=_("Hostname will be changed.\n\nOld: {}\nNew: {}").format(
+                current_hostname, new_hostname
+            ),
+        )
+
+        response = dialog.run()
+        dialog.hide()
+
+        if response == Gtk.ResponseType.OK:
+            p = subprocess.run(["pkexec", ACTIONS_PY, "hostname", new_hostname], capture_output=True, text=True)
+            if p.returncode != 0 and p.returncode != 126:
+                self.show_info_dialog(_("Couldn't change hostname"), p.stderr)
+                return False
+
+            self.show_info_dialog(_("Hostname changed."), _("Old: {}\nNew: {}").format(current_hostname, new_hostname))
+            self.model.hostname = new_hostname
+
+            return True
+
+        return False
 
     def spawn_process(self, params, on_stdout, on_stderr, on_exit):
         pid, _stdin, stdout, stderr = GLib.spawn_async(
@@ -368,7 +443,7 @@ class MainWindow:
         self.joining_process_pid = self.spawn_process(
             [
                 "pkexec",
-                f"{CWD}/Actions.py",
+                ACTIONS_PY,
                 "join",
                 self.model.hostname,
                 self.model.domain,
@@ -441,21 +516,15 @@ class MainWindow:
     def on_back_to_main_btn_clicked(self, btn):
         self.hostname_entry.set_text(self.model.hostname)
         self.ou_path_entry.set_text(self.model.organizational_unit)
+        self.ou_specific_radio.set_active(self.model.organizational_unit != "")
         self.sssd_radio.set_active(self.model.connection_type == "sssd")
 
         self.main_stack.set_visible_child_name("main")
 
-    def on_save_btn_clicked(self, btn):
-        # Update model
-        self.model.organizational_unit = self.ou_path_entry.get_text().strip()
-
-        self.model.connection_type = (
-            "sssd" if self.sssd_radio.get_active() else "winbind"
-        )
-
-        self.save_config()
-
-        self.main_stack.set_visible_child_name("main")
+    def on_adv_save_btn_clicked(self, btn):
+        # Try to change hostname:
+        task = Gio.Task.new()
+        task.run_in_thread(self.save_settings)
 
     def on_password_entry_icon_press(self, entry, icon_pos, event):
         entry.set_visibility(True)
@@ -479,71 +548,12 @@ class MainWindow:
 
     # Advanced settings
     def on_hostname_entry_changed(self, entry):
-        self.change_hostname_btn.set_sensitive(len(entry.get_text()) != 0)
+        self.adv_save_btn.set_sensitive(len(entry.get_text()) != 0)
 
-    def on_change_hostname_btn_clicked(self, btn):
-        current_hostname = self.model.hostname
-        new_hostname = self.hostname_entry.get_text()
+    def on_ou_specific_radio_toggled(self, radiobutton):
+        enabled = radiobutton.get_active()
+        self.ou_path_entry.set_sensitive(enabled)
 
-        if current_hostname == new_hostname:
-            return
-
-        if len(new_hostname) > 63:
-            self.show_info_dialog(
-                _("Hostname is not valid!"),
-                _("Maximum length is 63. Your hostname length is:")
-                + str(len(new_hostname)),
-            )
-            return
-
-        if re.fullmatch(HOSTNAME_REGEX, new_hostname) is None:
-            self.show_info_dialog(
-                _("Hostname is not valid!"),
-                _("Valid chars: Letters, numbers, '.', '-'."),
-            )
-            return
-
-        dialog = Gtk.MessageDialog(
-            buttons=Gtk.ButtonsType.OK_CANCEL,
-            text=_("Are you sure?"),
-            secondary_text=_("Hostname will be changed.\n\nOld: {}\nNew: {}").format(
-                current_hostname, new_hostname
-            ),
-        )
-
-        response = dialog.run()
-        if response == Gtk.ResponseType.OK:
-            self.stderr_text = ""
-
-            def on_stderr(source, condition):
-                if condition == GLib.IO_HUP:
-                    return False
-
-                line = source.readline().strip()
-                if line:
-                    self.stderr_text += line + "\n"
-
-                return True
-
-            def on_exit(pid, status):
-                if status == 0:
-                    self.model.hostname = new_hostname
-
-                    self.show_info_dialog(_("Hostname changed."), "")
-
-                elif status == 126:
-                    pass
-                else:
-                    self.show_info_dialog(_("Couldn't change hostname"), "")
-
-            self.spawn_process(
-                ["pkexec", f"{CWD}/Actions.py", "hostname", new_hostname],
-                None,
-                on_stderr,
-                on_exit,
-            )
-
-        dialog.hide()
 
     # Pre Join
     def on_join_btn_clicked(self, btn):
@@ -576,7 +586,7 @@ class MainWindow:
         response = dialog.run()
         if response == Gtk.ResponseType.OK:
             subprocess.run(
-                ["pkexec", f"{CWD}/Actions.py", "cancel", str(self.joining_process_pid)]
+                ["pkexec", ACTIONS_PY, "cancel", str(self.joining_process_pid)]
             )
 
         dialog.hide()
@@ -686,7 +696,7 @@ class MainWindow:
                 self.main_stack.set_visible_child_name("main")
 
             else:
-                self.show_info_dialog(_("Joining Failed"), self.stderr_text)
+                self.show_info_dialog(_("Leaving Failed"), self.stderr_text)
 
                 sys.stderr.write(self.stderr_text + "\n")
 
@@ -694,7 +704,7 @@ class MainWindow:
 
         args = [
             "pkexec",
-            f"{CWD}/Actions.py",
+            ACTIONS_PY,
             "leave",
             ldap_client.username,
             ldap_client.password,

@@ -130,7 +130,7 @@
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
                             <property name="valign">center</property>
-                            <property name="label" translatable="yes">Etki Alanı:</property>
+                            <property name="label" translatable="yes">Domain:</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -144,7 +144,7 @@
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
                             <property name="valign">center</property>
-                            <property name="label" translatable="yes">Kullanıcı Adı:</property>
+                            <property name="label" translatable="yes">Username:</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -158,7 +158,7 @@
                             <property name="can-focus">False</property>
                             <property name="halign">start</property>
                             <property name="valign">center</property>
-                            <property name="label" translatable="yes">Parola:</property>
+                            <property name="label" translatable="yes">Password:</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -965,6 +965,7 @@
                                 <property name="margin-bottom">7</property>
                                 <property name="use-markup">True</property>
                                 <property name="selectable">True</property>
+                                <signal name="size-allocate" handler="on_joining_log_label_size_allocate" swapped="no"/>
                                 <style>
                                   <class name="monospace"/>
                                 </style>

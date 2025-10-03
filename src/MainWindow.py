@@ -163,7 +163,6 @@ class MainWindow:
         self.sssd_radio.set_active(self.model.connection_type == "sssd")
         self.winbind_radio.set_active(self.model.connection_type == "winbind")
 
-        print("org_unit:", self.model.organizational_unit, "status:", self.model.organizational_unit != "")
         self.ou_path_entry.set_text(self.model.organizational_unit)
         self.ou_default_radio.set_active(self.model.organizational_unit == "")
         self.ou_specific_radio.set_active(self.model.organizational_unit != "")
@@ -392,9 +391,6 @@ class MainWindow:
             lbl = self.joining_log_label
             lbl.set_markup(lbl.get_label() + line + "\n")
 
-            adj = self.joining_viewport.get_vadjustment()
-            adj.set_value(adj.get_upper() - adj.get_page_size())
-
             return True
 
         def on_stderr(source, condition):
@@ -408,9 +404,6 @@ class MainWindow:
             lbl = self.joining_log_label
             lbl.set_markup(lbl.get_label() + f'<span color="gray">{line}</span>' + "\n")
 
-            adj = self.joining_viewport.get_vadjustment()
-            adj.set_value(adj.get_upper() - adj.get_page_size())
-
             return True
 
         def on_exit(pid, status):
@@ -421,9 +414,6 @@ class MainWindow:
                 lbl.set_markup(
                     lbl.get_label() + _("Process exit code:{}").format(status)
                 )
-
-            adj = self.joining_viewport.get_vadjustment()
-            adj.set_value(adj.get_upper() - adj.get_page_size())
 
             if status == 0:
                 # Successfully joined to the domain
@@ -439,6 +429,21 @@ class MainWindow:
                 self.joining_title_label.set_text(_("Joining Failed"))
                 self.joining_spinner.stop()
                 self.cancel_btn_stack.set_visible_child_name("back")
+
+                if ("BAD_NAME" in lbl.get_text()
+                    or ("failed to precreate account in ou" in lbl.get_text())):
+                    # Not valid OU name like 'computers' instead of 'CN=computers'
+                    lbl.set_markup('{}\n<span color="red">-------</span>'.format(lbl.get_label()))
+                    lbl.set_markup('{}\n<span color="red">{}:</span>\n"{}"'.format(lbl.get_label(), _("Invalid Organizational Unit"), self.model.organizational_unit))
+                    lbl.set_markup('{}\n<span color="red">{}</span>'.format(lbl.get_label(), _("Please make sure the Organizational Unit is correct.")))
+                    lbl.set_markup('{}\n'.format(lbl.get_label()))
+                elif "The organizational unit does not exist" in lbl.get_text():
+                    # OU does not exist
+                    lbl.set_markup('{}\n<span color="red">-------</span>'.format(lbl.get_label()))
+                    lbl.set_markup('{}\n<span color="red">{}:</span>\n"{}"'.format(lbl.get_label(), _("Organizational Unit does not exist"), self.model.organizational_unit))
+                    lbl.set_markup('{}\n'.format(lbl.get_label()))
+
+
 
         self.joining_process_pid = self.spawn_process(
             [
@@ -590,6 +595,11 @@ class MainWindow:
             )
 
         dialog.hide()
+
+    def on_joining_log_label_size_allocate(self, label, allocation):
+        # Use this signal to scroll logs bottom
+        adj = self.joining_viewport.get_vadjustment()
+        adj.set_value(adj.get_upper())
 
     # In Domain page
     def authenticate_and_leave(self, task, source_object, task_data, cancellable):

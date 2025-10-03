@@ -529,7 +529,7 @@ class MainWindow:
     def on_adv_save_btn_clicked(self, btn):
         # Try to change hostname:
         task = Gio.Task.new()
-        task.run_in_thread(self.save_settings)
+        GLib.idle_add(task.run_in_thread, self.save_settings)
 
     def on_password_entry_icon_press(self, entry, icon_pos, event):
         entry.set_visibility(True)
@@ -574,7 +574,7 @@ class MainWindow:
             self.joining_log_label.set_text(_("Checking WORKGROUP...") + "\n")
 
             task = Gio.Task.new()
-            task.run_in_thread(self.check_workgroup)
+            GLib.idle_add(task.run_in_thread, self.check_workgroup)
         else:
             self.spawn_joining_process("")
 
@@ -768,7 +768,7 @@ class MainWindow:
         # We set this useless temporary variable because set_task_data is broken. (pardus23)
         self._temp_ldap_username_password = (username, password)
         task = Gio.Task.new()
-        task.run_in_thread(self.authenticate_and_leave)
+        GLib.idle_add(task.run_in_thread, self.authenticate_and_leave)
 
     # AD Leave Dialog
     def on_ad_dialog_username_entry_changed(self, entry):

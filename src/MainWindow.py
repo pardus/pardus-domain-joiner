@@ -431,7 +431,7 @@ class MainWindow:
                 self.main_stack.set_visible_child_name("in_domain")
                 self.joined_domain_label.set_text(self.model.domain)
 
-                self.save_config()
+                self.save_config_to_file()
             elif status == 15 or status == 32256 or status == 32512 or status == 126:
                 # Cancelled pkexec dialog
                 self.main_stack.set_visible_child_name("prejoin")

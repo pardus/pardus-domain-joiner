@@ -430,14 +430,17 @@ class MainWindow:
                 self.joining_spinner.stop()
                 self.cancel_btn_stack.set_visible_child_name("back")
 
-                if ("BAD_NAME" in lbl.get_text()
-                    or ("failed to precreate account in ou" in lbl.get_text())):
+                logs = lbl.get_text()
+
+                if ("BAD_NAME" in logs
+                    or "failed to precreate account in ou" in logs
+                    or "Couldn't lookup computer container" in logs):
                     # Not valid OU name like 'computers' instead of 'CN=computers'
                     lbl.set_markup('{}\n<span color="red">-------</span>'.format(lbl.get_label()))
                     lbl.set_markup('{}\n<span color="red">{}:</span>\n"{}"'.format(lbl.get_label(), _("Invalid Organizational Unit"), self.model.organizational_unit))
                     lbl.set_markup('{}\n<span color="red">{}</span>'.format(lbl.get_label(), _("Please make sure the Organizational Unit is correct.")))
                     lbl.set_markup('{}\n'.format(lbl.get_label()))
-                elif "The organizational unit does not exist" in lbl.get_text():
+                elif "The organizational unit does not exist" in logs:
                     # OU does not exist
                     lbl.set_markup('{}\n<span color="red">-------</span>'.format(lbl.get_label()))
                     lbl.set_markup('{}\n<span color="red">{}:</span>\n"{}"'.format(lbl.get_label(), _("Organizational Unit does not exist"), self.model.organizational_unit))

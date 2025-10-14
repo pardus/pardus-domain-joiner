@@ -7,6 +7,8 @@ import locale
 import ldap
 from locale import gettext as _
 
+import Version
+
 from pardus_domain_joiner import domain_operations
 from pardus_domain_joiner import domain_joiner_ldap
 import managers.ConfigManager as ConfigManager
@@ -105,7 +107,6 @@ class MainWindow:
 
         # Advanced Settings Page
         self.hostname_entry = UI("hostname_entry")
-        self.adv_save_btn = UI("adv_save_btn")
 
         self.sssd_radio = UI("sssd_radio")
         self.winbind_radio = UI("winbind_radio")
@@ -171,22 +172,13 @@ class MainWindow:
 
     def setup_about_dialog(self):
         self.about_dialog = self.builder.get_object("about_dialog")
-
+        self.about_dialog.set_version(Version.VERSION)
         if self.about_dialog.get_titlebar is None:
             about_headerbar = Gtk.HeaderBar.new()
             about_headerbar.set_show_close_button(True)
             about_headerbar.set_title(_("Pardus Domain Joiner"))
             about_headerbar.show_all()
             self.about_dialog.set_titlebar(about_headerbar)
-
-        try:
-            version = open(
-                os.path.dirname(os.path.abspath(__file__)) + "/__version__"
-            ).readline()
-
-            self.about_dialog.set_version(version)
-        except Exception:
-            pass
 
     # == FUNCTIONS ==
     def check_domain_already_joined(self):
@@ -261,7 +253,7 @@ class MainWindow:
 
         ConfigManager.save_config(config)
 
-    def save_settings(self, task, source_object, task_data, cancellable):
+    def save_settings(self):
         if not self.change_hostname():
             return
 
@@ -279,8 +271,6 @@ class MainWindow:
             self.model.organizational_unit = ""
 
         self.save_config_to_file()
-
-        self.main_stack.set_visible_child_name("main")
 
     def change_hostname(self):
         current_hostname = self.model.hostname
@@ -316,12 +306,19 @@ class MainWindow:
         dialog.hide()
 
         if response == Gtk.ResponseType.OK:
-            p = subprocess.run(["pkexec", ACTIONS_PY, "hostname", new_hostname], capture_output=True, text=True)
+            p = subprocess.run(
+                ["pkexec", ACTIONS_PY, "hostname", new_hostname],
+                capture_output=True,
+                text=True,
+            )
             if p.returncode != 0 and p.returncode != 126:
                 self.show_info_dialog(_("Couldn't change hostname"), p.stderr)
                 return False
 
-            self.show_info_dialog(_("Hostname changed."), _("Old: {}\nNew: {}").format(current_hostname, new_hostname))
+            self.show_info_dialog(
+                _("Hostname changed."),
+                _("Old: {}\nNew: {}").format(current_hostname, new_hostname),
+            )
             self.model.hostname = new_hostname
 
             return True
@@ -432,21 +429,42 @@ class MainWindow:
 
                 logs = lbl.get_text()
 
-                if ("BAD_NAME" in logs
+                if (
+                    "BAD_NAME" in logs
                     or "failed to precreate account in ou" in logs
-                    or "Couldn't lookup computer container" in logs):
+                    or "Couldn't lookup computer container" in logs
+                ):
                     # Not valid OU name like 'computers' instead of 'CN=computers'
-                    lbl.set_markup('{}\n<span color="red">-------</span>'.format(lbl.get_label()))
-                    lbl.set_markup('{}\n<span color="red">{}:</span>\n"{}"'.format(lbl.get_label(), _("Invalid Organizational Unit"), self.model.organizational_unit))
-                    lbl.set_markup('{}\n<span color="red">{}</span>'.format(lbl.get_label(), _("Please make sure the Organizational Unit is correct.")))
-                    lbl.set_markup('{}\n'.format(lbl.get_label()))
+                    lbl.set_markup(
+                        '{}\n<span color="red">-------</span>'.format(lbl.get_label())
+                    )
+                    lbl.set_markup(
+                        '{}\n<span color="red">{}:</span>\n"{}"'.format(
+                            lbl.get_label(),
+                            _("Invalid Organizational Unit"),
+                            self.model.organizational_unit,
+                        )
+                    )
+                    lbl.set_markup(
+                        '{}\n<span color="red">{}</span>'.format(
+                            lbl.get_label(),
+                            _("Please make sure the Organizational Unit is correct."),
+                        )
+                    )
+                    lbl.set_markup("{}\n".format(lbl.get_label()))
                 elif "The organizational unit does not exist" in logs:
                     # OU does not exist
-                    lbl.set_markup('{}\n<span color="red">-------</span>'.format(lbl.get_label()))
-                    lbl.set_markup('{}\n<span color="red">{}:</span>\n"{}"'.format(lbl.get_label(), _("Organizational Unit does not exist"), self.model.organizational_unit))
-                    lbl.set_markup('{}\n'.format(lbl.get_label()))
-
-
+                    lbl.set_markup(
+                        '{}\n<span color="red">-------</span>'.format(lbl.get_label())
+                    )
+                    lbl.set_markup(
+                        '{}\n<span color="red">{}:</span>\n"{}"'.format(
+                            lbl.get_label(),
+                            _("Organizational Unit does not exist"),
+                            self.model.organizational_unit,
+                        )
+                    )
+                    lbl.set_markup("{}\n".format(lbl.get_label()))
 
         self.joining_process_pid = self.spawn_process(
             [
@@ -493,6 +511,8 @@ class MainWindow:
 
     # Main Page
     def on_prejoin_btn_clicked(self, btn):
+        self.save_settings()
+
         domain = self.domain_entry.get_text().strip()
         if domain.endswith(".local"):
             self.show_info_dialog(
@@ -518,21 +538,14 @@ class MainWindow:
 
         self.main_stack.set_visible_child_name("prejoin")
 
-    def on_advanced_settings_btn_clicked(self, btn):
-        self.main_stack.set_visible_child_name("advanced_settings")
-
-    def on_back_to_main_btn_clicked(self, btn):
+    def on_reset_advanced_settings_clicked(self, btn):
         self.hostname_entry.set_text(self.model.hostname)
         self.ou_path_entry.set_text(self.model.organizational_unit)
         self.ou_specific_radio.set_active(self.model.organizational_unit != "")
         self.sssd_radio.set_active(self.model.connection_type == "sssd")
 
+    def on_back_to_main_btn_clicked(self, btn):
         self.main_stack.set_visible_child_name("main")
-
-    def on_adv_save_btn_clicked(self, btn):
-        # Try to change hostname:
-        task = Gio.Task.new()
-        GLib.idle_add(task.run_in_thread, self.save_settings)
 
     def on_password_entry_icon_press(self, entry, icon_pos, event):
         entry.set_visibility(True)
@@ -556,12 +569,11 @@ class MainWindow:
 
     # Advanced settings
     def on_hostname_entry_changed(self, entry):
-        self.adv_save_btn.set_sensitive(len(entry.get_text()) != 0)
+        self.prejoin_btn.set_sensitive(len(entry.get_text()) != 0)
 
     def on_ou_specific_radio_toggled(self, radiobutton):
         enabled = radiobutton.get_active()
         self.ou_path_entry.set_sensitive(enabled)
-
 
     # Pre Join
     def on_join_btn_clicked(self, btn):

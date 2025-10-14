@@ -5,6 +5,7 @@ import os
 import subprocess
 
 from setuptools import setup, find_packages
+from src.Version import VERSION
 
 
 def create_mo_files():
@@ -33,24 +34,12 @@ def create_mo_files():
     return mo
 
 
-changelog = "debian/changelog"
-if os.path.exists(changelog):
-    head = open(changelog).readline()
-    try:
-        version = head.split("(")[1].split(")")[0]
-    except:
-        print("debian/changelog format is wrong for get version")
-        version = ""
-    f = open("src/__version__", "w")
-    f.write(version)
-    f.close()
-
 data_files = [
     ("/usr/bin/", ["pardus-domain-joiner"]),
     ("/usr/share/applications/", ["data/tr.org.pardus.domain-joiner.desktop"]),
     (
         "/usr/share/pardus/pardus-domain-joiner/src",
-        ["src/Main.py", "src/MainWindow.py", "src/Actions.py", "src/__version__"],
+        ["src/Main.py", "src/MainWindow.py", "src/Actions.py", "src/Version.py"],
     ),
     (
         "/usr/share/pardus/pardus-domain-joiner/src/managers",
@@ -67,7 +56,7 @@ data_files = [
 
 setup(
     name="pardus-domain-joiner",
-    version=version,
+    version=VERSION,
     packages=find_packages(),
     scripts=["pardus-domain-joiner"],
     install_requires=["PyGObject"],

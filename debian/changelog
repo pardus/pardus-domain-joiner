@@ -1,3 +1,14 @@
+pardus-domain-joiner (0.4.0) yirmiuc; urgency=medium
+
+  * feat: UI refactoring
+  * fix: typo bugs crashes
+  * feat: better OU fail messages
+  * feat: update translations
+  * fix: run tasks in idle_add
+  * feat: improve OU messages
+
+ -- Emin Fedar <emin.fedar@pardus.org.tr>  Fri, 03 Oct 2025 13:51:53 +0300
+
 pardus-domain-joiner (0.3.5) yirmiuc; urgency=medium
 
   * feat: check if hostname still exists after leave

@@ -1,3 +1,13 @@
+pardus-domain-joiner (0.5.0) yirmiuc; urgency=medium
+
+  * feat: add steps on joining
+  * fix: check_credentials on hostname entry & last step show_all
+  * feat: add last step logs box
+  * fix: improve async task to prevent random crashing
+  * fix: improve last step logs
+
+ -- Emin Fedar <emin.fedar@pardus.org.tr>  Wed, 15 Oct 2025 13:49:20 +0300
+
 pardus-domain-joiner (0.4.0) yirmiuc; urgency=medium
 
   * feat: UI refactoring

@@ -590,10 +590,13 @@ class MainWindow:
             if not workgroup:
                 workgroup = ""
 
-        print("founded workgroup:", workgroup)
+        task.return_value(workgroup)
 
-        lbl = self.joining_log_label
-        lbl.set_markup(lbl.get_label() + f"Workgroup:{workgroup}\n")
+    def check_workgroup_finish(self, source, result):
+        (status, workgroup) = result.propagate_value()
+
+        if not status:
+            workgroup = ""
 
         self.spawn_joining_process(workgroup)
 
@@ -684,7 +687,7 @@ class MainWindow:
         if self.model.connection_type == "winbind":
             self.joining_log_label.set_text(_("Checking WORKGROUP...") + "\n")
 
-            task = Gio.Task.new()
+            task = Gio.Task.new(callback=self.check_workgroup_finish)
             GLib.idle_add(task.run_in_thread, self.check_workgroup)
         else:
             self.spawn_joining_process("")

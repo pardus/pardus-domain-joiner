@@ -123,6 +123,7 @@ class MainWindow:
         self.ou_prejoin_label = UI("ou_prejoin_label")
 
         # Joining Page
+        self.steps_box = UI("steps_box")
         self.joining_viewport = UI("joining_viewport")
         self.joining_log_label = UI("joining_log_label")
         self.joining_spinner = UI("joining_spinner")
@@ -170,6 +171,10 @@ class MainWindow:
 
         self.joining_process_pid = None
 
+        # Steps box
+        self.last_step_box = None
+        self.last_step_spinner = None
+
     def setup_about_dialog(self):
         self.about_dialog = self.builder.get_object("about_dialog")
         self.about_dialog.set_version(Version.VERSION)
@@ -181,6 +186,49 @@ class MainWindow:
             self.about_dialog.set_titlebar(about_headerbar)
 
     # == FUNCTIONS ==
+    def add_step_to_box(self, msg):
+        if self.last_step_box and self.last_step_spinner:
+            self.last_step_box.remove(self.last_step_spinner)
+
+            img = Gtk.Image(icon_name="object-select-symbolic")
+            img.get_style_context().add_class("success")
+
+            self.last_step_box.add(img)
+            self.last_step_box.reorder_child(img, 0)
+
+        box = Gtk.Box(spacing=11, width_request=300)
+        box.get_style_context().add_class("card")
+        box.get_style_context().add_class("p-14")
+
+        self.last_step_spinner = Gtk.Spinner(active=True)
+        label = Gtk.Label(label=msg)
+
+        box.add(self.last_step_spinner)
+        box.add(label)
+
+        self.steps_box.add(box)
+        self.window.show_all()
+
+        print("added box:", msg)
+
+        self.last_step_box = box
+
+    def finish_last_step(self, success):
+        if self.last_step_box and self.last_step_spinner:
+            self.last_step_box.remove(self.last_step_spinner)
+            self.last_step_spinner = None
+
+        if success:
+            img = Gtk.Image(icon_name="object-select-symbolic")
+            img.get_style_context().add_class("success")
+            self.last_step_box.add(img)
+            self.last_step_box.reorder_child(img, 0)
+        else:
+            img = Gtk.Image(icon_name="dialog-error-symbolic")
+            img.get_style_context().add_class("error")
+            self.last_step_box.add(img)
+            self.last_step_box.reorder_child(img, 0)
+
     def check_domain_already_joined(self):
         # Go to directly joined page if already joined
         self.stderr_text = ""
@@ -388,6 +436,11 @@ class MainWindow:
             lbl = self.joining_log_label
             lbl.set_markup(lbl.get_label() + line + "\n")
 
+            if line[0:7] == "STEP===":
+                # New step
+                msg = line[7:]
+                self.add_step_to_box(msg)
+
             return True
 
         def on_stderr(source, condition):
@@ -409,11 +462,13 @@ class MainWindow:
             if status != 0:
                 lbl = self.joining_log_label
                 lbl.set_markup(
-                    lbl.get_label() + _("Process exit code:{}").format(status)
+                    lbl.get_label() + _("Join Action exit code:{}").format(status)
                 )
+                self.finish_last_step(False)
 
             if status == 0:
                 # Successfully joined to the domain
+                self.finish_last_step(True)
                 self.joined_btn_stack.set_visible_child_name("restart_button")
                 self.main_stack.set_visible_child_name("in_domain")
                 self.joined_domain_label.set_text(self.model.domain)

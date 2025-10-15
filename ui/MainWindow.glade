@@ -906,54 +906,91 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkBox" id="steps_box">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
                     <property name="orientation">vertical</property>
+                    <property name="spacing">11</property>
                     <child>
-                      <object class="GtkScrolledWindow" id="joining_scrolledwindow">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <child>
-                          <object class="GtkViewport" id="joining_viewport">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="shadow-type">none</property>
-                            <child>
-                              <object class="GtkLabel" id="joining_log_label">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="halign">start</property>
-                                <property name="valign">start</property>
-                                <property name="margin-start">7</property>
-                                <property name="margin-end">7</property>
-                                <property name="margin-top">7</property>
-                                <property name="margin-bottom">7</property>
-                                <property name="use-markup">True</property>
-                                <property name="selectable">True</property>
-                                <signal name="size-allocate" handler="on_joining_log_label_size_allocate" swapped="no"/>
-                                <style>
-                                  <class name="monospace"/>
-                                </style>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
+                      <placeholder/>
                     </child>
-                    <style>
-                      <class name="card"/>
-                    </style>
                   </object>
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
                     <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkExpander">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="height-request">250</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkScrolledWindow" id="joining_scrolledwindow">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="hscrollbar-policy">never</property>
+                            <child>
+                              <object class="GtkViewport" id="joining_viewport">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="shadow-type">none</property>
+                                <child>
+                                  <object class="GtkLabel" id="joining_log_label">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">start</property>
+                                    <property name="margin-left">7</property>
+                                    <property name="margin-right">7</property>
+                                    <property name="margin-start">7</property>
+                                    <property name="margin-end">7</property>
+                                    <property name="margin-top">7</property>
+                                    <property name="margin-bottom">7</property>
+                                    <property name="use-markup">True</property>
+                                    <property name="wrap">True</property>
+                                    <property name="wrap-mode">char</property>
+                                    <property name="selectable">True</property>
+                                    <signal name="size-allocate" handler="on_joining_log_label_size_allocate" swapped="no"/>
+                                    <style>
+                                      <class name="monospace"/>
+                                    </style>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <style>
+                          <class name="card"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child type="label">
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Logs</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
@@ -996,7 +1033,7 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">3</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
               </object>

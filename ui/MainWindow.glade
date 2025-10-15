@@ -892,20 +892,6 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSpinner" id="joining_spinner">
-                    <property name="width-request">36</property>
-                    <property name="height-request">36</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="active">True</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkBox" id="steps_box">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>

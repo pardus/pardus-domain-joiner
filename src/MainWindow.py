@@ -126,7 +126,7 @@ class MainWindow:
         self.steps_box = UI("steps_box")
         self.joining_viewport = UI("joining_viewport")
         self.joining_log_label = UI("joining_log_label")
-        self.joining_spinner = UI("joining_spinner")
+        # self.joining_spinner = UI("joining_spinner")
         self.joining_title_label = UI("joining_title_label")
         self.cancel_btn_stack = UI("cancel_btn_stack")
 
@@ -174,6 +174,7 @@ class MainWindow:
         # Steps box
         self.last_step_box = None
         self.last_step_spinner = None
+        self.last_step_logs = ""
 
     def setup_about_dialog(self):
         self.about_dialog = self.builder.get_object("about_dialog")
@@ -209,8 +210,6 @@ class MainWindow:
         self.steps_box.add(box)
         self.window.show_all()
 
-        print("added box:", msg)
-
         self.last_step_box = box
 
     def finish_last_step(self, success):
@@ -229,7 +228,41 @@ class MainWindow:
             self.last_step_box.add(img)
             self.last_step_box.reorder_child(img, 0)
 
+            # Log box
+            box = Gtk.Box()
+            box.get_style_context().add_class("card")
+            box.get_style_context().add_class("p-14")
+
+            label = Gtk.Label(
+                wrap=True, wrap_mode=1, selectable=True
+            )  # 1: Pango.WrapMode.CHAR
+            label.set_markup(self.last_step_logs.strip())
+
+            scrolledwindow = Gtk.ScrolledWindow(
+                hexpand=True, max_content_height=180, max_content_width=600
+            )
+            scrolledwindow.add(label)
+            label.connect(
+                "size-allocate",
+                self.on_last_step_log_label_size_allocate,
+                scrolledwindow,
+            )  # scroll to bottom
+
+            box.add(scrolledwindow)
+            self.steps_box.add(box)
+
+        self.last_step_box = None
+
         self.window.show_all()
+
+    def add_log(self, msg, color=""):
+        lbl = self.joining_log_label
+
+        if color:
+            msg = f'<span color="{color}">{msg}</span>'
+
+        self.last_step_logs += msg + "\n"
+        lbl.set_markup("{}\n{}".format(lbl.get_label(), msg))
 
     def check_domain_already_joined(self):
         # Go to directly joined page if already joined
@@ -428,6 +461,12 @@ class MainWindow:
         self.main_stack.set_visible_child_name("spinner")
 
     def spawn_joining_process(self, workgroup):
+        # Clear steps box:
+        def rm_box(b):
+            self.steps_box.remove(b)
+
+        self.steps_box.foreach(rm_box)
+
         def on_stdout(source, condition):
             if condition == GLib.IO_HUP:
                 return False
@@ -442,7 +481,11 @@ class MainWindow:
             if line[0:7] == "STEP===":
                 # New step
                 msg = line[7:]
+
+                self.last_step_logs = ""
                 self.add_step_to_box(msg)
+            else:
+                self.last_step_logs += line + "\n"
 
             return True
 
@@ -454,21 +497,15 @@ class MainWindow:
             if line == "":
                 return True
 
-            lbl = self.joining_log_label
-            lbl.set_markup(lbl.get_label() + f'<span color="gray">{line}</span>' + "\n")
+            self.add_log(line, color="gray")
 
             return True
 
         def on_exit(pid, status):
             self.joining_process_pid = None
+            lbl = self.joining_log_label
 
-            if status != 0:
-                lbl = self.joining_log_label
-                lbl.set_markup(
-                    lbl.get_label() + _("Join Action exit code:{}").format(status)
-                )
-                self.finish_last_step(False)
-
+            # Success
             if status == 0:
                 # Successfully joined to the domain
                 self.finish_last_step(True)
@@ -477,12 +514,15 @@ class MainWindow:
                 self.joined_domain_label.set_text(self.model.domain)
 
                 self.save_config_to_file()
-            elif status == 15 or status == 32256 or status == 32512 or status == 126:
+                return
+
+            # Failed
+            if status == 15 or status == 32256 or status == 32512 or status == 126:
                 # Cancelled pkexec dialog
                 self.main_stack.set_visible_child_name("prejoin")
             else:
                 self.joining_title_label.set_text(_("Joining Failed"))
-                self.joining_spinner.stop()
+                # self.joining_spinner.stop()
                 self.cancel_btn_stack.set_visible_child_name("back")
 
                 logs = lbl.get_text()
@@ -493,36 +533,34 @@ class MainWindow:
                     or "Couldn't lookup computer container" in logs
                 ):
                     # Not valid OU name like 'computers' instead of 'CN=computers'
-                    lbl.set_markup(
-                        '{}\n<span color="red">-------</span>'.format(lbl.get_label())
+                    self.last_step_logs = ""
+                    self.add_log(
+                        _("Invalid Organizational Unit")
+                        + ": "
+                        + self.model.organizational_unit,
+                        color="red",
                     )
-                    lbl.set_markup(
-                        '{}\n<span color="red">{}:</span>\n"{}"'.format(
-                            lbl.get_label(),
-                            _("Invalid Organizational Unit"),
-                            self.model.organizational_unit,
-                        )
+                    self.add_log(
+                        _("Please make sure the Organizational Unit is correct."),
+                        color="red",
                     )
-                    lbl.set_markup(
-                        '{}\n<span color="red">{}</span>'.format(
-                            lbl.get_label(),
-                            _("Please make sure the Organizational Unit is correct."),
-                        )
-                    )
-                    lbl.set_markup("{}\n".format(lbl.get_label()))
                 elif "The organizational unit does not exist" in logs:
+                    self.last_step_logs = ""
+
                     # OU does not exist
-                    lbl.set_markup(
-                        '{}\n<span color="red">-------</span>'.format(lbl.get_label())
+                    self.add_log(
+                        _("Organizational Unit does not exist")
+                        + ": "
+                        + self.model.organizational_unit,
+                        color="red",
                     )
-                    lbl.set_markup(
-                        '{}\n<span color="red">{}:</span>\n"{}"'.format(
-                            lbl.get_label(),
-                            _("Organizational Unit does not exist"),
-                            self.model.organizational_unit,
-                        )
-                    )
-                    lbl.set_markup("{}\n".format(lbl.get_label()))
+
+                elif "authentic" in logs and ("failed" in logs or "Couldn't" in logs):
+                    self.last_step_logs = ""
+
+                    self.add_log(_("Username or Password is wrong."), color="red")
+
+            self.finish_last_step(False)
 
         self.joining_process_pid = self.spawn_process(
             [
@@ -636,7 +674,7 @@ class MainWindow:
     # Pre Join
     def on_join_btn_clicked(self, btn):
         # Clear UI
-        self.joining_spinner.start()
+        # self.joining_spinner.start()
         self.joining_title_label.set_text(_("Joining to the domain..."))
         self.joining_log_label.set_text("")
         self.cancel_btn_stack.set_visible_child_name("cancel")
@@ -672,6 +710,11 @@ class MainWindow:
     def on_joining_log_label_size_allocate(self, label, allocation):
         # Use this signal to scroll logs bottom
         adj = self.joining_viewport.get_vadjustment()
+        adj.set_value(adj.get_upper())
+
+    def on_last_step_log_label_size_allocate(self, label, allocation, scrolledwindow):
+        # Use this signal to scroll logs bottom
+        adj = scrolledwindow.get_vadjustment()
         adj.set_value(adj.get_upper())
 
     # In Domain page

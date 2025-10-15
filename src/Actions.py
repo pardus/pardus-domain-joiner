@@ -22,7 +22,7 @@ if len(sys.argv) >= 2:
         connection_type = sys.argv[7].strip()
         workgroup = sys.argv[8].strip()
 
-        domain_operations.join(
+        error = domain_operations.join(
             hostname,
             domain,
             user,
@@ -32,17 +32,23 @@ if len(sys.argv) >= 2:
             winbind=connection_type == "winbind",
             workgroup=workgroup,
         )
+
+        if error:
+            sys.exit(1)
     elif cmd == "leave":
         username = sys.argv[2].strip()
         password = sys.argv[3].strip()
         is_winbind = True if sys.argv[4].strip() == "winbind" else False
 
-        domain_operations.leave(
+        error = domain_operations.leave(
             user=username,
             password=password,
             winbind=is_winbind,
             realmd=(not is_winbind),
         )
+
+        if error:
+            sys.exit(1)
     elif cmd == "check_domain":
         joined_domain_name = domain_operations.list(realmd=True)
 

@@ -175,6 +175,17 @@ class MainWindow:
         self.last_step_box = None
         self.last_step_spinner = None
         self.last_step_logs = ""
+        # Step translations in libpardus:
+        _("Starting sssd service...")
+        _("Discovering kerberos domain...")
+        _("Backup configuration files...")
+        _("Joining the domain with sssd...")
+        _("Updating configuration files...")
+        _("Enabling Pardus PAM Config...")
+        _("Success.")
+        _("Starting winbind service...")
+        _("Discovering the domain...")
+        _("Joining the domain with winbind...")
 
     def setup_about_dialog(self):
         self.about_dialog = self.builder.get_object("about_dialog")
@@ -486,7 +497,7 @@ class MainWindow:
                 msg = line[7:]
 
                 self.last_step_logs = ""
-                self.add_step_to_box(msg)
+                self.add_step_to_box(_(msg))
             else:
                 self.last_step_logs += line + "\n"
 

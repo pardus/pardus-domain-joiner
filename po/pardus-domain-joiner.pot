@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-03 09:36+0300\n"
+"POT-Creation-Date: 2025-10-15 14:00+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ui/MainWindow.glade:93 ui/MainWindow.glade:1226 src/MainWindow.py:179
+#: ui/MainWindow.glade:93 ui/MainWindow.glade:1215 src/MainWindow.py:196
 msgid "Pardus Domain Joiner"
 msgstr ""
 
-#: ui/MainWindow.glade:133 ui/MainWindow.glade:636
+#: ui/MainWindow.glade:133 ui/MainWindow.glade:602
 msgid "Domain:"
 msgstr ""
 
-#: ui/MainWindow.glade:147 ui/MainWindow.glade:675
+#: ui/MainWindow.glade:147 ui/MainWindow.glade:641
 msgid "Username:"
 msgstr ""
 
@@ -45,119 +45,159 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: ui/MainWindow.glade:254
-msgid "Advanced Settings"
-msgstr ""
-
-#: ui/MainWindow.glade:268 ui/MainWindow.glade:873
-msgid "Join"
-msgstr ""
-
-#: ui/MainWindow.glade:315 ui/MainWindow.glade:714
+#: ui/MainWindow.glade:281 ui/MainWindow.glade:680
 msgid "Hostname:"
 msgstr ""
 
-#: ui/MainWindow.glade:330
+#: ui/MainWindow.glade:296
 msgid "Hostname"
 msgstr ""
 
-#: ui/MainWindow.glade:358 ui/MainWindow.glade:764
+#: ui/MainWindow.glade:324 ui/MainWindow.glade:730
 msgid "Connection Type:"
 msgstr ""
 
-#: ui/MainWindow.glade:400
+#: ui/MainWindow.glade:365
 msgid "Connect to AD with sssd(realm) service."
 msgstr ""
 
-#: ui/MainWindow.glade:440
+#: ui/MainWindow.glade:405
 msgid "Connect to AD with winbind service."
 msgstr ""
 
-#: ui/MainWindow.glade:468
+#: ui/MainWindow.glade:433
 msgid "Organizational Unit (optional):"
 msgstr ""
 
-#: ui/MainWindow.glade:543 ui/MainWindow.glade:859 ui/MainWindow.glade:1016
-msgid "Back"
+#: ui/MainWindow.glade:507
+msgid "Advanced Settings"
 msgstr ""
 
-#: ui/MainWindow.glade:557
-msgid "Save"
+#: ui/MainWindow.glade:530 ui/MainWindow.glade:839
+msgid "Join"
 msgstr ""
 
-#: ui/MainWindow.glade:598
+#: ui/MainWindow.glade:564
 msgid "Review Your Choices:"
 msgstr ""
 
-#: ui/MainWindow.glade:803
+#: ui/MainWindow.glade:769
 msgid "Organizational Unit:"
 msgstr ""
 
-#: ui/MainWindow.glade:917 src/MainWindow.py:567
+#: ui/MainWindow.glade:825 ui/MainWindow.glade:1005
+msgid "Back"
+msgstr ""
+
+#: ui/MainWindow.glade:883 src/MainWindow.py:687
 msgid "Joining to the domain..."
 msgstr ""
 
-#: ui/MainWindow.glade:999 ui/MainWindow.glade:1309 ui/MainWindow.glade:1486
+#: ui/MainWindow.glade:972
+msgid "Logs"
+msgstr ""
+
+#: ui/MainWindow.glade:988 ui/MainWindow.glade:1298 ui/MainWindow.glade:1475
 msgid "Cancel"
 msgstr ""
 
-#: ui/MainWindow.glade:1105
+#: ui/MainWindow.glade:1094
 msgid "You are in the domain."
 msgstr ""
 
-#: ui/MainWindow.glade:1146
+#: ui/MainWindow.glade:1135
 msgid "Leave"
 msgstr ""
 
-#: ui/MainWindow.glade:1166
+#: ui/MainWindow.glade:1155
 msgid "Restart the computer"
 msgstr ""
 
-#: ui/MainWindow.glade:1251
+#: ui/MainWindow.glade:1240
 msgid "Join domains easily."
 msgstr ""
 
-#: ui/MainWindow.glade:1256
+#: ui/MainWindow.glade:1245
 msgid "translator_name"
 msgstr ""
 
-#: ui/MainWindow.glade:1322 ui/MainWindow.glade:1499
+#: ui/MainWindow.glade:1311 ui/MainWindow.glade:1488
 msgid "Ok"
 msgstr ""
 
-#: ui/MainWindow.glade:1363
+#: ui/MainWindow.glade:1352
 msgid "AD Username:"
 msgstr ""
 
-#: ui/MainWindow.glade:1404
+#: ui/MainWindow.glade:1393
 msgid "AD Password:"
 msgstr ""
 
-#: ui/MainWindow.glade:1457
+#: ui/MainWindow.glade:1446
 msgid "Enter account information to leave"
 msgstr ""
 
-#: src/MainWindow.py:197
+#: src/MainWindow.py:179
+msgid "Starting sssd service..."
+msgstr ""
+
+#: src/MainWindow.py:180
+msgid "Discovering kerberos domain..."
+msgstr ""
+
+#: src/MainWindow.py:181
+msgid "Backup configuration files..."
+msgstr ""
+
+#: src/MainWindow.py:182
+msgid "Joining the domain with sssd..."
+msgstr ""
+
+#: src/MainWindow.py:183
+msgid "Updating configuration files..."
+msgstr ""
+
+#: src/MainWindow.py:184
+msgid "Enabling Pardus PAM Config..."
+msgstr ""
+
+#: src/MainWindow.py:185
+msgid "Success."
+msgstr ""
+
+#: src/MainWindow.py:186
+msgid "Starting winbind service..."
+msgstr ""
+
+#: src/MainWindow.py:187
+msgid "Discovering the domain..."
+msgstr ""
+
+#: src/MainWindow.py:188
+msgid "Joining the domain with winbind..."
+msgstr ""
+
+#: src/MainWindow.py:289
 msgid "Checking AD servers..."
 msgstr ""
 
-#: src/MainWindow.py:295 src/MainWindow.py:303
+#: src/MainWindow.py:386 src/MainWindow.py:394
 msgid "Hostname is not valid!"
 msgstr ""
 
-#: src/MainWindow.py:296
+#: src/MainWindow.py:387
 msgid "Maximum length is 63. Your hostname length is:"
 msgstr ""
 
-#: src/MainWindow.py:304
+#: src/MainWindow.py:395
 msgid "Valid chars: Letters, numbers, '.', '-'."
 msgstr ""
 
-#: src/MainWindow.py:310 src/MainWindow.py:588
+#: src/MainWindow.py:401 src/MainWindow.py:708
 msgid "Are you sure?"
 msgstr ""
 
-#: src/MainWindow.py:311
+#: src/MainWindow.py:402
 msgid ""
 "Hostname will be changed.\n"
 "\n"
@@ -165,103 +205,99 @@ msgid ""
 "New: {}"
 msgstr ""
 
-#: src/MainWindow.py:322
+#: src/MainWindow.py:417
 msgid "Couldn't change hostname"
 msgstr ""
 
-#: src/MainWindow.py:325
+#: src/MainWindow.py:421
 msgid "Hostname changed."
 msgstr ""
 
-#: src/MainWindow.py:325
+#: src/MainWindow.py:422
 msgid ""
 "Old: {}\n"
 "New: {}"
 msgstr ""
 
-#: src/MainWindow.py:416
-msgid "Process exit code:{}"
-msgstr ""
-
-#: src/MainWindow.py:430
+#: src/MainWindow.py:538
 msgid "Joining Failed"
 msgstr ""
 
-#: src/MainWindow.py:437
+#: src/MainWindow.py:551
 msgid "Invalid Organizational Unit"
 msgstr ""
 
-#: src/MainWindow.py:438
-msgid "Please make sure the Organizational Unit is correct."
-msgstr ""
-
-#: src/MainWindow.py:443
+#: src/MainWindow.py:559
 msgid "Organizational Unit does not exist"
 msgstr ""
 
-#: src/MainWindow.py:471
+#: src/MainWindow.py:566
+msgid "Username or Password is wrong."
+msgstr ""
+
+#: src/MainWindow.py:593
 msgid "Enter WORKSPACE value."
 msgstr ""
 
-#: src/MainWindow.py:496
+#: src/MainWindow.py:623
 msgid "Warning"
 msgstr ""
 
-#: src/MainWindow.py:498
+#: src/MainWindow.py:625
 msgid ""
 "Domains that end with '.local' can cause mDNS to resolve and the domain to "
 "not be found."
 msgstr ""
 
-#: src/MainWindow.py:574
+#: src/MainWindow.py:694
 msgid "Checking WORKGROUP..."
 msgstr ""
 
-#: src/MainWindow.py:589
+#: src/MainWindow.py:709
 msgid "Do you want to cancel the joining process?"
 msgstr ""
 
-#: src/MainWindow.py:612
+#: src/MainWindow.py:736
 msgid "Checking credentials..."
 msgstr ""
 
-#: src/MainWindow.py:629 src/MainWindow.py:631
+#: src/MainWindow.py:753 src/MainWindow.py:755
 msgid "Invalid credentials."
 msgstr ""
 
-#: src/MainWindow.py:631 src/MainWindow.py:639 src/MainWindow.py:646
-#: src/MainWindow.py:653
+#: src/MainWindow.py:755 src/MainWindow.py:763 src/MainWindow.py:770
+#: src/MainWindow.py:777
 msgid "Error"
 msgstr ""
 
-#: src/MainWindow.py:637 src/MainWindow.py:639
+#: src/MainWindow.py:761 src/MainWindow.py:763
 msgid "Server is not reachable."
 msgstr ""
 
-#: src/MainWindow.py:682
+#: src/MainWindow.py:806
 msgid "Information"
 msgstr ""
 
-#: src/MainWindow.py:684
+#: src/MainWindow.py:808
 msgid ""
 "You have successfully left the domain. But your computer still exists in "
 "Active Directory."
 msgstr ""
 
-#: src/MainWindow.py:696 src/MainWindow.py:740
+#: src/MainWindow.py:820 src/MainWindow.py:864
 msgid "Reboot the computer?"
 msgstr ""
 
-#: src/MainWindow.py:698 src/MainWindow.py:742
+#: src/MainWindow.py:822 src/MainWindow.py:866
 msgid ""
 "Please don't forget to save your progress in other applications before the "
 "reboot."
 msgstr ""
 
-#: src/MainWindow.py:710
+#: src/MainWindow.py:834
 msgid "Leaving Failed"
 msgstr ""
 
-#: src/MainWindow.py:732
+#: src/MainWindow.py:856
 msgid "Leaving the domain..."
 msgstr ""

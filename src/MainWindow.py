@@ -229,6 +229,8 @@ class MainWindow:
             self.last_step_box.add(img)
             self.last_step_box.reorder_child(img, 0)
 
+        self.window.show_all()
+
     def check_domain_already_joined(self):
         # Go to directly joined page if already joined
         self.stderr_text = ""
@@ -287,6 +289,7 @@ class MainWindow:
             len(self.username_entry.get_text()) != 0
             and len(self.password_entry.get_text()) != 0
             and len(self.domain_entry.get_text()) != 0
+            and len(self.hostname_entry.get_text()) != 0
         )
 
         self.prejoin_btn.set_sensitive(is_valid)
@@ -624,7 +627,7 @@ class MainWindow:
 
     # Advanced settings
     def on_hostname_entry_changed(self, entry):
-        self.prejoin_btn.set_sensitive(len(entry.get_text()) != 0)
+        self.check_credentials()
 
     def on_ou_specific_radio_toggled(self, radiobutton):
         enabled = radiobutton.get_active()

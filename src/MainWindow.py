@@ -187,6 +187,13 @@ class MainWindow:
             self.about_dialog.set_titlebar(about_headerbar)
 
     # == FUNCTIONS ==
+    def clear_steps_box(self):
+        # Clear steps box:
+        def rm_box(b):
+            self.steps_box.remove(b)
+
+        self.steps_box.foreach(rm_box)
+
     def add_step_to_box(self, msg):
         if self.last_step_box and self.last_step_spinner:
             self.last_step_box.remove(self.last_step_spinner)
@@ -234,7 +241,7 @@ class MainWindow:
             box.get_style_context().add_class("p-14")
 
             label = Gtk.Label(
-                wrap=True, wrap_mode=1, selectable=True
+                wrap=True, wrap_mode=1, selectable=True, halign="start"
             )  # 1: Pango.WrapMode.CHAR
             label.set_markup(self.last_step_logs.strip())
 
@@ -461,11 +468,7 @@ class MainWindow:
         self.main_stack.set_visible_child_name("spinner")
 
     def spawn_joining_process(self, workgroup):
-        # Clear steps box:
-        def rm_box(b):
-            self.steps_box.remove(b)
-
-        self.steps_box.foreach(rm_box)
+        self.clear_steps_box()
 
         def on_stdout(source, condition):
             if condition == GLib.IO_HUP:
@@ -534,26 +537,17 @@ class MainWindow:
                 ):
                     # Not valid OU name like 'computers' instead of 'CN=computers'
                     self.last_step_logs = ""
-                    self.add_log(
-                        _("Invalid Organizational Unit")
-                        + ": "
-                        + self.model.organizational_unit,
-                        color="red",
-                    )
-                    self.add_log(
-                        _("Please make sure the Organizational Unit is correct."),
-                        color="red",
-                    )
+                    self.add_log(_("Invalid Organizational Unit") + ":", color="red")
+                    self.add_log(self.model.organizational_unit)
+
                 elif "The organizational unit does not exist" in logs:
                     self.last_step_logs = ""
 
                     # OU does not exist
                     self.add_log(
-                        _("Organizational Unit does not exist")
-                        + ": "
-                        + self.model.organizational_unit,
-                        color="red",
+                        _("Organizational Unit does not exist") + ":", color="red"
                     )
+                    self.add_log(self.model.organizational_unit)
 
                 elif "authentic" in logs and ("failed" in logs or "Couldn't" in logs):
                     self.last_step_logs = ""
@@ -644,6 +638,7 @@ class MainWindow:
         self.sssd_radio.set_active(self.model.connection_type == "sssd")
 
     def on_back_to_main_btn_clicked(self, btn):
+        self.clear_steps_box()
         self.main_stack.set_visible_child_name("main")
 
     def on_password_entry_icon_press(self, entry, icon_pos, event):

@@ -186,6 +186,7 @@ class MainWindow:
         _("Starting winbind service...")
         _("Discovering the domain...")
         _("Joining the domain with winbind...")
+        _("Organizational Unit format check...")
 
     def setup_about_dialog(self):
         self.about_dialog = self.builder.get_object("about_dialog")
@@ -257,7 +258,7 @@ class MainWindow:
             label.set_markup(self.last_step_logs.strip())
 
             scrolledwindow = Gtk.ScrolledWindow(
-                hexpand=True, max_content_height=180, max_content_width=600
+                hexpand=True, max_content_height=230, max_content_width=700
             )
             scrolledwindow.add(label)
             label.connect(
@@ -545,6 +546,7 @@ class MainWindow:
                     "BAD_NAME" in logs
                     or "failed to precreate account in ou" in logs
                     or "Couldn't lookup computer container" in logs
+                    or "but is not in the desired organizational unit" in logs
                 ):
                     # Not valid OU name like 'computers' instead of 'CN=computers'
                     self.last_step_logs = ""

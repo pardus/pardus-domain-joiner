@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-15 14:00+0300\n"
+"POT-Creation-Date: 2025-11-14 11:14+0300\n"
 "PO-Revision-Date: 2024-07-30 12:23+0300\n"
 "Last-Translator: Emin Fedar <emin.fedar@pardus.org.tr>\n"
 "Language-Team: Turkish <dev@pardus.org.tr>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Gtranslator 42.0\n"
 
-#: ui/MainWindow.glade:93 ui/MainWindow.glade:1215 src/MainWindow.py:196
+#: ui/MainWindow.glade:93 ui/MainWindow.glade:1216 src/MainWindow.py:197
 msgid "Pardus Domain Joiner"
 msgstr "Pardus Etki Alanı Ayarları"
 
@@ -89,55 +89,55 @@ msgstr "Seçimlerinizi Gözden Geçirin:"
 msgid "Organizational Unit:"
 msgstr "Organizasyonel Birim (OU):"
 
-#: ui/MainWindow.glade:825 ui/MainWindow.glade:1005
+#: ui/MainWindow.glade:825 ui/MainWindow.glade:1006
 msgid "Back"
 msgstr "Geri"
 
-#: ui/MainWindow.glade:883 src/MainWindow.py:687
+#: ui/MainWindow.glade:883 src/MainWindow.py:689
 msgid "Joining to the domain..."
 msgstr "Etki alanına dahil ediliyor..."
 
-#: ui/MainWindow.glade:972
+#: ui/MainWindow.glade:973
 msgid "Logs"
 msgstr "Çıktılar"
 
-#: ui/MainWindow.glade:988 ui/MainWindow.glade:1298 ui/MainWindow.glade:1475
+#: ui/MainWindow.glade:989 ui/MainWindow.glade:1299 ui/MainWindow.glade:1476
 msgid "Cancel"
 msgstr "İptal Et"
 
-#: ui/MainWindow.glade:1094
+#: ui/MainWindow.glade:1095
 msgid "You are in the domain."
 msgstr "Etki alanındasınız."
 
-#: ui/MainWindow.glade:1135
+#: ui/MainWindow.glade:1136
 msgid "Leave"
 msgstr "Ayrıl"
 
-#: ui/MainWindow.glade:1155
+#: ui/MainWindow.glade:1156
 msgid "Restart the computer"
 msgstr "Bilgisayarı Yeniden Başlat"
 
-#: ui/MainWindow.glade:1240
+#: ui/MainWindow.glade:1241
 msgid "Join domains easily."
 msgstr "Etki alanlarına kolayca dahil olun."
 
-#: ui/MainWindow.glade:1245
+#: ui/MainWindow.glade:1246
 msgid "translator_name"
 msgstr "Emin Fedar"
 
-#: ui/MainWindow.glade:1311 ui/MainWindow.glade:1488
+#: ui/MainWindow.glade:1312 ui/MainWindow.glade:1489
 msgid "Ok"
 msgstr "Tamam"
 
-#: ui/MainWindow.glade:1352
+#: ui/MainWindow.glade:1353
 msgid "AD Username:"
 msgstr "AD Kullanıcı Adı:"
 
-#: ui/MainWindow.glade:1393
+#: ui/MainWindow.glade:1394
 msgid "AD Password:"
 msgstr "AD Parola:"
 
-#: ui/MainWindow.glade:1446
+#: ui/MainWindow.glade:1447
 msgid "Enter account information to leave"
 msgstr "Ayrılmak için hesap bilgilerinizi giriniz"
 
@@ -181,27 +181,31 @@ msgstr "Etki alanı keşfediliyor..."
 msgid "Joining the domain with winbind..."
 msgstr "Etki alanına winbind ile dahil ediliyor..."
 
-#: src/MainWindow.py:289
+#: src/MainWindow.py:189
+msgid "Organizational Unit format check..."
+msgstr "Organizasyonel Birim biçimi kontrol ediliyor..."
+
+#: src/MainWindow.py:290
 msgid "Checking AD servers..."
 msgstr "Sunucular kontrol ediliyor..."
 
-#: src/MainWindow.py:386 src/MainWindow.py:394
+#: src/MainWindow.py:387 src/MainWindow.py:395
 msgid "Hostname is not valid!"
 msgstr "Hostname geçersiz!"
 
-#: src/MainWindow.py:387
+#: src/MainWindow.py:388
 msgid "Maximum length is 63. Your hostname length is:"
 msgstr "Maksimum uzunluk 63 karakterdir. Girilen değerin uzunluğu:"
 
-#: src/MainWindow.py:395
+#: src/MainWindow.py:396
 msgid "Valid chars: Letters, numbers, '.', '-'."
 msgstr "Geçerli karakterler: Harfler, numaralar, '.', '-'."
 
-#: src/MainWindow.py:401 src/MainWindow.py:708
+#: src/MainWindow.py:402 src/MainWindow.py:710
 msgid "Are you sure?"
 msgstr "Emin misiniz?"
 
-#: src/MainWindow.py:402
+#: src/MainWindow.py:403
 msgid ""
 "Hostname will be changed.\n"
 "\n"
@@ -213,15 +217,15 @@ msgstr ""
 "Eski: {}\n"
 "Yeni: {}"
 
-#: src/MainWindow.py:417
+#: src/MainWindow.py:418
 msgid "Couldn't change hostname"
 msgstr "Bilgisayar Adı değiştirilemedi."
 
-#: src/MainWindow.py:421
+#: src/MainWindow.py:422
 msgid "Hostname changed."
 msgstr "Bilgisayar adı değiştirildi."
 
-#: src/MainWindow.py:422
+#: src/MainWindow.py:423
 msgid ""
 "Old: {}\n"
 "New: {}"
@@ -229,31 +233,31 @@ msgstr ""
 "Eski: {}\n"
 "Yeni: {}"
 
-#: src/MainWindow.py:538
+#: src/MainWindow.py:539
 msgid "Joining Failed"
 msgstr "Katılma Başarısız"
 
-#: src/MainWindow.py:551
+#: src/MainWindow.py:553
 msgid "Invalid Organizational Unit"
 msgstr "Geçersiz Organizasyonel Birim"
 
-#: src/MainWindow.py:559
+#: src/MainWindow.py:561
 msgid "Organizational Unit does not exist"
 msgstr "Organizasyonel Birim mevcut değil"
 
-#: src/MainWindow.py:566
+#: src/MainWindow.py:568
 msgid "Username or Password is wrong."
 msgstr "Kullanıcı adı veya Parola yanlış."
 
-#: src/MainWindow.py:593
+#: src/MainWindow.py:595
 msgid "Enter WORKSPACE value."
 msgstr "WORKSPACE değerini giriniz."
 
-#: src/MainWindow.py:623
+#: src/MainWindow.py:625
 msgid "Warning"
 msgstr "Uyarı"
 
-#: src/MainWindow.py:625
+#: src/MainWindow.py:627
 msgid ""
 "Domains that end with '.local' can cause mDNS to resolve and the domain to "
 "not be found."
@@ -261,47 +265,47 @@ msgstr ""
 "'.local' ile biten domainler mDNS çözümlemesine ve domain'in bulunamamasına "
 "yol açabilir."
 
-#: src/MainWindow.py:694
+#: src/MainWindow.py:696
 msgid "Checking WORKGROUP..."
 msgstr "WORKGROUP kontrol ediliyor..."
 
-#: src/MainWindow.py:709
+#: src/MainWindow.py:711
 msgid "Do you want to cancel the joining process?"
 msgstr "Katılmayı iptal etmek istiyor musunuz?"
 
-#: src/MainWindow.py:736
+#: src/MainWindow.py:738
 msgid "Checking credentials..."
 msgstr "Kimlik kontrol ediliyor..."
 
-#: src/MainWindow.py:753 src/MainWindow.py:755
+#: src/MainWindow.py:755 src/MainWindow.py:757
 msgid "Invalid credentials."
 msgstr "Geçersiz kimlik."
 
-#: src/MainWindow.py:755 src/MainWindow.py:763 src/MainWindow.py:770
-#: src/MainWindow.py:777
+#: src/MainWindow.py:757 src/MainWindow.py:765 src/MainWindow.py:772
+#: src/MainWindow.py:779
 msgid "Error"
 msgstr "Hata"
 
-#: src/MainWindow.py:761 src/MainWindow.py:763
+#: src/MainWindow.py:763 src/MainWindow.py:765
 msgid "Server is not reachable."
 msgstr "Sunucuya erişilemiyor."
 
-#: src/MainWindow.py:806
+#: src/MainWindow.py:808
 msgid "Information"
 msgstr "Bilgi"
 
-#: src/MainWindow.py:808
+#: src/MainWindow.py:810
 msgid ""
 "You have successfully left the domain. But your computer still exists in "
 "Active Directory."
 msgstr ""
 "Domain'den başarıyla ayrıldınız. Fakat bilgisayarınız AD'den silinemedi."
 
-#: src/MainWindow.py:820 src/MainWindow.py:864
+#: src/MainWindow.py:822 src/MainWindow.py:866
 msgid "Reboot the computer?"
 msgstr "Bilgisayarı Yeniden Başlat?"
 
-#: src/MainWindow.py:822 src/MainWindow.py:866
+#: src/MainWindow.py:824 src/MainWindow.py:868
 msgid ""
 "Please don't forget to save your progress in other applications before the "
 "reboot."
@@ -309,10 +313,10 @@ msgstr ""
 "Lütfen yeniden başlatmadan önce diğer uygulamalardaki işlerinizi kaydetmeyi "
 "unutmayın."
 
-#: src/MainWindow.py:834
+#: src/MainWindow.py:836
 msgid "Leaving Failed"
 msgstr "Ayrılma Başarısız"
 
-#: src/MainWindow.py:856
+#: src/MainWindow.py:858
 msgid "Leaving the domain..."
 msgstr "Etki alanından ayrılınıyor..."

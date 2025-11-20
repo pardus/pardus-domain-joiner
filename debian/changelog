@@ -1,3 +1,9 @@
+pardus-domain-joiner (0.5.2) yirmiuc; urgency=medium
+
+  * fix: change lib name to: pardus-lib-domain-joiner
+
+ -- Emin Fedar <emin.fedar@pardus.org.tr>  Thu, 20 Nov 2025 16:12:49 +0300
+
 pardus-domain-joiner (0.5.1) yirmiuc; urgency=medium
 
   * fix: ui improvements & added OU detection line

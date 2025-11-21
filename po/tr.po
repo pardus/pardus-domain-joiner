@@ -5,14 +5,15 @@
 # Fatih Altun <fatih.altun@pardus.org.tr>, 2024.
 # busra cagliyan <busra.cagliyan@pardus.org.tr>, 2024.
 # Emin Fedar <emin.fedar@pardus.org.tr> 2025.
+# busra.cagliyan <busra.cagliyan@pardus.org.tr>, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-14 11:14+0300\n"
-"PO-Revision-Date: 2024-07-30 12:23+0300\n"
-"Last-Translator: Emin Fedar <emin.fedar@pardus.org.tr>\n"
+"PO-Revision-Date: 2025-11-21 22:29+0300\n"
+"Last-Translator: busra.cagliyan <busra.cagliyan@pardus.org.tr>\n"
 "Language-Team: Turkish <dev@pardus.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +24,7 @@ msgstr ""
 
 #: ui/MainWindow.glade:93 ui/MainWindow.glade:1216 src/MainWindow.py:197
 msgid "Pardus Domain Joiner"
-msgstr "Pardus Etki Alanı Ayarları"
+msgstr "Pardus Etki Alanı Dahil Edici"
 
 #: ui/MainWindow.glade:133 ui/MainWindow.glade:602
 msgid "Domain:"

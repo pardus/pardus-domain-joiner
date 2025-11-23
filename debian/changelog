@@ -1,3 +1,14 @@
+pardus-domain-joiner (0.5.3) yirmiuc; urgency=medium
+
+  [ busra ]
+  * i18n: Correct Turkish translation of the application name in tr.po
+
+  [ Fatih Altun ]
+  * Update app icon
+  * Update debian standards
+
+ -- Fatih Altun <fatih.altun@pardus.org.tr>  Sun, 23 Nov 2025 16:08:50 +0300
+
 pardus-domain-joiner (0.5.2) yirmiuc; urgency=medium
 
   * fix: change lib name to: pardus-lib-domain-joiner

@@ -11,6 +11,7 @@ import Version
 
 from pardus_domain_joiner import domain_operations
 from pardus_domain_joiner import domain_joiner_ldap
+from pardus_domain_joiner import logger
 import managers.ConfigManager as ConfigManager
 
 import subprocess
@@ -36,6 +37,8 @@ HOSTNAME_REGEX = (
     r"""^([a-zA-Z0-9](?:(?:[a-zA-Z0-9-]*|(?<!-)\.(?![-.]))*[a-zA-Z0-9]+)?)$"""
 )
 
+logger = logger.get_logger("pardus-domain-joiner")
+
 
 class Model:
     domain = ""
@@ -50,6 +53,7 @@ class Model:
 class MainWindow:
     def __init__(self, application):
         self.application = application
+        logger.info("Pardus Domain Joiner starting...")
 
         self.setup_ui_builder()
 
@@ -64,6 +68,7 @@ class MainWindow:
         self.setup_about_dialog()
 
         self.check_domain_already_joined()
+        logger.info("Pardus Domain Joiner done...")
 
     # == SETUPS ==
     def setup_ui_builder(self):
@@ -279,8 +284,20 @@ class MainWindow:
 
         self.last_step_box = None
 
+    def extract_message(self, line):
+        line = line.strip()
+
+        # Check if the line contains common log patterns or is a continuation line
+        if "][" in line or "] [" in line or line.endswith("..."):
+            parts = line.split("]")
+            # Ensure there was at least one bracket to split by
+            if len(parts) > 1:
+                # Return only the last part (the actual message) and trim whitespace
+                return parts[-1].strip()
+
     def add_log(self, msg, color=""):
         lbl = self.joining_log_label
+        msg = self.extract_message(msg)
 
         if color:
             msg = f'<span color="{color}">{msg}</span>'
@@ -498,9 +515,9 @@ class MainWindow:
             lbl = self.joining_log_label
             lbl.set_markup(lbl.get_label() + line + "\n")
 
-            if line[0:7] == "STEP===":
+            if "STEP===" in line:
                 # New step
-                msg = line[7:]
+                msg = line.split("STEP===")[-1]
 
                 self.last_step_logs = ""
                 self.add_step_to_box(_(msg))

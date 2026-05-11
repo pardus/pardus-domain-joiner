@@ -232,20 +232,19 @@ class MainWindow:
         self.last_step_box = box
 
     def finish_last_step(self, success):
-        if self.last_step_box and self.last_step_spinner:
+        if not self.last_step_box:
+            return
+
+        if self.last_step_spinner:
             self.last_step_box.remove(self.last_step_spinner)
             self.last_step_spinner = None
 
         if success:
             img = Gtk.Image(icon_name="object-select-symbolic")
             img.get_style_context().add_class("success")
-            self.last_step_box.add(img)
-            self.last_step_box.reorder_child(img, 0)
         else:
             img = Gtk.Image(icon_name="dialog-error-symbolic")
             img.get_style_context().add_class("error")
-            self.last_step_box.add(img)
-            self.last_step_box.reorder_child(img, 0)
 
             # Log box
             box = Gtk.Box()
@@ -255,7 +254,8 @@ class MainWindow:
             label = Gtk.Label(
                 wrap=True, wrap_mode=1, selectable=True, halign="start"
             )  # 1: Pango.WrapMode.CHAR
-            label.set_markup(self.last_step_logs.strip())
+            safe_logs = GLib.markup_escape_text(self.last_step_logs.strip())
+            label.set_markup(safe_logs)
 
             scrolledwindow = Gtk.ScrolledWindow(
                 hexpand=True, max_content_height=230, max_content_width=700
@@ -270,9 +270,14 @@ class MainWindow:
             box.add(scrolledwindow)
             self.steps_box.add(box)
 
-        self.last_step_box = None
+        self.last_step_box.add(img)
+        self.last_step_box.reorder_child(img, 0)
 
-        self.window.show_all()
+        img.show()
+        if not success:
+            box.show_all()
+
+        self.last_step_box = None
 
     def add_log(self, msg, color=""):
         lbl = self.joining_log_label

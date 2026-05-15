@@ -272,8 +272,8 @@ class MainWindow:
                 scrolledwindow,
             )  # scroll to bottom
 
-            box.add(scrolledwindow)
-            self.steps_box.add(box)
+            # box.add(scrolledwindow)
+            # self.steps_box.add(box)
 
         self.last_step_box.add(img)
         self.last_step_box.reorder_child(img, 0)
@@ -298,6 +298,7 @@ class MainWindow:
     def add_log(self, msg, color=""):
         lbl = self.joining_log_label
         msg = self.extract_message(msg)
+        self.add_step_to_box(msg)
 
         if color:
             msg = f'<span color="{color}">{msg}</span>'

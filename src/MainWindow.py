@@ -274,7 +274,6 @@ class MainWindow:
 
             # box.add(scrolledwindow)
             # self.steps_box.add(box)
-
         self.last_step_box.add(img)
         self.last_step_box.reorder_child(img, 0)
 
@@ -298,6 +297,7 @@ class MainWindow:
     def add_log(self, msg, color=""):
         lbl = self.joining_log_label
         msg = self.extract_message(msg)
+        logger.info(msg)
         self.add_step_to_box(msg)
 
         if color:
@@ -327,6 +327,7 @@ class MainWindow:
                 return False
 
             line = source.readline().strip()
+            logger.error("stderr: %s\n", line)
             if line:
                 self.stderr_text += line + "\n"
 
@@ -340,6 +341,7 @@ class MainWindow:
                     domain = output.split("=")[1]
 
                     print(f"returned domain name: '{domain}'")
+                    logger.info("returned domain name: %s", domain)
 
                 if domain:
                     self.joined_domain_label.set_text(domain)
@@ -349,6 +351,7 @@ class MainWindow:
 
             else:
                 sys.stderr.write(self.stderr_text + "\n")
+                logger.error("Process failed:\n%s\n", self.stderr_text)
 
                 self.application.quit()
 
@@ -427,6 +430,7 @@ class MainWindow:
                 current_hostname, new_hostname
             ),
         )
+        logger.info("Hostname will be changed.\n\nOld: %s\nNew: %s", current_hostname, new_hostname)
 
         response = dialog.run()
         dialog.hide()
@@ -439,12 +443,14 @@ class MainWindow:
             )
             if p.returncode != 0 and p.returncode != 126:
                 self.show_info_dialog(_("Couldn't change hostname"), p.stderr)
+                logger.error("Couldn't change hostname. %s", p.stderr)
                 return False
 
             self.show_info_dialog(
                 _("Hostname changed."),
                 _("Old: {}\nNew: {}").format(current_hostname, new_hostname),
             )
+            logger.info("Hostname changed.\nOld: %s\nNew: %s", current_hostname, new_hostname)
             self.model.hostname = new_hostname
 
             return True
@@ -522,8 +528,10 @@ class MainWindow:
 
                 self.last_step_logs = ""
                 self.add_step_to_box(_(msg))
+                logger.info("Joining process stdout %s", msg)
             else:
                 self.last_step_logs += line + "\n"
+                logger.info("Joining process stdout %s", line)
 
             return True
 
@@ -536,6 +544,8 @@ class MainWindow:
                 return True
 
             self.add_log(line, color="gray")
+            #msg = self.extract_message(line)
+            #logger.info("Joining process stderr %s", msg)
 
             return True
 
@@ -560,6 +570,7 @@ class MainWindow:
                 self.main_stack.set_visible_child_name("prejoin")
             else:
                 self.joining_title_label.set_text(_("Joining Failed"))
+                logger.error("Joining Failed")
                 # self.joining_spinner.stop()
                 self.cancel_btn_stack.set_visible_child_name("back")
 
@@ -575,6 +586,7 @@ class MainWindow:
                     self.last_step_logs = ""
                     self.add_log(_("Invalid Organizational Unit") + ":", color="red")
                     self.add_log(self.model.organizational_unit)
+                    logger.error("Invalid Organizational Unit. %s", self.model.organizational_unit)
 
                 elif "The organizational unit does not exist" in logs:
                     self.last_step_logs = ""
@@ -584,11 +596,13 @@ class MainWindow:
                         _("Organizational Unit does not exist") + ":", color="red"
                     )
                     self.add_log(self.model.organizational_unit)
+                    logger.error("Organizational Unit does not exist. %s", self.model.organizational_unit)
 
                 elif "authentic" in logs and ("failed" in logs or "Couldn't" in logs):
                     self.last_step_logs = ""
 
                     self.add_log(_("Username or Password is wrong."), color="red")
+                    logger.error("Username or Password is wrong.")
 
             self.finish_last_step(False)
 
@@ -621,6 +635,7 @@ class MainWindow:
                 workgroup = ""
 
         task.return_value(workgroup)
+        logger.info("workgroup: %s", workgroup)
 
     def check_workgroup_finish(self, source, result):
         (status, workgroup) = result.propagate_value()
@@ -650,6 +665,7 @@ class MainWindow:
                     "Domains that end with '.local' can cause mDNS to resolve and the domain to not be found."
                 ),
             )
+            logger.warning("Warning! Domains that end with '.local' can cause mDNS to resolve and the domain to not be found.")
 
         self.model.domain = self.domain_entry.get_text()
         self.model.username = self.username_entry.get_text()
@@ -758,6 +774,7 @@ class MainWindow:
             return
 
         print("Authenticating the user on LDAP...")
+        logger.info("Authenticating the user on LDAP...")
         self.show_spinner(_("Checking credentials..."))
 
         (username, password) = self._temp_ldap_username_password
@@ -776,6 +793,7 @@ class MainWindow:
 
         except ldap.INVALID_CREDENTIALS:
             print(_("Invalid credentials."))
+            logger.warning(_("Invalid credentials."))
 
             self.show_info_dialog(_("Error"), _("Invalid credentials."))
             ldap_client._unbind_connection()
@@ -784,6 +802,7 @@ class MainWindow:
             return
         except ldap.SERVER_DOWN:
             print(_("Server is not reachable."))
+            logger.error(_("Server is not reachable."))
 
             self.show_info_dialog(_("Error"), _("Server is not reachable."))
             ldap_client._unbind_connection()
@@ -792,6 +811,7 @@ class MainWindow:
             return
         except ldap.LDAPError as err:
             print("Other LDAPError:", err)
+            logger.error("Other LDAPError: %s", err)
             self.show_info_dialog(_("Error"), f"LDAP Error:\n{err}")
             ldap_client._unbind_connection()
 
@@ -799,6 +819,7 @@ class MainWindow:
             return
         except Exception as e:
             print("LDAP Authenticate Exception:", e)
+            logger.exception("LDAP Authenticate Exception: %s", e)
             self.show_info_dialog(_("Error"), f"Exception: {e}")
 
             ldap_client._unbind_connection()
@@ -811,7 +832,8 @@ class MainWindow:
                 return False
 
             line = source.readline().strip()
-            print("stderr", line)
+            print("Leave domain stderr", line)
+            logger.error("Leave domain stderr: %s", line)
             if line:
                 self.stderr_text += line + "\n"
 
@@ -821,10 +843,12 @@ class MainWindow:
             if status == 0:
                 # Check if hostname still exists in AD
                 print(f"Checking if '{self.model.hostname}' still exists in the AD")
+                logger.info("Checking if %s still exists in the AD", self.model.hostname)
                 is_hostname_in_ad = ldap_client.check_computer_exists_in_ad(
                     self.model.hostname
                 )
                 print("is hostname exists in AD:", is_hostname_in_ad)
+                logger.info("is hostname exists in AD: %s", is_hostname_in_ad)
 
                 if is_hostname_in_ad:
                     self.show_info_dialog(
@@ -833,8 +857,10 @@ class MainWindow:
                             "You have successfully left the domain. But your computer still exists in Active Directory."
                         ),
                     )
+                    logger.warning("You have successfully left the domain. But your computer still exists in Active Directory.")
 
                 ldap_client._unbind_connection()
+                logger.debug("LDAP connection unbound.")
 
                 # Inform for logout
                 env = os.environ["PATH"]
@@ -849,7 +875,10 @@ class MainWindow:
                 )
                 response = dialog.run()
                 if response == Gtk.ResponseType.OK:
+                    logger.info("The user confirmed the restart; the shutdown process is in progress.")
                     subprocess.run(["shutdown", "-r", "now"], env={"PATH": new_env})
+                else:
+                    logger.info("User canceled reboot.")
 
                 dialog.hide()
 
@@ -857,6 +886,7 @@ class MainWindow:
 
             else:
                 self.show_info_dialog(_("Leaving Failed"), self.stderr_text)
+                logger.error("Leaving Failed %s", self.stderr_text)
 
                 sys.stderr.write(self.stderr_text + "\n")
 

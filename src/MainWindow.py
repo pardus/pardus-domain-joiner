@@ -544,6 +544,10 @@ class MainWindow:
                 return True
 
             self.add_log(line, color="gray")
+
+            if "ERROR" in line:
+                return
+
             #msg = self.extract_message(line)
             #logger.info("Joining process stderr %s", msg)
 

@@ -17,10 +17,10 @@ if len(sys.argv) >= 2:
         hostname = sys.argv[2].strip()
         domain = sys.argv[3].strip()
         user = sys.argv[4].strip()
-        password = sys.argv[5].strip()
-        ouaddress = sys.argv[6].strip()
-        connection_type = sys.argv[7].strip()
-        workgroup = sys.argv[8].strip()
+        password = sys.stdin.read().strip()
+        ouaddress = sys.argv[5].strip()
+        connection_type = sys.argv[6].strip()
+        workgroup = sys.argv[7].strip()
 
         error = domain_operations.join(
             hostname,
@@ -37,8 +37,8 @@ if len(sys.argv) >= 2:
             sys.exit(1)
     elif cmd == "leave":
         username = sys.argv[2].strip()
-        password = sys.argv[3].strip()
-        is_winbind = True if sys.argv[4].strip() == "winbind" else False
+        password = sys.stdin.read().strip()
+        is_winbind = True if sys.argv[3].strip() == "winbind" else False
 
         error = domain_operations.leave(
             user=username,

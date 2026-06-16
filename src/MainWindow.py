@@ -457,16 +457,20 @@ class MainWindow:
 
         return False
 
-    def spawn_process(self, params, on_stdout, on_stderr, on_exit):
-        pid, _stdin, stdout, stderr = GLib.spawn_async(
+    def spawn_process(self, params, on_stdout, on_stderr, on_exit, input_data=None):
+        pid, stdin_fd, stdout, stderr = GLib.spawn_async(
             params,
             flags=GLib.SPAWN_SEARCH_PATH
             # | GLib.SPAWN_LEAVE_DESCRIPTORS_OPEN
             | GLib.SPAWN_DO_NOT_REAP_CHILD,
-            standard_input=False,
+            standard_input=bool(input_data),
             standard_output=True,
             standard_error=True,
         )
+
+        if input_data:
+            os.write(stdin_fd, input_data.encode('utf-8'))
+            os.close(stdin_fd)
 
         if on_stdout:
             GLib.io_add_watch(
@@ -618,7 +622,7 @@ class MainWindow:
                 self.model.hostname,
                 self.model.domain,
                 self.model.username,
-                self.model.password,
+                # self.model.password,
                 self.model.organizational_unit,
                 self.model.connection_type,
                 workgroup,
@@ -626,6 +630,7 @@ class MainWindow:
             on_stdout,
             on_stderr,
             on_exit,
+            input_data=self.model.password
         )
 
     def check_workgroup(self, task, source_object, task_data, cancellable):
@@ -901,7 +906,7 @@ class MainWindow:
             ACTIONS_PY,
             "leave",
             ldap_client.username,
-            ldap_client.password,
+            # ldap_client.password,
             self.model.connection_type,
         ]
 
@@ -910,6 +915,7 @@ class MainWindow:
             None,
             on_stderr,
             on_exit,
+            input_data=ldap_client.password
         )
 
         self.show_spinner(_("Leaving the domain..."))

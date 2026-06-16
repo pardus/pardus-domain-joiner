@@ -1,3 +1,14 @@
+pardus-domain-joiner (0.5.4) yirmiuc; urgency=medium
+
+  * fix(ui): add null check for last_step_box and escape markup characters
+  * feat(logging): implement log system and message parsing logic
+  * fix(ui): resolve missing icons in user interface PARDUS-1593
+  * chore: add missing log messages PARDUS-1593
+  * feat: halt stderr processing when [ERROR] pattern is found PARDUS-1593
+  * fix(security): pass and read password via stdin instead of process arguments PARDUS-1661
+
+ -- Büşra ÇAĞLIYAN <busra.cagliyan@pardus.org.tr>  Tue, 16 Jun 2026 16:31:03 +0300
+
 pardus-domain-joiner (0.5.3) yirmiuc; urgency=medium
 
   [ busra ]

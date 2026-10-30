@@ -294,16 +294,19 @@ class MainWindow:
                 # Return only the last part (the actual message) and trim whitespace
                 return parts[-1].strip()
 
+        return line
+
     def add_log(self, msg, color=""):
         lbl = self.joining_log_label
         msg = self.extract_message(msg)
         logger.info(msg)
         self.add_step_to_box(msg)
+        self.last_step_logs += msg + "\n"
 
+        msg = GLib.markup_escape_text(msg, -1)
         if color:
             msg = f'<span color="{color}">{msg}</span>'
 
-        self.last_step_logs += msg + "\n"
         lbl.set_markup("{}\n{}".format(lbl.get_label(), msg))
 
     def check_domain_already_joined(self):
@@ -524,7 +527,7 @@ class MainWindow:
                 return True
 
             lbl = self.joining_log_label
-            lbl.set_markup(lbl.get_label() + line + "\n")
+            lbl.set_markup(lbl.get_label() + GLib.markup_escape_text(line, -1) + "\n")
 
             if "STEP===" in line:
                 # New step
